@@ -1,0 +1,16 @@
+import { getPages } from "@/app/utils/utils";
+import { baseURL } from "@/app/resources";
+
+export default async function sitemap() {
+  const pages = getPages(["src", "content"]).map((post) => ({
+    url: `${baseURL}/docs/${post.slug}`,
+    lastModified: post.metadata.publishedAt,
+  }));
+
+  const routes = pages.map((route) => ({
+    url: `${baseURL} + "/" + ${route}`,
+    lastModified: new Date().toISOString().split("T")[0],
+  }));
+
+  return [...routes, ...pages];
+}

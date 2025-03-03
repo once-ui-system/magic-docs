@@ -1,0 +1,7 @@
+.avatar {
+    margin-left: calc(-1 * var(--static-space-8));
+
+    &:first-child {
+        margin-left: 0;
+    }
+}

@@ -7,11 +7,12 @@ import styles from "./Accordion.module.scss";
 interface AccordionProps extends Omit<React.ComponentProps<typeof Flex>, "title">{
   title: React.ReactNode;
   children: React.ReactNode;
+  size?: "s" | "m" | "l";
   open?: boolean;
 }
 
 const Accordion: React.FC<AccordionProps> = forwardRef(
-  ({ title, children, open = false, ...rest }, ref) => {
+  ({ title, children, open = false, size = "m", ...rest }, ref) => {
     const [isOpen, setIsOpen] = useState(open);
 
     const toggleAccordion = () => {
@@ -36,8 +37,8 @@ const Accordion: React.FC<AccordionProps> = forwardRef(
           className={styles.accordion}
           cursor="pointer"
           transition="macro-medium"
-          paddingY="16"
-          paddingX="20"
+          paddingY={size === "s" ? "8" : size === "m" ? "12" : "16"}
+          paddingX={size === "s" ? "12" : size === "m" ? "16" : "20"}
           vertical="center"
           horizontal="space-between"
           onClick={toggleAccordion}
@@ -49,7 +50,7 @@ const Accordion: React.FC<AccordionProps> = forwardRef(
           </Heading>
           <Icon
             name="chevronDown"
-            size="m"
+            size={size === "s" ? "xs" : "s"}
             style={{
               display: "flex",
               transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",

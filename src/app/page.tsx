@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Heading, Flex, Text, Column } from "@/once-ui/components";
+import { Heading, Text, Column } from "@/once-ui/components";
 
 import { baseURL } from "@/app/resources";
 import { home } from "@/app/resources/content";
@@ -60,12 +60,12 @@ export default function Home() {
         }}
       />
       <Column fillWidth paddingY="l" gap="m">
-        <Column maxWidth="s" gap="24">
-          <Heading wrap="balance" variant="display-strong-m">
+        <Column maxWidth="s" gap="12">
+          <Heading variant="display-default-s">
             Once UI Documentation
           </Heading>
-          <Text wrap="balance" onBackground="neutral-weak" variant="heading-default-xl">
-            Get started with Once UI in minutes
+          <Text wrap="balance" onBackground="neutral-weak" variant="body-default-xl">
+            Learn how to get up and running with Once UI through tutorials and resources.
           </Text>
         </Column>
       </Column>

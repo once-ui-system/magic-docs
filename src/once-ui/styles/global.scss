@@ -35,12 +35,14 @@ img {
 a:not(.button) {
     color: var(--brand-on-background-medium);
     text-decoration: none;
+    transition: var(--transition-micro-medium);
     text-decoration-thickness: 1px;
     text-underline-offset: 0.25em;
     text-decoration-color: var(--neutral-border-strong) !important;
 
     &:hover {
-        text-decoration-line: underline;
+        text-decoration: none;
+        color: var(--brand-on-background-strong);
     }
 }
 

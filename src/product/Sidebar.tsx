@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { ToggleButton } from '@/once-ui/components/ToggleButton';
-import { Column, Row, Tag } from "@/once-ui/components";
+import { Accordion, Column, Row, Tag, Text } from "@/once-ui/components";
 import { usePathname } from 'next/navigation';
 
 interface NavigationItem {
@@ -69,29 +69,40 @@ export const Sidebar = ({ initialNavigation }: { initialNavigation: NavigationIt
           return (
             <React.Fragment key={item.slug}>
               {item.children ? (
-                <Column fillWidth marginTop={depth !== 0 ? "12" : "32"} gap="2" style={{paddingLeft: `calc(${depth} * var(--static-space-8))`, marginLeft: `calc(${depth} * var(--static-space-16))`}}
-                    borderLeft={depth > 0 ? "neutral-alpha-medium" : undefined}>
-                  <Row textVariant="label-strong-s" onBackground="brand-medium" marginBottom="12" marginTop="4" paddingLeft="16">
-                    {toTitleCase(item.title)}
-                  </Row>
-                  {renderNavigation(item.children, depth + 1)}
+                <Column
+                  fillWidth
+                  radius="s"
+                  overflow="hidden" 
+                  style={{paddingLeft: `calc(${depth} * var(--static-space-16))`}}
+                  marginTop={depth !== 0 ? "12" : "24"}>
+                  <Accordion
+                    gap="2"
+                    paddingLeft="4"
+                    size="s"
+                    paddingX={undefined} paddingTop={undefined} paddingBottom={undefined}
+                    title={
+                      <Row textVariant="label-strong-s" onBackground="brand-medium" paddingLeft="8">
+                        {toTitleCase(item.title)}
+                      </Row>
+                    }>
+                      {renderNavigation(item.children, depth + 1)}
+                  </Accordion>
                 </Column>
               ) : (
                 <ToggleButton
                   fillWidth
-                  size={depth === 0 ? "l" : undefined}
-                  justifyContent="flex-start"
+                  justifyContent="space-between"
                   prefixIcon={item.navIcon}
                   selected={pathname.startsWith(`/docs/${correctedSlug}`)}
                   href={`/docs/${correctedSlug}`}
                 >
-                    <Row vertical="center" gap="8">
+                    <Row fillWidth horizontal="space-between" vertical="center">
+                        <Text style={{overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap"}}>{item.label || item.title}</Text>
                         {item.navTag && (
-                            <Tag variant={item.navTagVariant} size="s">
+                            <Tag style={{marginRight: "-0.5rem", transform: "scale(0.8)", transformOrigin: "right center"}} variant={item.navTagVariant} size="s">
                                 {item.navTag}
                             </Tag>
                         )}
-                        {item.label || item.title}
                     </Row>
                 </ToggleButton>
               )}

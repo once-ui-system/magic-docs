@@ -12,10 +12,10 @@ export const Header = () => {
       <Row maxWidth="xl" vertical="center" gap="l">
         <Logo icon={false} size="s" href="/"/>
         <Row gap="4" fillWidth>
-          <ToggleButton label="Home" href="/" selected={pathname === "/"} />
+          <ToggleButton label="Docs" href="/" selected={pathname === "/"} />
           <ToggleButton
-            href="/docs"
-            label="Docs"
+            href="/discord"
+            label="Discord"
             selected={pathname.startsWith("/docs")}
           />
         </Row>

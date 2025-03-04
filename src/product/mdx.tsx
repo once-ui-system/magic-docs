@@ -1,11 +1,10 @@
 import { MDXRemote, MDXRemoteProps } from "next-mdx-remote/rsc";
-import React, { ReactNode } from "react";
+import React, { ReactNode, ElementType } from "react";
 
 import { SmartImage, SmartLink, Text } from "@/once-ui/components";
 import { CodeBlock } from "@/once-ui/modules";
-import { HeadingLink } from "@/product";
-
 import { TextProps } from "@/once-ui/interfaces";
+import { HeadingLink } from "./HeadingLink";
 import { SmartImageProps } from "@/once-ui/components/SmartImage";
 
 type TableProps = {
@@ -85,22 +84,20 @@ function createImage({ alt, src, ...props }: SmartImageProps & { src: string }) 
 
 function slugify(str: string): string {
   return str
-    .toString()
     .toLowerCase()
-    .trim() // Remove whitespace from both ends of a string
     .replace(/\s+/g, "-") // Replace spaces with -
     .replace(/&/g, "-and-") // Replace & with 'and'
     .replace(/[^\w\-]+/g, "") // Remove all non-word characters except for -
     .replace(/\-\-+/g, "-"); // Replace multiple - with single -
 }
 
-function createHeading(level: 1 | 2 | 3 | 4 | 5 | 6) {
-  const CustomHeading = ({ children, ...props }: TextProps) => {
+function createHeading(as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6") {
+  const CustomHeading = ({ children, ...props }: TextProps<typeof as>) => {
     const slug = slugify(children as string);
     return (
       <HeadingLink
         style={{ marginTop: "var(--static-space-24)", marginBottom: "var(--static-space-12)" }}
-        level={level}
+        as={as}
         id={slug}
         {...props}
       >
@@ -109,7 +106,7 @@ function createHeading(level: 1 | 2 | 3 | 4 | 5 | 6) {
     );
   };
 
-  CustomHeading.displayName = `Heading${level}`;
+  CustomHeading.displayName = `${as}`;
 
   return CustomHeading;
 }
@@ -130,12 +127,12 @@ function createParagraph({ children }: TextProps) {
 
 const components = {
   p: createParagraph as any,
-  h1: createHeading(1) as any,
-  h2: createHeading(2) as any,
-  h3: createHeading(3) as any,
-  h4: createHeading(4) as any,
-  h5: createHeading(5) as any,
-  h6: createHeading(6) as any,
+  h1: createHeading("h1") as any,
+  h2: createHeading("h2") as any,
+  h3: createHeading("h3") as any,
+  h4: createHeading("h4") as any,
+  h5: createHeading("h5") as any,
+  h6: createHeading("h6") as any,
   img: createImage as any,
   a: CustomLink as any,
   Table,

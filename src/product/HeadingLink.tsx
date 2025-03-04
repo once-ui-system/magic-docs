@@ -7,12 +7,12 @@ import styles from "./HeadingLink.module.scss";
 
 interface HeadingLinkProps {
   id: string;
-  level: 1 | 2 | 3 | 4 | 5 | 6;
+  as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
   children: React.ReactNode;
   style?: React.CSSProperties;
 }
 
-export const HeadingLink: React.FC<HeadingLinkProps> = ({ id, level, children, style }) => {
+export const HeadingLink: React.FC<HeadingLinkProps> = ({ id, as, children, style }) => {
   const { addToast } = useToast();
 
   const copyURL = (id: string): void => {
@@ -34,16 +34,15 @@ export const HeadingLink: React.FC<HeadingLinkProps> = ({ id, level, children, s
   };
 
   const variantMap = {
-    1: "display-strong-xs",
-    2: "heading-strong-xl",
-    3: "heading-strong-l",
-    4: "heading-strong-m",
-    5: "heading-strong-s",
-    6: "heading-strong-xs",
+    h1: "display-strong-xs",
+    h2: "heading-strong-xl",
+    h3: "heading-strong-l",
+    h4: "heading-strong-m",
+    h5: "heading-strong-s",
+    h6: "heading-strong-xs",
   } as const;
 
-  const variant = variantMap[level];
-  const asTag = `h${level}` as keyof JSX.IntrinsicElements;
+  const variant = variantMap[as];
 
   return (
     <Flex
@@ -51,16 +50,16 @@ export const HeadingLink: React.FC<HeadingLinkProps> = ({ id, level, children, s
       onClick={() => copyURL(id)}
       className={styles.control}
       vertical="center"
-      gap="4"
+      gap="8"
     >
-      <Heading className={styles.text} id={id} variant={variant} as={asTag}>
+      <Heading className={styles.text} id={id} variant={variant} as={as}>
         {children}
       </Heading>
       <IconButton
         className={styles.visibility}
-        size="s"
+        size="m"
         icon="openLink"
-        variant="ghost"
+        variant="secondary"
         tooltip="Copy"
         tooltipPosition="right"
       />

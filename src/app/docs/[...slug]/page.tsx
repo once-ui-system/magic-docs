@@ -92,10 +92,6 @@ export default function Docs({ params }: DocsParams) {
               }),
             }}
           />
-          <Button href="/blog" weight="default" variant="tertiary" size="s" prefixIcon="chevronLeft">
-            Posts
-          </Button>
-            
           <Heading variant="display-strong-s">{doc.metadata.title}</Heading>
           <Row gap="12" vertical="center">
             <Text variant="body-default-s" onBackground="neutral-weak">

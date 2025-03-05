@@ -1,3 +1,4 @@
+import { layout } from "@/app/resources/config";
 import {
   Button,
   Column,
@@ -10,7 +11,7 @@ import {
 export const Footer = () => {
   return (
     <Column gap="40" fillWidth paddingY="xl" paddingX="l" horizontal="center" position="relative">
-      <Row gap="12" textVariant="label-default-m" maxWidth="m" vertical="center">
+      <Row gap="12" textVariant="label-default-m" maxWidth={layout.footer.width} vertical="center">
         <Logo href="/" wordmark={false} size="m" />
         <Button
           data-border="rounded"
@@ -25,7 +26,7 @@ export const Footer = () => {
           </Row>
         </Button>
       </Row>
-      <Row maxWidth="m" horizontal="space-between" gap="40" wrap paddingX="2">
+      <Row maxWidth={layout.footer.width} horizontal="space-between" gap="40" wrap paddingX="2">
         <Column gap="12" textVariant="label-default-m">
           <Row paddingX="4" marginBottom="8">
             Solutions
@@ -58,9 +59,9 @@ export const Footer = () => {
           <Row paddingX="4" marginBottom="8">
             Social
           </Row>
-          <Button href=" " prefixIcon="github" label="GitHub" size="s" variant="secondary" />
-          <Button href=" " prefixIcon="linkedin" label="LinkedIn" size="s" variant="secondary" />
-          <Button href=" " prefixIcon="threads" label="Threads" size="s" variant="secondary" />
+          <Button href=" " weight="default" prefixIcon="github" label="GitHub" size="s" variant="secondary" />
+          <Button href=" " weight="default" prefixIcon="linkedin" label="LinkedIn" size="s" variant="secondary" />
+          <Button href=" " weight="default" prefixIcon="threads" label="Threads" size="s" variant="secondary" />
         </Column>
       </Row>
     </Column>

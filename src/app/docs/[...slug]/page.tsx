@@ -1,11 +1,13 @@
 import { notFound } from "next/navigation";
 import { CustomMDX } from "@/product/mdx";
 import { getPages } from "@/app/utils/utils";
-import { Button, Column, Heading, Row, Text } from "@/once-ui/components";
+import { Column, Heading, Icon, Row, SmartImage, Text } from "@/once-ui/components";
 import { baseURL } from "@/app/resources";
 import { formatDate } from "@/app/utils/formatDate";
 import { HeadingNav } from "@/product/HeadingNav";
 import { Metadata } from "next";
+import { layout } from "@/app/resources/config";
+import { PageList } from "@/product/PageList";
 
 interface DocsParams {
   params: {
@@ -28,7 +30,7 @@ export async function generateMetadata({
 
   let {
     title,
-    publishedAt: publishedTime,
+    updatedAt: publishedTime,
     summary: description,
     image,
   } = doc.metadata;
@@ -69,7 +71,7 @@ export default function Docs({ params }: DocsParams) {
   return (
     <>
       <Row fillWidth horizontal="center">
-        <Column as="main" maxWidth="xs" gap="l">
+        <Column as="main" maxWidth={layout.content.width} gap="l" paddingBottom="xl">
           <script
             type="application/ld+json"
             suppressHydrationWarning
@@ -78,8 +80,8 @@ export default function Docs({ params }: DocsParams) {
                 "@context": "https://schema.org",
                 "@type": "BlogPosting",
                 headline: doc.metadata.title,
-                datePublished: doc.metadata.publishedAt,
-                dateModified: doc.metadata.publishedAt,
+                datePublished: doc.metadata.updatedAt,
+                dateModified: doc.metadata.updatedAt,
                 description: doc.metadata.summary,
                 image: doc.metadata.image
                   ? `${baseURL}${doc.metadata.image}`
@@ -92,18 +94,28 @@ export default function Docs({ params }: DocsParams) {
               }),
             }}
           />
-          <Heading variant="display-strong-s">{doc.metadata.title}</Heading>
-          <Row gap="12" vertical="center">
+          <Column fillWidth gap="8" vertical="center">
+            <Heading variant="display-strong-s">{doc.metadata.title}</Heading>
             <Text variant="body-default-s" onBackground="neutral-weak">
-              {formatDate(doc.metadata.publishedAt)}
+              Last update: {formatDate(doc.metadata.updatedAt)}
             </Text>
-          </Row>
+          </Column>
+          {doc.metadata.image && (
+            <SmartImage src={doc.metadata.image} alt={"Thumbnail of " + doc.metadata.title} aspectRatio="2 / 1" radius="m" sizes="(max-width: 768px) 100vw, 768px" priority />
+          )}
           <Column as="article" fillWidth>
             <CustomMDX source={doc.content} />
           </Column>
+          <PageList />
         </Column>
       </Row>
-      <HeadingNav position="sticky" top="80" fitHeight/>
+      <Column gap="16" maxWidth={12} hide="s" position="sticky" top="80" fitHeight>
+        <Row gap="12" paddingLeft="2" vertical="center" onBackground="neutral-medium" textVariant="label-default-s">
+          <Icon name="document" size="xs"/>
+          On this page
+        </Row>
+        <HeadingNav/>
+      </Column>
     </>
   );
 } 

@@ -11,6 +11,7 @@ import { Source_Code_Pro } from "next/font/google";
 
 import { home } from "@/app/resources/content";
 import { Background, Column, Flex, ToastProvider } from "@/once-ui/components";
+import { layout } from "./resources/config";
 
 export async function generateMetadata() {
   return {
@@ -147,7 +148,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             padding="l"
             horizontal="center"
           >
-            <Flex horizontal="center" maxWidth="xl" minHeight="0">
+            <Flex horizontal="center" maxWidth={layout.body.width} minHeight="0">
               {children}
             </Flex>
           </Flex>

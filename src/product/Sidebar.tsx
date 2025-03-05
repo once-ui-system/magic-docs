@@ -2,18 +2,29 @@
 
 import React, { useEffect, useState } from "react";
 import { ToggleButton } from '@/once-ui/components/ToggleButton';
-import { Accordion, Column, Row, Tag, Text } from "@/once-ui/components";
+import { Accordion, Column, Flex, Row, Tag, Text } from "@/once-ui/components";
 import { usePathname } from 'next/navigation';
+import styles from './Sidebar.module.scss';
+import { layout } from "@/app/resources/config";
+import { Schemes } from "@/once-ui/types";
 
-interface NavigationItem {
+export interface NavigationItem extends Omit<React.ComponentProps<typeof Flex>, "title" | "label" | "children">{
   slug: string;
   title: string;
   label?: string;
+  order?: number;
+  children?: NavigationItem[];
+  schemes?: Schemes;
+  navIcon?: string;
   navTag?: string;
   navLabel?: string;
-  navIcon?: string;
-  navTagVariant?: "brand" | "accent" | "neutral" | "success" | "info" | "danger" | "gradient";
-  children?: NavigationItem[];
+  navTagVariant?: Schemes;
+}
+
+interface SidebarProps extends Omit<React.ComponentProps<typeof Flex>, "children"> {
+  initialNavigation: NavigationItem[];
+  hide?: "s" | "m" | "l";
+  show?: "s" | "m" | "l";
 }
 
 const toTitleCase = (str: string) => {
@@ -22,88 +33,82 @@ const toTitleCase = (str: string) => {
     .replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
 };
 
-const sortNavigationItems = (items: NavigationItem[]): NavigationItem[] => {
-    return items.sort((a, b) => {
-      const aDepth = a.slug.split('/').length;
-      const bDepth = b.slug.split('/').length;
-  
-      const aIsCategory = !!a.children;
-      const bIsCategory = !!b.children;
-  
-      const aIsUncategorized = aDepth === 1;
-      const bIsUncategorized = bDepth === 1;
-  
-      // Prioritize uncategorized pages (no `/`)
-      if (aIsUncategorized && !bIsUncategorized) return -1;
-      if (!aIsUncategorized && bIsUncategorized) return 1;
-  
-      // Ensure categories come after uncategorized pages
-      if (!aIsCategory && bIsCategory) return -1;
-      if (aIsCategory && !bIsCategory) return 1;
-  
-      // Sort alphabetically within their group
-      return a.title.localeCompare(b.title);
-    });
-  };
-  
-
-export const Sidebar = ({ initialNavigation }: { initialNavigation: NavigationItem[] }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ initialNavigation, ...rest }) => {
   const [navigation, setNavigation] = useState<NavigationItem[]>(initialNavigation || []);
   const pathname = usePathname();
 
   useEffect(() => {
     fetch("/api/navigation")
       .then((res) => res.json())
-      .then((data) => setNavigation(data))
+      .then((data) => {
+        setNavigation(data);
+      })
       .catch((err) => console.error("Navigation fetch failed", err));
   }, []);
   
   const renderNavigation = (items: NavigationItem[], depth = 0) => {
-    const sortedItems = sortNavigationItems(items);
-  
     return (
       <>
-        {sortedItems.map((item) => {
+        {items.map((item) => {
           const correctedSlug = item.slug.replace(/^src\\content\\/, '').replace(/\\/g, '/');
   
           return (
             <React.Fragment key={item.slug}>
               {item.children ? (
-                <Column
-                  fillWidth
-                  radius="s"
-                  overflow="hidden" 
-                  style={{paddingLeft: `calc(${depth} * var(--static-space-16))`}}
-                  marginTop={depth !== 0 ? "12" : "24"}>
-                  <Accordion
-                    gap="2"
-                    paddingLeft="4"
-                    size="s"
-                    paddingX={undefined} paddingTop={undefined} paddingBottom={undefined}
-                    title={
-                      <Row textVariant="label-strong-s" onBackground="brand-medium" paddingLeft="8">
-                        {toTitleCase(item.title)}
-                      </Row>
-                    }>
-                      {renderNavigation(item.children, depth + 1)}
-                  </Accordion>
-                </Column>
+                <Row
+                  fillWidth 
+                  style={{paddingLeft: `calc(${depth} * var(--static-space-8))`}}>
+                  <Column
+                    fillWidth
+                    marginTop="2">
+                    {layout.sidebar.collapsible ? (
+                    <Accordion
+                      gap="2"
+                      icon="chevronRight"
+                      iconRotation={90}
+                      size="s"
+                      radius="s"
+                      paddingX={undefined}
+                      paddingBottom={undefined}
+                      paddingLeft="4"
+                      paddingTop="4"
+                      title={
+                        <Row textVariant="label-default-s" onBackground="brand-medium">
+                          {toTitleCase(item.title)}
+                        </Row>
+                      }>
+                        {renderNavigation(item.children, depth + 1)}
+                    </Accordion>
+                    ) : (
+                      <Column
+                        gap="2"
+                        paddingLeft="4"
+                        paddingTop="4">
+                          <Row 
+                            paddingY="8" paddingLeft="8" textVariant="label-default-s" onBackground="brand-medium">
+                            {toTitleCase(item.title)}
+                          </Row>
+                          {renderNavigation(item.children, depth + 1)}
+                      </Column>
+                    )}
+                  </Column>
+                </Row>
               ) : (
                 <ToggleButton
                   fillWidth
                   justifyContent="space-between"
                   prefixIcon={item.navIcon}
                   selected={pathname.startsWith(`/docs/${correctedSlug}`)}
-                  href={`/docs/${correctedSlug}`}
-                >
-                    <Row fillWidth horizontal="space-between" vertical="center">
-                        <Text style={{overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap"}}>{item.label || item.title}</Text>
-                        {item.navTag && (
-                            <Tag style={{marginRight: "-0.5rem", transform: "scale(0.8)", transformOrigin: "right center"}} variant={item.navTagVariant} size="s">
-                                {item.navTag}
-                            </Tag>
-                        )}
-                    </Row>
+                  className={depth === 0 ? styles.navigation : undefined}
+                  href={`/docs/${correctedSlug}`}>
+                  <Row fillWidth horizontal="space-between" vertical="center">
+                      <Text style={{overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap"}}>{item.label || item.title}</Text>
+                      {item.navTag && (
+                        <Tag data-theme="dark" data-brand={item.navTagVariant} style={{marginRight: "-0.5rem", transform: "scale(0.8)", transformOrigin: "right center"}} variant="brand" size="s">
+                            {item.navTag}
+                        </Tag>
+                      )}
+                  </Row>
                 </ToggleButton>
               )}
             </React.Fragment>
@@ -115,8 +120,8 @@ export const Sidebar = ({ initialNavigation }: { initialNavigation: NavigationIt
   
 
   return (
-    <Column maxWidth={12} position="sticky" top="80" fitHeight gap="2" as="nav">
-      {renderNavigation(navigation)}
+    <Column maxWidth={layout.sidebar.width} position="sticky" top="64" fitHeight gap="2" as="nav" overflowY="auto" paddingRight="8" style={{maxHeight: "calc(100vh - var(--static-space-80))"}} {...rest}>
+        {renderNavigation(navigation)}
     </Column>
   );
 };

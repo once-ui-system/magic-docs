@@ -1,5 +1,5 @@
 import { Column, Heading } from "@/once-ui/components";
-import { Posts } from "@/product/Posts";
+import { PageList } from "@/product/PageList";
 import { baseURL } from "@/app/resources";
 import { blog } from "@/app/resources/content";
 
@@ -58,11 +58,13 @@ export default function Blog() {
         }}
       />
       <Heading marginBottom="l" variant="display-strong-s">
-        {blog.title}
+        Get started with Once UI
       </Heading>
       <Column fillWidth flex={1}>
-        <Posts range={[1, 3]} thumbnail />
-        <Posts range={[4]} columns="2" />
+        <Column fillWidth gap="16">
+          <PageList range={[1, 3]} thumbnail />
+        </Column>
+        <PageList range={[4]} />
       </Column>
     </Column>
   );

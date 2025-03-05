@@ -1,18 +1,21 @@
 "use client";
 
 import React, { useState, forwardRef, useImperativeHandle } from "react";
-import { Flex, Icon, Heading, Column } from ".";
+import { Flex, Icon, Text, Column, Grid } from ".";
 import styles from "./Accordion.module.scss";
 
 interface AccordionProps extends Omit<React.ComponentProps<typeof Flex>, "title">{
   title: React.ReactNode;
   children: React.ReactNode;
+  icon?: string;
+  iconRotation?: number;
   size?: "s" | "m" | "l";
+  radius?: "xs" | "s" | "m" | "l" | "full";
   open?: boolean;
 }
 
 const Accordion: React.FC<AccordionProps> = forwardRef(
-  ({ title, children, open = false, size = "m", ...rest }, ref) => {
+  ({ title, children, open = false, iconRotation = 180, radius, icon = "chevronDown", size = "m", ...rest }, ref) => {
     const [isOpen, setIsOpen] = useState(open);
 
     const toggleAccordion = () => {
@@ -31,7 +34,7 @@ const Accordion: React.FC<AccordionProps> = forwardRef(
     }));
 
     return (
-      <Flex fillWidth direction="column" className={styles.border}>
+      <Column fillWidth className={styles.border}>
         <Flex
           tabIndex={0}
           className={styles.accordion}
@@ -44,25 +47,25 @@ const Accordion: React.FC<AccordionProps> = forwardRef(
           onClick={toggleAccordion}
           aria-expanded={isOpen}
           aria-controls="accordion-content"
+          radius={radius}
         >
-          <Heading as="h3" variant="heading-strong-s">
+          <Text variant="heading-strong-s">
             {title}
-          </Heading>
+          </Text>
           <Icon
-            name="chevronDown"
+            name={icon}
             size={size === "s" ? "xs" : "s"}
             style={{
               display: "flex",
-              transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+              transform: isOpen ? `rotate(${iconRotation}deg)` : "rotate(0deg)",
               transition: "var(--transition-micro-medium)",
             }}
           />
         </Flex>
-        <Flex
+        <Grid
           id="accordion-content"
           fillWidth
           style={{
-            display: "grid",
             gridTemplateRows: isOpen ? "1fr" : "0fr",
             transition:
               "grid-template-rows var(--transition-duration-macro-medium) var(--transition-eased)",
@@ -74,8 +77,8 @@ const Accordion: React.FC<AccordionProps> = forwardRef(
               {children}
             </Column>
           </Flex>
-        </Flex>
-      </Flex>
+        </Grid>
+      </Column>
     );
   },
 );

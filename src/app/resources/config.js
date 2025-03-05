@@ -12,6 +12,25 @@ const style = {
   transition: "all", // all | micro | macro
 };
 
+const layout = {
+  header: {
+    width: 88,
+  },
+  body: {
+    width: 88,
+  },
+  sidebar: {
+    width: 14,
+    collapsible: true,
+  },
+  content: {
+    width: 48,
+  },
+  footer: {
+    width: 64,
+  },
+};
+
 const effects = {
   mask: {
     cursor: false,
@@ -48,4 +67,4 @@ const effects = {
   },
 };
 
-export { effects, style, baseURL };
+export { effects, style, layout, baseURL };

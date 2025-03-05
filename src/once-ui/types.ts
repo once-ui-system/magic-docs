@@ -18,6 +18,8 @@ export type StaticSpacingToken =
   | "128"
   | "160";
 
+export type Schemes = "blue" | "indigo" | "violet" | "magenta" | "pink" | "red" | "orange" | "yellow" | "moss" | "green" | "emerald" | "aqua" | "cyan";
+
 export type TShirtSizes = "xs" | "s" | "m" | "l" | "xl";
 
 export type ResponsiveSpacingToken = TShirtSizes;

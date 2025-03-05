@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import { Schemes } from "@/once-ui/types";
 
 interface Post {
   slug: string;
@@ -8,11 +9,11 @@ interface Post {
   navTag?: string;
   navLabel?: string;
   navIcon?: string;
-  navTagVariant?: "brand" | "accent" | "neutral" | "success" | "info" | "danger" | "gradient";
+  navTagVariant?: Schemes;
   metadata: {
     title: string;
     summary?: string;
-    publishedAt: string;
+    updatedAt: string;
     image?: string;
   };
 }
@@ -48,7 +49,7 @@ export function getPages(customPath = ["src", "content"]): Post[] {
         metadata: {
           title: data.title || '',
           summary: data.summary,
-          publishedAt: data.publishedAt || '',
+          updatedAt: data.updatedAt || '',
           image: data.image,
         },
       });

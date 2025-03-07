@@ -4,11 +4,85 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Button, Flex, Logo, NavIcon, Row, ToggleButton, Kbar, Kbd } from "@/once-ui/components";
 import { layout } from "@/app/resources/config";
-import { Sidebar } from "./Sidebar";
+import { Sidebar, NavigationItem } from "./Sidebar";
 
-export const Header = () => {
-  const pathname = usePathname() ?? "";
+export function Header() {
   const [sidebarVisible, setSidebarVisible] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setSidebarVisible(false);
+  }, [pathname]);
+
+  const toggleSidebar = () => {
+    setSidebarVisible(!sidebarVisible);
+  };
+
+  // State to store navigation items from API
+  const [navigationItems, setNavigationItems] = useState<NavigationItem[]>([]);
+  
+  // Fetch navigation data
+  useEffect(() => {
+    fetch("/api/navigation")
+      .then((res) => res.json())
+      .then((data) => {
+        setNavigationItems(data);
+      })
+      .catch((err) => console.error("Navigation fetch failed", err));
+  }, []);
+
+  // Function to convert navigation items to Kbar items recursively
+  const convertToKbarItems = (items: NavigationItem[]) => {
+    const kbarItems: any[] = [];
+    
+    items.forEach((item) => {
+      if (item.children) {
+        // This is a section/category
+        // Add children items with this section name
+        const childItems = convertToKbarItems(item.children);
+        childItems.forEach(child => {
+          child.section = item.title;
+        });
+        kbarItems.push(...childItems);
+      } else {
+        // This is a page item
+        const correctedSlug = item.slug.replace(/^src\\content\\/, '').replace(/\\/g, '/');
+        
+        // Generate default keywords if none provided
+        const defaultKeywords = `${item.title.toLowerCase()}, docs, documentation`;
+        const keywords = item.keywords || defaultKeywords;
+        
+        kbarItems.push({
+          id: correctedSlug,
+          name: item.label || item.title,
+          section: "Documentation",
+          shortcut: [],
+          keywords: keywords,
+          href: `/docs/${correctedSlug}`,
+          icon: item.navIcon || "document",
+        });
+      }
+    });
+    
+    return kbarItems;
+  };
+
+  // Generate Kbar items from navigation
+  const docsItems = convertToKbarItems(navigationItems);
+  
+  // Add static items
+  const kbar = [
+    {
+      id: "home",
+      name: "Home",
+      section: "Navigation",
+      shortcut: [],
+      keywords: "home, landing page",
+      href: "/",
+      icon: "home",
+    },
+    ...docsItems,
+  ];
 
   useEffect(() => {
     if (sidebarVisible) {
@@ -37,153 +111,6 @@ export const Header = () => {
     };
   }, [sidebarVisible]);
 
-  // Close sidebar on navigation
-  useEffect(() => {
-    setSidebarVisible(false);
-  }, [pathname]);
-
-  const toggleSidebar = () => {
-    setSidebarVisible(!sidebarVisible);
-  };
-
-  const kbar = [
-    {
-      id: "home1",
-      name: "Home",
-      section: "Navigation",
-      shortcut: [],
-      keywords: "home, hülyeség",
-      href: "/",
-      icon: "home",
-    },
-    {
-      id: "figma2",
-      name: "Figma library",
-      section: "Navigation",
-      shortcut: [],
-      keywords: "figma, design",
-      href: "/figma",
-      icon: "figma",
-    },
-    {
-      id: "docs3",
-      name: "Documentation",
-      section: "Navigation",
-      shortcut: [],
-      keywords: "docs, documentation",
-      href: "/docs/installation",
-      icon: "document",
-    },
-    {
-      id: "lightTheme4",
-      name: "Light",
-      section: "Change theme",
-      shortcut: [],
-      keywords: "light, theme, appearance, mode",
-      perform: () => console.log('light'),
-      icon: "sun",
-    },
-    {
-      id: "darkTheme5",
-      name: "Dark",
-      section: "Change theme",
-      shortcut: [],
-      keywords: "dark, theme, appearance, mode",
-      perform: () => console.log('dark'),
-      icon: "moon",
-    },
-    {
-      id: "home6",
-      name: "Home",
-      section: "Navigation",
-      shortcut: [],
-      keywords: "home, hülyeség",
-      href: "/",
-      icon: "home",
-    },
-    {
-      id: "figma7",
-      name: "Figma library",
-      section: "Navigation",
-      shortcut: [],
-      keywords: "figma, design",
-      href: "/figma",
-      icon: "figma",
-    },
-    {
-      id: "docs8",
-      name: "Documentation",
-      section: "Navigation",
-      shortcut: [],
-      keywords: "docs, documentation",
-      href: "/docs/installation",
-      icon: "document",
-    },
-    {
-      id: "lightTheme9",
-      name: "Light",
-      section: "Change theme",
-      shortcut: [],
-      keywords: "light, theme, appearance, mode",
-      perform: () => console.log('light'),
-      icon: "sun",
-    },
-    {
-      id: "darkTheme11",
-      name: "Dark",
-      section: "Change theme",
-      shortcut: [],
-      keywords: "dark, theme, appearance, mode",
-      perform: () => console.log('dark'),
-      icon: "moon",
-    },
-    {
-      id: "home12",
-      name: "Home",
-      section: "Navigation",
-      shortcut: [],
-      keywords: "home, hülyeség",
-      href: "/",
-      icon: "home",
-    },
-    {
-      id: "figma13",
-      name: "Figma library",
-      section: "Navigation",
-      shortcut: [],
-      keywords: "figma, design",
-      href: "/figma",
-      icon: "figma",
-    },
-    {
-      id: "docs14",
-      name: "Documentation",
-      section: "Navigation",
-      shortcut: [],
-      keywords: "docs, documentation",
-      href: "/docs/installation",
-      icon: "document",
-    },
-    {
-      id: "lightTheme15",
-      name: "Light",
-      section: "Change theme",
-      shortcut: [],
-      keywords: "light, theme, appearance, mode",
-      perform: () => console.log('light'),
-      icon: "sun",
-    },
-    {
-      id: "darkTheme16",
-      name: "Dark",
-      section: "Change theme",
-      shortcut: [],
-      keywords: "dark, theme, appearance, mode",
-      perform: () => console.log('dark'),
-      icon: "moon",
-    },
-  ];
-
   return (
     <>
       <Flex as="header" horizontal="center" position="sticky" top="0" zIndex={9} fillWidth vertical="center" background="surface" borderBottom="neutral-alpha-weak" paddingY="12" paddingX="l">
@@ -192,7 +119,7 @@ export const Header = () => {
             <NavIcon show="m" onClick={toggleSidebar}/>
             <Logo icon={false} size="s" href="/"/>
           </Row>
-          <Kbar items={kbar} maxWidth={20} radius="full" background="neutral-alpha-weak">
+          <Kbar hide="m" items={kbar} maxWidth={16} radius="full" background="neutral-alpha-weak">
             <Button data-border="rounded" size="s" variant="tertiary" fillWidth weight="default">
               <Row vertical="center" gap="16">
                 <Row background="neutral-alpha-medium" paddingX="8" paddingY="4" radius="full" data-scaling="90" textVariant="body-default-xs" onBackground="neutral-medium">Cmd k</Row>

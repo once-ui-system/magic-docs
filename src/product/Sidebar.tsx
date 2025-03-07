@@ -15,6 +15,7 @@ export interface NavigationItem extends Omit<React.ComponentProps<typeof Flex>, 
   order?: number;
   children?: NavigationItem[];
   schemes?: Schemes;
+  keywords?: string;
   navIcon?: string;
   navTag?: string;
   navLabel?: string;

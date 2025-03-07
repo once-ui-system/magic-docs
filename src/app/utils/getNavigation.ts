@@ -11,6 +11,7 @@ interface NavigationItem {
     navLabel?: string;
     navIcon?: string;
     navTagVariant?: Schemes;
+    keywords?: string;
     children?: NavigationItem[];
     order?: number;
 }
@@ -127,6 +128,7 @@ export default function getNavigation(dirPath = path.join(process.cwd(), 'src/co
         navLabel: data.navLabel,
         navIcon: data.navIcon,
         navTagVariant: data.navTagVariant,
+        keywords: data.keywords,
         order: pageOrder !== undefined ? pageOrder : data.order,
       };
       

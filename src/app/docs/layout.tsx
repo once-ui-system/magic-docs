@@ -1,16 +1,15 @@
 import { Row } from "@/once-ui/components";
-import { NavigationItem, Sidebar } from "@/product/Sidebar";
+import { Sidebar } from "@/product/Sidebar";
 import React from "react";
 
-interface Props {
+export default function DocsLayout({
+  children,
+}: {
   children: React.ReactNode;
-  initialNavigation: NavigationItem[];
-}
-
-export default function Layout({ children, initialNavigation }: Props) {
+}) {
   return (
     <Row fillWidth gap="24" position="relative">
-      <Sidebar hide="m" initialNavigation={initialNavigation} />
+      <Sidebar hide="m" />
       {children}
     </Row>
   );

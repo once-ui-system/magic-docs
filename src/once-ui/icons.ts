@@ -29,6 +29,7 @@ import {
   HiOutlineShieldCheck,
   HiOutlineSparkles,
   HiOutlineBars3BottomLeft,
+  HiOutlineHome,
 } from "react-icons/hi2";
 
 import { RiVisaLine } from "react-icons/ri";
@@ -70,4 +71,5 @@ export const iconLibrary: Record<string, IconType> = {
   document: HiOutlineBars3BottomLeft,
   linkedin: FaLinkedin,
   threads: FaThreads,
+  home: HiOutlineHome,
 };

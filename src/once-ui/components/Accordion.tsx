@@ -4,6 +4,12 @@ import React, { useState, forwardRef, useImperativeHandle } from "react";
 import { Flex, Icon, Text, Column, Grid } from ".";
 import styles from "./Accordion.module.scss";
 
+export interface AccordionHandle extends HTMLDivElement {
+  toggle: () => void;
+  open: () => void;
+  close: () => void;
+}
+
 interface AccordionProps extends Omit<React.ComponentProps<typeof Flex>, "title">{
   title: React.ReactNode;
   children: React.ReactNode;
@@ -14,7 +20,7 @@ interface AccordionProps extends Omit<React.ComponentProps<typeof Flex>, "title"
   open?: boolean;
 }
 
-const Accordion: React.FC<AccordionProps> = forwardRef(
+const Accordion = forwardRef<AccordionHandle, AccordionProps>(
   ({ title, children, open = false, iconRotation = 180, radius, icon = "chevronDown", size = "m", ...rest }, ref) => {
     const [isOpen, setIsOpen] = useState(open);
 
@@ -22,16 +28,19 @@ const Accordion: React.FC<AccordionProps> = forwardRef(
       setIsOpen(!isOpen);
     };
 
-    useImperativeHandle(ref, () => ({
-      ...((ref as React.MutableRefObject<HTMLDivElement>)?.current ?? {}),
-      toggle: toggleAccordion,
-      open: () => {
-        setIsOpen(true);
+    useImperativeHandle(
+      ref,
+      () => {
+        const methods = {
+          toggle: toggleAccordion,
+          open: () => setIsOpen(true),
+          close: () => setIsOpen(false),
+        };
+        
+        return Object.assign(document.createElement('div'), methods) as unknown as AccordionHandle;
       },
-      close: () => {
-        setIsOpen(false);
-      },
-    }));
+      []
+    );
 
     return (
       <Column fillWidth className={styles.border}>

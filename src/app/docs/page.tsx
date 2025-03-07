@@ -64,7 +64,7 @@ export default function Blog() {
         <Column fillWidth gap="16">
           <PageList range={[1, 3]} thumbnail />
         </Column>
-        <PageList range={[4]} />
+        <PageList range={[4]} path={["magic-portfolio"]} />
       </Column>
     </Column>
   );

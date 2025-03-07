@@ -2,7 +2,7 @@ import { Column, Heading, Text } from "@/once-ui/components";
 
 export default function NotFound() {
   return (
-    <Column as="section" fill center paddingBottom="160">
+    <Column as="section" fill center paddingY="160">
       <Text marginBottom="s" variant="display-strong-xl">
         404
       </Text>

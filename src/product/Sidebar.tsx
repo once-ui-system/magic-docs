@@ -22,7 +22,7 @@ export interface NavigationItem extends Omit<React.ComponentProps<typeof Flex>, 
 }
 
 interface SidebarProps extends Omit<React.ComponentProps<typeof Flex>, "children"> {
-  initialNavigation: NavigationItem[];
+  initialNavigation?: NavigationItem[];
   hide?: "s" | "m" | "l";
   show?: "s" | "m" | "l";
 }

@@ -10,12 +10,6 @@ import { Metadata } from "next";
 import React from "react";
 import { layout } from "@/app/resources/config";
 
-interface DocsParams {
-  params: {
-    slug: string[];
-  };
-}
-
 export async function generateMetadata({
   params,
 }: {
@@ -66,7 +60,7 @@ export default async function Docs({
  }: { params: Promise<{ slug: string[] }> }) {
   const slugParams = await params;
   const slugPath = slugParams.slug.join('/');
-  
+
   let doc = getPages().find((doc) => doc.slug === slugPath);
 
   if (!doc) {

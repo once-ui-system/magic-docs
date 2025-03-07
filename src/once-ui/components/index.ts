@@ -29,6 +29,7 @@ export * from "./IconButton";
 export * from "./InlineCode";
 export * from "./Input";
 export * from "./InteractiveDetails";
+export * from "./Kbar";
 export * from "./Kbd";
 export * from "./LetterFx";
 export * from "./Line";

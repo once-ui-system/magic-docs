@@ -121,8 +121,12 @@ export default function getNavigation(dirPath = path.join(process.cwd(), 'src/co
         pageOrder = dirMeta.pages[filenameNoExt];
       }
 
+      const contentDir = path.join(process.cwd(), 'src/content');
+      const relativePath = path.relative(contentDir, fullPath);
+      const normalizedPath = relativePath.replace(/\\/g, '/').replace(/\.mdx?$/, '');
+
       const item = {
-        slug: path.relative(process.cwd(), fullPath).replace(/\.mdx?$/, ''),
+        slug: normalizedPath,
         title: data.title || entry.name.replace(/\.mdx?$/, ''),
         navTag: data.navTag,
         navLabel: data.navLabel,

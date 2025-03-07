@@ -51,7 +51,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ initialNavigation, ...rest }) 
     return (
       <>
         {items.map((item) => {
-          const correctedSlug = item.slug.replace(/^src\\content\\/, '').replace(/\\/g, '/');
+          // The slug should already be normalized from getNavigation.ts
+          // Just ensure it's a valid path for navigation
+          const correctedSlug = item.slug;
   
           return (
             <React.Fragment key={item.slug}>

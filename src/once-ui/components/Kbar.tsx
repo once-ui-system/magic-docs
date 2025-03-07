@@ -361,7 +361,7 @@ export const KbarContent: React.FC<KbarContentProps> = ({ isOpen, onClose, items
                 hasSuffix={option.hasSuffix}
                 description={option.description}
                 {...(option.href 
-                  ? { href: option.href, onClick: undefined } 
+                  ? { href: option.href, onClick: undefined, onLinkClick: onClose } 
                   : { onClick: option.onClick }
                 )}
                 highlighted={isHighlighted}

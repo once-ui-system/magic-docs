@@ -1,4 +1,4 @@
-import { getPages } from "@/app/utils/utils";
+import { getPages, sortPages } from "@/app/utils/utils";
 import { Card, Column, Heading, Icon, Row, SmartImage, Text } from "@/once-ui/components";
 import React from "react";
 
@@ -6,6 +6,7 @@ interface props extends Omit<React.ComponentProps<typeof Card>, 'onClick'> {
   range?: [number] | [number, number];
   thumbnail?: boolean;
   path?: string[];
+  sortType?: 'order' | 'alphabetical' | 'date' | 'section';
 }
 
 function formatSlug(slug: string): React.JSX.Element {
@@ -43,6 +44,7 @@ export function PageList({
   range,
   thumbnail = false,
   path = [],
+  sortType = 'date', // Default to date sorting for the page list
   ...rest
 }: props) {
   // Create a base path array starting with src/content
@@ -54,9 +56,8 @@ export function PageList({
   // Get pages from the specified path
   let pages = getPages(fullPath);
 
-  const sortedPages = pages.sort((a, b) => {
-    return new Date(b.metadata.updatedAt).getTime() - new Date(a.metadata.updatedAt).getTime();
-  });
+  // Sort pages using the centralized sorting function
+  const sortedPages = sortPages(pages, sortType);
 
   const displayedPages = range 
     ? (range.length === 1 

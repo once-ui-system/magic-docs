@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Heading, Text, Column } from "@/once-ui/components";
+import { Heading, Text, Column, Button } from "@/once-ui/components";
 
 import { baseURL } from "@/app/resources";
 import { home } from "@/app/resources/content";
@@ -64,9 +64,10 @@ export default function Home() {
           <Heading variant="display-default-s">
             Once UI Documentation
           </Heading>
-          <Text wrap="balance" onBackground="neutral-weak" variant="body-default-xl">
+          <Text wrap="balance" onBackground="neutral-weak" variant="body-default-xl" marginBottom="20">
             Learn how to get up and running with Once UI through tutorials and resources.
           </Text>
+          <Button data-border="rounded" size="s" href="/docs" variant="secondary">Quick start</Button>
         </Column>
       </Column>
     </Column>

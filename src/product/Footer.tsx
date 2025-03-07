@@ -28,7 +28,7 @@ export const Footer = () => {
       </Row>
       <Row maxWidth={layout.footer.width} horizontal="space-between" gap="40" wrap paddingX="2">
         <Column gap="12" textVariant="label-default-m">
-          <Row paddingX="4" marginBottom="8">
+          <Row paddingX="2" marginBottom="8">
             Solutions
           </Row>
           <Row>
@@ -42,7 +42,7 @@ export const Footer = () => {
           </Row>
         </Column>
         <Column gap="12" textVariant="label-default-m">
-          <Row paddingX="4" marginBottom="8">
+          <Row paddingX="2" marginBottom="8">
             Resources
           </Row>
           <Row>
@@ -56,7 +56,7 @@ export const Footer = () => {
           </Row>
         </Column>
         <Column data-border="rounded" gap="12" textVariant="label-default-m">
-          <Row paddingX="4" marginBottom="8">
+          <Row paddingX="2" marginBottom="8">
             Social
           </Row>
           <Button href=" " weight="default" prefixIcon="github" label="GitHub" size="s" variant="secondary" />

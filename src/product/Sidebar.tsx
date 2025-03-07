@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { ToggleButton } from '@/once-ui/components/ToggleButton';
-import { Accordion, Column, Flex, Row, Tag, Text } from "@/once-ui/components";
+import { Accordion, Column, Flex, Icon, Row, Tag, Text } from "@/once-ui/components";
 import { usePathname } from 'next/navigation';
 import styles from './Sidebar.module.scss';
 import { layout } from "@/app/resources/config";
@@ -73,7 +73,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ initialNavigation, ...rest }) 
                       paddingLeft="4"
                       paddingTop="4"
                       title={
-                        <Row textVariant="label-default-s" onBackground="brand-medium">
+                        <Row textVariant="label-strong-s" onBackground="brand-medium">
                           {toTitleCase(item.title)}
                         </Row>
                       }>
@@ -97,12 +97,19 @@ export const Sidebar: React.FC<SidebarProps> = ({ initialNavigation, ...rest }) 
                 <ToggleButton
                   fillWidth
                   justifyContent="space-between"
-                  prefixIcon={item.navIcon}
                   selected={pathname.startsWith(`/docs/${correctedSlug}`)}
                   className={depth === 0 ? styles.navigation : undefined}
                   href={`/docs/${correctedSlug}`}>
                   <Row fillWidth horizontal="space-between" vertical="center">
-                      <Text style={{overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap"}}>{item.label || item.title}</Text>
+                      <Row
+                        overflow="hidden"
+                        gap="8"
+                        onBackground={pathname.startsWith(`/docs/${correctedSlug}`) ? "neutral-strong" : "neutral-medium"}
+                        textVariant={pathname.startsWith(`/docs/${correctedSlug}`) ? "label-strong-s" : "label-default-s"}
+                        style={{ textOverflow: "ellipsis", whiteSpace: "nowrap"}}>
+                          {item.navIcon && <Icon size="xs" name={item.navIcon}/>}
+                          {item.label || item.title}
+                      </Row>
                       {item.navTag && (
                         <Tag data-theme="dark" data-brand={item.navTagVariant} style={{marginRight: "-0.5rem", transform: "scale(0.8)", transformOrigin: "right center"}} variant="brand" size="s">
                             {item.navTag}

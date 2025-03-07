@@ -55,6 +55,7 @@ const Accordion: React.FC<AccordionProps> = forwardRef(
           <Icon
             name={icon}
             size={size === "s" ? "xs" : "s"}
+            onBackground={isOpen ? "neutral-strong" : "neutral-weak"}
             style={{
               display: "flex",
               transform: isOpen ? `rotate(${iconRotation}deg)` : "rotate(0deg)",

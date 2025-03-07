@@ -2,7 +2,7 @@
 
 import React, { forwardRef, useEffect, useState, useRef } from "react";
 import { Column, Flex, Row, SmartLink, Text } from "@/once-ui/components";
-import { generateHeadingLinks } from "@/app/utils/generateHeadingLinks";
+import { useHeadingLinks } from "@/app/utils/generateHeadingLinks";
 
 interface props extends React.ComponentProps<typeof Flex> { }
 
@@ -15,7 +15,7 @@ export const HeadingNav = forwardRef<HTMLDivElement, props>(
     const [activeHeadingId, setActiveHeadingId] = useState<string | null>(null);
     const [activeIndex, setActiveIndex] = useState(0);
     const indicatorRef = useRef<HTMLDivElement>(null);
-    const headings = generateHeadingLinks();
+    const headings = useHeadingLinks();
 
     useEffect(() => {
       if (headings.length === 0) return;

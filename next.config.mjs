@@ -7,6 +7,10 @@ const withMDX = mdx({
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  sassOptions: {
+    compiler: "modern",
+    silenceDeprecations: ["legacy-js-api"],
+  },
   pageExtensions: ["ts", "tsx", "md", "mdx"],
 };
 

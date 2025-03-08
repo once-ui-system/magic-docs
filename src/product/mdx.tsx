@@ -2,7 +2,7 @@ import { MDXRemote, MDXRemoteProps } from "next-mdx-remote/rsc";
 import React, { ReactNode } from "react";
 import dynamic from "next/dynamic";
 
-import { Heading, SmartImage, SmartLink, Text } from "@/once-ui/components";
+import { Heading, Row, SmartImage, SmartLink, Text } from "@/once-ui/components";
 import { CodeBlock } from "@/once-ui/modules";
 import { TextProps } from "@/once-ui/interfaces";
 import { HeadingLink } from "./HeadingLink";
@@ -16,22 +16,37 @@ type TableProps = {
 };
 
 function Table({ data }: TableProps) {
-  const headers = data.headers.map((header, index) => <th key={index}>{header}</th>);
+  const headers = data.headers.map((header, index) => (
+    <th style={{textAlign: "left", borderBottom: "1px solid var(--neutral-alpha-medium)"}} className="px-16 py-12 font-label font-default font-s" key={index}>
+      {header}
+    </th>
+  ));
+  
   const rows = data.rows.map((row, index) => (
     <tr key={index}>
       {row.map((cell, cellIndex) => (
-        <td key={cellIndex}>{cell}</td>
+        <td className="px-16 py-12 font-body font-default font-s" key={cellIndex}>{cell}</td>
       ))}
     </tr>
   ));
 
   return (
-    <table>
-      <thead>
-        <tr>{headers}</tr>
-      </thead>
-      <tbody>{rows}</tbody>
-    </table>
+    <Row fillWidth radius="m" overflowY="hidden" border="neutral-alpha-medium" overflowX="auto">
+      <table className="w-full surface-background" style={{borderSpacing: 0, borderCollapse: "collapse", minWidth: "32rem"}}>
+        <thead className="neutral-on-background-strong">
+          <tr>{headers}</tr>
+        </thead>
+        <tbody className="neutral-on-background-medium">
+          {rows.length > 0 ? (
+            rows
+          ) : (
+            <tr>
+              <td colSpan={headers.length} className="px-24 py-12 font-body font-default font-s">No data available</td>
+            </tr>
+          )}
+        </tbody>
+      </table>
+    </Row>
   );
 }
 

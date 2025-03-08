@@ -1,4 +1,7 @@
 { 
   "order": 1,
-  "title": "Components"
+  "title": "Components",
+  "pages": {
+    "overview": 0
+  }
 }

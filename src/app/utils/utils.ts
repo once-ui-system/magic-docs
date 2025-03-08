@@ -170,6 +170,54 @@ export function getAdjacentPages(currentSlug: string, sortType: SortType = 'orde
     // Get all pages
     const allPages = getPages();
     
+    // Check if the current slug has no slashes (top-level MDX file)
+    const isTopLevelPage = !currentSlug.includes('/');
+    
+    // For top-level pages, we need special handling
+    if (isTopLevelPage) {
+      // Get only top-level pages
+      const topLevelPages = allPages.filter(page => !page.slug.includes('/'));
+      
+      // Try to read root meta.json for top-level page ordering
+      let rootMetaData: { pages?: Record<string, number> } = {};
+      const rootMetaPath = path.join(process.cwd(), "src", "content", "meta.json");
+      if (fs.existsSync(rootMetaPath)) {
+        try {
+          rootMetaData = JSON.parse(fs.readFileSync(rootMetaPath, 'utf8'));
+        } catch (error) {
+          console.warn(`Error reading root meta.json: ${rootMetaPath}`, error);
+        }
+      }
+      
+      // Sort top-level pages based on meta.json order if available
+      const sortedTopLevelPages = topLevelPages.sort((a, b) => {
+        const aOrder = rootMetaData.pages?.[a.slug];
+        const bOrder = rootMetaData.pages?.[b.slug];
+        
+        if (aOrder !== undefined && bOrder !== undefined) {
+          return aOrder - bOrder;
+        }
+        if (aOrder !== undefined) return -1;
+        if (bOrder !== undefined) return 1;
+        
+        // Fallback to alphabetical by title
+        return a.metadata.title.localeCompare(b.metadata.title);
+      });
+      
+      // Find current page index
+      const currentIndex = sortedTopLevelPages.findIndex(page => page.slug === currentSlug);
+      
+      if (currentIndex === -1) {
+        return { prevPage: null, nextPage: null };
+      }
+      
+      // Get previous and next pages
+      const prevPage = currentIndex > 0 ? sortedTopLevelPages[currentIndex - 1] : null;
+      const nextPage = currentIndex < sortedTopLevelPages.length - 1 ? sortedTopLevelPages[currentIndex + 1] : null;
+      
+      return { prevPage, nextPage };
+    }
+    
     // Get the section from the current slug (first part of the path)
     const currentSection = currentSlug.split('/')[0];
     

@@ -86,8 +86,8 @@ export default async function Docs({
             <CustomMDX source={doc.content} />
           </Column>
           
-          <Row gap="16" fillWidth horizontal="space-between" wrap>
-              {prevPage && (
+          <Row gap="16" fillWidth horizontal="space-between" wrap>              
+              {prevPage ? (
                 <Row maxWidth={20}>
                 <Card
                   border="neutral-alpha-medium"
@@ -105,8 +105,8 @@ export default async function Docs({
                   </Column>
                 </Card>
                 </Row>
-              )}
-              {nextPage && (
+              ) : <Row/>}
+              {nextPage ? (
                 <Row maxWidth={20}>
                   <Card
                     border="neutral-alpha-medium"
@@ -124,7 +124,7 @@ export default async function Docs({
                     <Icon name="chevronRight" size="s" onBackground="neutral-weak" />
                   </Card>
                 </Row>
-              )}
+              ) : <Row/>}
           </Row>
         </Column>
       </Row>

@@ -88,7 +88,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ initialNavigation, ...rest }) 
                         paddingLeft="4"
                         paddingTop="4">
                           <Row 
-                            paddingY="8" paddingLeft="8" textVariant="label-default-s" onBackground="brand-medium">
+                            paddingY="8" paddingLeft="8" textVariant="label-strong-s" onBackground="brand-strong">
                             {toTitleCase(item.title)}
                           </Row>
                           {renderNavigation(item.children, depth + 1)}

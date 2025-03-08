@@ -1,7 +1,7 @@
 import React from "react";
 import { Heading, Text, Column, Button } from "@/once-ui/components";
 import { Meta, Schema } from "@/once-ui/modules";
-import { baseURL } from "@/app/resources";
+import { baseURL, layout } from "@/app/resources";
 import { home, schema } from "@/app/resources";
 import { PageList } from "@/product/PageList";
 
@@ -16,7 +16,7 @@ export async function generateMetadata() {
 
 export default function Home() {
   return (
-    <Column maxWidth="m" gap="xl" horizontal="center">
+    <Column maxWidth={layout.content.width} gap="xl" horizontal="center">
       <Schema
         as="webPage"
         title={home.title}

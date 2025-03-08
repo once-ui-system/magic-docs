@@ -1,0 +1,51 @@
+---
+title: "Overview"
+summary: "Learn about the core UI components in the Once UI system and how to use them effectively in your projects."
+updatedAt: "2025-03-08"
+image: "/images/components-hero.jpg"
+navLabel: "Components"
+---
+
+# Once UI Components
+
+Once UI provides a comprehensive set of components designed to help you build beautiful, accessible, and responsive user interfaces. This guide introduces the key components and shows how to use them in your projects.
+
+## Component Philosophy
+
+Our components follow these design principles:
+
+1. **Accessibility First**: All components are built with accessibility in mind
+2. **Responsive by Default**: Components adapt to different screen sizes
+3. **Customizable**: Flexible props system allows for extensive customization
+4. **Consistent**: Unified design language across all components
+
+## Key Components
+
+Here's a quick overview of some of our most commonly used components:
+
+<Table data={{
+  headers: ["Component", "Purpose", "Key Features"],
+  rows: [
+    ["Card", "Container for related content", "Flexible layout, hover states, interactive options"],
+    ["Accordion", "Collapsible content sections", "Animated transitions, keyboard accessibility"],
+    ["Feedback", "User notifications", "Multiple variants (success, error, warning, info)"],
+    ["SmartImage", "Enhanced image display", "Lazy loading, aspect ratio control, zoom capability"]
+  ]
+}} />
+
+## Code Example
+
+Here's a simple example of using our components together:
+
+<CodeBlock
+  codeInstances={[
+    {
+      code: 'import { Card, Text, SmartImage } from "@/once-ui/components";\n\nexport function ProductCard({ title, description, image }) {\n  return (\n    <Card padding="m" radius="l" shadow="m">\n      <SmartImage src={image} alt={title} aspectRatio="16/9" />\n      <Text variant="heading-strong-m">{title}</Text>\n      <Text variant="body-default-s">{description}</Text>\n    </Card>\n  );\n}',
+      label: 'Product Card Component',
+      language: 'tsx'
+    }
+  ]}
+  copyButton
+/>
+
+In the following sections, we'll explore each component in detail.

@@ -1,0 +1,65 @@
+---
+title: "Accordion"
+summary: "Learn how to use the Accordion component to create collapsible content sections and save space in your UI."
+updatedAt: "2025-03-08"
+image: "/images/accordion-component.jpg"
+navLabel: "Accordion"
+---
+
+# Accordion Component
+
+The Accordion component provides an expandable/collapsible container that helps organize content into digestible sections, saving valuable screen space while keeping related information accessible.
+
+## Basic Usage
+
+Accordions are perfect for FAQs, product specifications, or any content that benefits from progressive disclosure.
+
+<Accordion title="What is Once UI?">
+  Once UI is a comprehensive design system and component library built for modern web applications. It provides a collection of reusable components, design tokens, and patterns to help developers build consistent, accessible, and beautiful user interfaces.
+</Accordion>
+
+<Accordion title="How do I install Once UI?">
+  You can install Once UI using npm or yarn:
+  
+  ```bash
+  npm install @once-ui/react
+  # or
+  yarn add @once-ui/react
+  ```
+  
+  Then import components as needed in your application.
+</Accordion>
+
+## Customization Options
+
+The Accordion component supports various customization options:
+
+- **Size**: Control the overall size with the `size` prop (`s`, `m`, or `l`)
+- **Icon**: Change the default chevron icon with the `icon` prop
+- **Radius**: Adjust corner rounding with the `radius` prop
+- **Initial state**: Control whether it's initially open with the `open` prop
+
+## Implementation Example
+
+Here's how to implement a custom accordion group:
+
+<CodeBlock
+  codeInstances={[
+    {
+      code: 'import { Accordion, Column } from "@/once-ui/components";\n\nexport function FAQSection() {\n  return (\n    <Column gap="m">\n      <Accordion\n        title="How do I reset my password?"\n        size="m"\n        radius="m"\n      >\n        Visit the login page and click on "Forgot Password". Follow the\n        instructions sent to your email to reset your password.\n      </Accordion>\n      \n      <Accordion\n        title="Can I change my username?"\n        size="m"\n        radius="m"\n      >\n        Yes, you can change your username in your account settings.\n        Note that username changes are limited to once every 30 days.\n      </Accordion>\n    </Column>\n  );\n}',
+      label: 'FAQ Accordion Group',
+      language: 'tsx'
+    }
+  ]}
+  copyButton
+/>
+
+## Accessibility Considerations
+
+Our Accordion component follows WAI-ARIA best practices:
+
+1. Uses appropriate ARIA attributes for screen readers
+2. Supports keyboard navigation (Tab, Enter, Space)
+3. Maintains focus management during interactions
+
+Accordions are a powerful way to organize complex information while keeping your UI clean and focused.

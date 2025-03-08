@@ -31,6 +31,17 @@ export function getPages(customPath = ["src", "content"]): Post[] {
   
   const files = fs.readdirSync(postsDir);
   const posts: Post[] = [];
+  
+  // Try to read meta.json if it exists in the current directory
+  let metaData: { pages?: Record<string, number>, order?: number, title?: string } = {};
+  const metaPath = path.join(postsDir, "meta.json");
+  if (fs.existsSync(metaPath)) {
+    try {
+      metaData = JSON.parse(fs.readFileSync(metaPath, 'utf8'));
+    } catch (error) {
+      console.warn(`Error reading meta.json: ${metaPath}`, error);
+    }
+  }
 
   files.forEach((file) => {
     const filePath = path.join(postsDir, file);
@@ -51,6 +62,10 @@ export function getPages(customPath = ["src", "content"]): Post[] {
         const slug = path.relative(contentBasePath, filePath)
           .replace(/\.mdx?$/, '')
           .replace(/\\/g, '/');
+          
+        // Get order from meta.json if available
+        const fileName = path.basename(file, path.extname(file));
+        const metaOrder = metaData.pages?.[fileName];
 
         posts.push({
           slug,
@@ -64,7 +79,8 @@ export function getPages(customPath = ["src", "content"]): Post[] {
             summary: data.summary,
             updatedAt: data.updatedAt || '',
             image: data.image,
-            order: data.order !== undefined ? Number(data.order) : undefined,
+            // Priority: 1. Frontmatter order, 2. meta.json order, 3. undefined
+            order: data.order !== undefined ? Number(data.order) : (metaOrder !== undefined ? Number(metaOrder) : undefined),
           },
         });
       } catch (error) {
@@ -154,23 +170,111 @@ export function getAdjacentPages(currentSlug: string, sortType: SortType = 'orde
     // Get all pages
     const allPages = getPages();
     
-    // Sort pages using the consistent sorting function
-    const sortedPages = sortPages(allPages, sortType);
+    // Get the section from the current slug (first part of the path)
+    const currentSection = currentSlug.split('/')[0];
     
-    // Find current page index
-    const currentIndex = sortedPages.findIndex(page => page.slug === currentSlug);
+    // First, sort all pages by section and then by order within section
+    // This gives us a global ordering of all pages across all sections
+    const allSortedPages = sortPages(allPages, 'section');
     
-    if (currentIndex === -1) {
+    // Find current page index in the global ordering
+    const globalCurrentIndex = allSortedPages.findIndex(page => page.slug === currentSlug);
+    
+    if (globalCurrentIndex === -1) {
       return { prevPage: null, nextPage: null };
     }
     
-    // Get previous and next pages
-    const prevPage = currentIndex > 0 ? sortedPages[currentIndex - 1] : null;
-    const nextPage = currentIndex < sortedPages.length - 1 ? sortedPages[currentIndex + 1] : null;
+    // Get global previous and next pages (across all sections)
+    const globalPrevPage = globalCurrentIndex > 0 ? allSortedPages[globalCurrentIndex - 1] : null;
+    const globalNextPage = globalCurrentIndex < allSortedPages.length - 1 ? allSortedPages[globalCurrentIndex + 1] : null;
+    
+    // Filter pages to only include those in the same section for section-specific navigation
+    const sectionPages = allPages.filter(page => {
+      const pageSection = page.slug.split('/')[0];
+      return pageSection === currentSection;
+    });
+    
+    // Sort pages within the section using the provided sort type
+    const sortedSectionPages = sortPages(sectionPages, sortType);
+    
+    // Find current page index within the section
+    const sectionCurrentIndex = sortedSectionPages.findIndex(page => page.slug === currentSlug);
+    
+    // Determine if we're at section boundaries
+    const isFirstInSection = sectionCurrentIndex === 0;
+    const isLastInSection = sectionCurrentIndex === sortedSectionPages.length - 1;
+    
+    // Get section-specific previous and next pages
+    const sectionPrevPage = sectionCurrentIndex > 0 ? sortedSectionPages[sectionCurrentIndex - 1] : null;
+    const sectionNextPage = sectionCurrentIndex < sortedSectionPages.length - 1 ? sortedSectionPages[sectionCurrentIndex + 1] : null;
+    
+    // Logic for cross-section navigation:
+    // If we're at the first page of a section and there's a global previous page from another section, use that
+    // If we're at the last page of a section and there's a global next page from another section, use that
+    const prevPage = isFirstInSection ? globalPrevPage : sectionPrevPage;
+    const nextPage = isLastInSection ? globalNextPage : sectionNextPage;
     
     return { prevPage, nextPage };
   } catch (error) {
     console.error("Error getting adjacent pages:", error);
     return { prevPage: null, nextPage: null };
+  }
+}
+
+// Function to get all sections with their pages
+export function getSections(sortType: SortType = 'order'): { section: string, pages: Post[] }[] {
+  try {
+    // Get all pages
+    const allPages = getPages();
+    
+    // Group pages by section
+    const sectionMap = new Map<string, Post[]>();
+    
+    allPages.forEach(page => {
+      const section = page.slug.split('/')[0];
+      if (!sectionMap.has(section)) {
+        sectionMap.set(section, []);
+      }
+      sectionMap.get(section)!.push(page);
+    });
+    
+    // Sort sections based on meta.json order if available
+    const sections: { section: string, pages: Post[] }[] = [];
+    
+    // Try to read root meta.json for section ordering
+    let rootMetaData: { sections?: Record<string, number> } = {};
+    const rootMetaPath = path.join(process.cwd(), "src", "content", "meta.json");
+    if (fs.existsSync(rootMetaPath)) {
+      try {
+        rootMetaData = JSON.parse(fs.readFileSync(rootMetaPath, 'utf8'));
+      } catch (error) {
+        console.warn(`Error reading root meta.json: ${rootMetaPath}`, error);
+      }
+    }
+    
+    // Convert map to array and sort sections
+    for (const [section, pages] of sectionMap.entries()) {
+      sections.push({
+        section,
+        pages: sortPages(pages, sortType)
+      });
+    }
+    
+    // Sort sections based on meta.json order if available, otherwise alphabetically
+    return sections.sort((a, b) => {
+      const aOrder = rootMetaData.sections?.[a.section];
+      const bOrder = rootMetaData.sections?.[b.section];
+      
+      if (aOrder !== undefined && bOrder !== undefined) {
+        return aOrder - bOrder;
+      }
+      if (aOrder !== undefined) return -1;
+      if (bOrder !== undefined) return 1;
+      
+      return a.section.localeCompare(b.section);
+    });
+  } catch (error) {
+    console.error("Error getting sections:", error);
+    return [];
   }
 }

@@ -1,0 +1,90 @@
+---
+title: "SmartImage"
+summary: "Learn how to use the SmartImage component to display images, videos, and YouTube embeds with advanced features like zoom and aspect ratio control."
+updatedAt: "2025-03-08"
+image: "/images/smartimage-component.jpg"
+navLabel: "SmartImage"
+---
+
+# SmartImage Component
+
+The SmartImage component is a versatile media display solution that handles images, videos, and YouTube embeds with advanced features like zoom functionality, aspect ratio control, and responsive sizing.
+
+## Basic Usage
+
+SmartImage wraps Next.js's Image component and adds additional functionality:
+
+<SmartImage 
+  src="/images/example-image.jpg" 
+  alt="Example image showing SmartImage capabilities" 
+  aspectRatio="16/9"
+  radius="m"
+/>
+
+## Video Support
+
+SmartImage can display video content seamlessly:
+
+<SmartImage 
+  src="/videos/product-demo.mp4" 
+  aspectRatio="16/9"
+  radius="m"
+/>
+
+## YouTube Embedding
+
+You can embed YouTube videos directly using the same component:
+
+<SmartImage 
+  src="https://www.youtube.com/watch?v=dQw4w9WgXcQ" 
+  aspectRatio="16/9"
+  radius="m"
+/>
+
+## Zoom Functionality
+
+Enable zoom functionality with the `enlarge` prop:
+
+<SmartImage 
+  src="/images/detailed-diagram.jpg" 
+  alt="Detailed architecture diagram" 
+  aspectRatio="16/9"
+  radius="m"
+  enlarge
+/>
+
+When the `enlarge` prop is enabled:
+- Click on the image to zoom
+- Press Escape to exit zoom view
+- Click outside the image to close
+- Use the mouse wheel to close the zoomed view
+
+## Implementation Example
+
+Here's how to implement SmartImage with various options:
+
+<CodeBlock
+  codeInstances={[
+    {
+      code: 'import { SmartImage, Column } from "@/once-ui/components";\n\nexport function ProductGallery() {\n  return (\n    <Column gap="l">\n      <SmartImage\n        src="/images/product-hero.jpg"\n        alt="Product hero image"\n        aspectRatio="16/9"\n        radius="l"\n        priority\n        enlarge\n      />\n      \n      <SmartImage\n        src="https://www.youtube.com/watch?v=product-demo-id"\n        aspectRatio="16/9"\n        radius="m"\n      />\n      \n      <SmartImage\n        src="/videos/product-features.mp4"\n        aspectRatio="16/9"\n        radius="m"\n      />\n    </Column>\n  );\n}',
+      label: 'Product Gallery',
+      language: 'tsx'
+    }
+  ]}
+  copyButton
+/>
+
+## Props Reference
+
+| Prop | Type | Default | Description |
+|------|------|---------|-------------|
+| src | string | required | URL of the image, video, or YouTube link |
+| alt | string | "" | Alt text for images (important for accessibility) |
+| aspectRatio | string | undefined | Aspect ratio in CSS format (e.g., "16/9") |
+| radius | string | undefined | Border radius (xs, s, m, l, full) |
+| enlarge | boolean | false | Enable zoom functionality |
+| priority | boolean | false | Prioritize loading (for LCP images) |
+| objectFit | string | "cover" | How the image should be resized |
+| sizes | string | "100vw" | Responsive size hints for the browser |
+
+The SmartImage component simplifies media handling while providing advanced features that enhance the user experience.

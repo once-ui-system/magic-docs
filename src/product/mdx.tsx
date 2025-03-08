@@ -1,7 +1,8 @@
 import { MDXRemote, MDXRemoteProps } from "next-mdx-remote/rsc";
 import React, { ReactNode } from "react";
+import dynamic from "next/dynamic";
 
-import { SmartImage, SmartLink, Text } from "@/once-ui/components";
+import { Heading, SmartImage, SmartLink, Text } from "@/once-ui/components";
 import { CodeBlock } from "@/once-ui/modules";
 import { TextProps } from "@/once-ui/interfaces";
 import { HeadingLink } from "./HeadingLink";
@@ -135,8 +136,14 @@ const components = {
   h6: createHeading("h6") as any,
   img: createImage as any,
   a: CustomLink as any,
+  Heading,
+  Text,
   Table,
   CodeBlock,
+  SmartImage,
+  Accordion: dynamic(() => import("@/once-ui/components").then(mod => mod.Accordion)),
+  Feedback: dynamic(() => import("@/once-ui/components").then(mod => mod.Feedback)),
+  Card: dynamic(() => import("@/once-ui/components").then(mod => mod.Card)),
 };
 
 type CustomMDXProps = MDXRemoteProps & {

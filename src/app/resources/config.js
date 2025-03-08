@@ -13,24 +13,25 @@ const style = {
 };
 
 const layout = {
+  // units are set in REM
   header: {
-    width: 90,
+    width: 90, // max-width of the content inside the header
   },
   body: {
-    width: 90,
+    width: 90, // max-width of the body
   },
   sidebar: {
-    width: 16,
-    collapsible: true,
+    width: 16, // width of the sidebar
+    collapsible: true, // accordion or static render
   },
   content: {
-    width: 44,
+    width: 44, // width of the main content block
   },
   sideNav: {
-    width: 14,
+    width: 14, // width of the sideNav on document pages
   },
   footer: {
-    width: 64,
+    width: 44, // width of the content inside the footer
   },
 };
 

@@ -1,7 +1,7 @@
 import { Column, Heading } from "@/once-ui/components";
 import { Meta, Schema } from "@/once-ui/modules";
 import { PageList } from "@/product/PageList";
-import { baseURL } from "@/app/resources";
+import { baseURL, layout } from "@/app/resources";
 import { home, schema } from "@/app/resources/content";
 
 export async function generateMetadata() {
@@ -15,7 +15,7 @@ export async function generateMetadata() {
 
 export default function Blog() {
   return (
-    <Column maxWidth="s">
+    <Column maxWidth={layout.content.width}>
       <Schema
         as="website"
         title={home.title}

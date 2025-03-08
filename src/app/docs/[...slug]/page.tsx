@@ -80,7 +80,7 @@ export default async function Docs({
             </Text>
           </Column>
           {doc.metadata.image && (
-            <SmartImage src={doc.metadata.image} alt={"Thumbnail of " + doc.metadata.title} aspectRatio="2 / 1" radius="m" sizes="(max-width: 768px) 100vw, 768px" priority />
+            <SmartImage enlarge src={doc.metadata.image} alt={"Thumbnail of " + doc.metadata.title} aspectRatio="2 / 1" radius="m" sizes="(max-width: 768px) 100vw, 768px" priority />
           )}
           <Column as="article" fillWidth>
             <CustomMDX source={doc.content} />

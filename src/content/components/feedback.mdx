@@ -1,0 +1,88 @@
+---
+title: "Feedback"
+summary: "Learn how to use the Feedback component to display informational, success, warning, and error messages to users."
+updatedAt: "2025-03-08"
+image: "/images/feedback-component.jpg"
+navLabel: "Feedback"
+---
+
+# Feedback Component
+
+The Feedback component provides a consistent way to communicate status messages, alerts, and notifications to users. It supports different variants to convey different types of information effectively.
+
+## Basic Usage
+
+The Feedback component has four main variants: info, success, warning, and danger.
+
+<Feedback
+  variant="info"
+  title="Information"
+  description="This is an informational message for the user."
+/>
+
+## Variants
+
+Each variant is designed to communicate a specific type of message:
+
+<Feedback
+  variant="success"
+  title="Success"
+  description="Your changes have been saved successfully."
+  showCloseButton
+/>
+
+<Feedback
+  variant="warning"
+  title="Warning"
+  description="Your session will expire in 5 minutes. Please save your work."
+  showCloseButton
+/>
+
+<Feedback
+  variant="danger"
+  title="Error"
+  description="There was a problem processing your request. Please try again."
+  showCloseButton
+/>
+
+## With Action Button
+
+You can add an action button to provide users with a direct way to respond:
+
+<Feedback
+  variant="info"
+  title="New Feature Available"
+  description="We've added a new feature that you might be interested in."
+  showCloseButton
+  actionButtonProps={{
+    children: "Learn More",
+    variant: "primary"
+  }}
+/>
+
+## Implementation Example
+
+Here's how to implement Feedback components in your application:
+
+<CodeBlock
+  codeInstances={[
+    {
+      code: 'import { Feedback, Column } from "@/once-ui/components";\n\nexport function FormSubmissionStatus({ status }) {\n  if (status === "success") {\n    return (\n      <Feedback\n        variant="success"\n        title="Form Submitted"\n        description="Thank you for your submission. We\'ll be in touch soon."\n        showCloseButton\n      />\n    );\n  }\n  \n  if (status === "error") {\n    return (\n      <Feedback\n        variant="danger"\n        title="Submission Failed"\n        description="There was an error submitting your form. Please try again."\n        showCloseButton\n        actionButtonProps={{\n          children: "Try Again",\n          variant: "primary"\n        }}\n      />\n    );\n  }\n  \n  return null;\n}',
+      label: 'Form Submission Feedback',
+      language: 'tsx'
+    }
+  ]}
+  copyButton
+/>
+
+## Best Practices
+
+When using the Feedback component:
+
+1. **Be specific**: Provide clear, concise messages that explain what happened
+2. **Suggest actions**: When appropriate, tell users what they can do next
+3. **Use appropriate variants**: Choose the right variant based on the message type
+4. **Position strategically**: Place feedback where users will notice it without disrupting their workflow
+5. **Allow dismissal**: For non-critical messages, provide a way to dismiss the feedback
+
+The Feedback component helps create a better user experience by providing timely, relevant information in a consistent format.

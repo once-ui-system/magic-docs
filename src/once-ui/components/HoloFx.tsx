@@ -12,7 +12,7 @@ interface MaskOptions {
 
 interface HoloFxProps extends React.ComponentProps<typeof Flex> {
   children: React.ReactNode;
-  light?: {
+  shine?: {
     opacity?: number;
     filter?: string;
     blending?: CSSProperties["mixBlendMode"];
@@ -44,15 +44,15 @@ const getMaskStyle = (mask?: MaskOptions): string => {
   return mask?.maskPosition ? formatMask(mask.maskPosition) : formatMask();
 };
 
-const HoloFx: React.FC<HoloFxProps> = ({ children, light, burn, texture, ...rest }) => {
+const HoloFx: React.FC<HoloFxProps> = ({ children, shine, burn, texture, ...rest }) => {
   const ref = useRef<HTMLDivElement>(null);
   let lastCall = 0;
 
-  const lightDefaults = {
+  const shineDefaults = {
     opacity: 30,
     blending: "color-dodge" as CSSProperties["mixBlendMode"],
-    mask: getMaskStyle(light?.mask),
-    ...light,
+    mask: getMaskStyle(shine?.mask),
+    ...shine,
   };
 
   const burnDefaults = {
@@ -126,12 +126,12 @@ const HoloFx: React.FC<HoloFxProps> = ({ children, light, burn, texture, ...rest
         position="absolute"
         fill
         pointerEvents="none"
-        className={classNames(styles.overlay, styles.light)}
+        className={classNames(styles.overlay, styles.shine)}
         style={{
-          ["--light-opacity" as any]: lightDefaults.opacity + "%",
-          filter: lightDefaults.filter,
-          mixBlendMode: lightDefaults.blending,
-          maskImage: lightDefaults.mask as string,
+          ["--shine-opacity" as any]: shineDefaults.opacity + "%",
+          filter: shineDefaults.filter,
+          mixBlendMode: shineDefaults.blending,
+          maskImage: shineDefaults.mask as string,
         }}
       >
         {children}

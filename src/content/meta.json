@@ -1,7 +1,7 @@
 { 
   "pages": {
-    "styles.mdx": 2,
-    "templates.mdx": 1,
-    "tokens": 0
+    "styles": 0,
+    "templates": 1,
+    "about": 2
   }
 }

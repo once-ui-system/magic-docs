@@ -1,5 +1,5 @@
 import { MDXRemote, MDXRemoteProps } from "next-mdx-remote/rsc";
-import React, { ReactNode, ElementType } from "react";
+import React, { ReactNode } from "react";
 
 import { SmartImage, SmartLink, Text } from "@/once-ui/components";
 import { CodeBlock } from "@/once-ui/modules";
@@ -145,7 +145,6 @@ type CustomMDXProps = MDXRemoteProps & {
 
 export function CustomMDX(props: CustomMDXProps) {
   return (
-    // @ts-ignore: Suppressing type error for MDXRemote usage
     <MDXRemote {...props} components={{ ...components, ...(props.components || {}) }} />
   );
 }

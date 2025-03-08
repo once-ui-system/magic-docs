@@ -53,6 +53,8 @@ const Grid = forwardRef<HTMLDivElement, ComponentProps>(
       marginBottom,
       marginX,
       marginY,
+      dark,
+      light,
       width,
       height,
       maxWidth,
@@ -230,6 +232,8 @@ const Grid = forwardRef<HTMLDivElement, ComponentProps>(
       zIndex && `z-index-${zIndex}`,
       textType && `font-${textType}`,
       cursor && `cursor-${cursor}`,
+      dark && "dark-grid",
+      light && "light-grid",
       className,
     );
 

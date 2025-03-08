@@ -30,6 +30,7 @@ import {
   HiOutlineSparkles,
   HiOutlineBars3BottomLeft,
   HiOutlineHome,
+  HiOutlineComputerDesktop,
 } from "react-icons/hi2";
 
 import { RiVisaLine } from "react-icons/ri";
@@ -45,6 +46,7 @@ export const iconLibrary: Record<string, IconType> = {
   check: HiCheck,
   light: HiOutlineSun,
   dark: HiOutlineMoon,
+  computer: HiOutlineComputerDesktop,
   helpCircle: HiMiniQuestionMarkCircle,
   infoCircle: HiInformationCircle,
   warningTriangle: HiExclamationTriangle,

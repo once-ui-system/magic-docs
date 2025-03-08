@@ -1,62 +1,30 @@
 import React from "react";
-
 import { Heading, Text, Column, Button } from "@/once-ui/components";
-
+import { Meta, Schema } from "@/once-ui/modules";
 import { baseURL } from "@/app/resources";
-import { home } from "@/app/resources/content";
+import { home, schema } from "@/app/resources";
+import { PageList } from "@/product/PageList";
 
 export async function generateMetadata() {
-  const title = home.title;
-  const description = home.description;
-  const ogImage = `${baseURL}/og?title=${encodeURIComponent(title)}`;
-
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      type: "website",
-      url: `${baseURL}`,
-      images: [
-        {
-          url: ogImage,
-          alt: title,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [ogImage],
-    },
-  };
+  return Meta.generate({
+    title: home.title,
+    description: home.description,
+    baseURL,
+    path: "",
+  });
 }
 
 export default function Home() {
   return (
     <Column maxWidth="m" gap="xl" horizontal="center">
-      <script
-        type="application/ld+json"
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "WebPage",
-            name: home.title,
-            description: home.description,
-            url: `${baseURL}`,
-            image: `${baseURL}/og?title=${encodeURIComponent(home.title)}`,
-            publisher: {
-              "@type": "Person",
-              name: "meta name",
-              image: {
-                "@type": "ImageObject",
-                url: "",
-              },
-            },
-          }),
+      <Schema
+        as="webPage"
+        title={home.title}
+        description={home.description}
+        baseURL={baseURL}
+        path=""
+        author={{
+          name: schema.name
         }}
       />
       <Column fillWidth paddingY="l" gap="m">

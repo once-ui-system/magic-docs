@@ -2,10 +2,11 @@
 export {
   effects,
   style,
+  layout,
   baseURL,
 } from "@/app/resources/config";
 export {
   social,
   home,
-  blog,
+  schema,
 } from "@/app/resources/content";

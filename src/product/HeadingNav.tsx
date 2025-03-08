@@ -16,6 +16,47 @@ export const HeadingNav = forwardRef<HTMLDivElement, props>(
     const [activeIndex, setActiveIndex] = useState(0);
     const indicatorRef = useRef<HTMLDivElement>(null);
     const headings = useHeadingLinks();
+    const observerRef = useRef<IntersectionObserver | null>(null);
+    const lastUpdateTimeRef = useRef<number>(0);
+    const pendingUpdateRef = useRef<string | null>(null);
+    const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+    const debouncedUpdateActiveHeading = (id: string) => {
+      const now = Date.now();
+      
+      if (now - lastUpdateTimeRef.current < 200) {
+        pendingUpdateRef.current = id;
+        
+        if (scrollTimeoutRef.current) {
+          clearTimeout(scrollTimeoutRef.current);
+        }
+        
+        scrollTimeoutRef.current = setTimeout(() => {
+          if (pendingUpdateRef.current) {
+            updateActiveHeadingInternal(pendingUpdateRef.current);
+            pendingUpdateRef.current = null;
+          }
+        }, 200);
+        
+        return;
+      }
+      
+      updateActiveHeadingInternal(id);
+    };
+
+    const updateActiveHeadingInternal = (id: string) => {
+      const index = headings.findIndex(h => h.id === id);
+      if (index !== -1) {
+        setActiveHeadingId(id);
+        setActiveIndex(index);
+        
+        if (indicatorRef.current) {
+          indicatorRef.current.style.top = `calc(${index} * var(--static-space-32))`;
+        }
+        
+        lastUpdateTimeRef.current = Date.now();
+      }
+    };
 
     useEffect(() => {
       if (headings.length === 0) return;
@@ -26,67 +67,106 @@ export const HeadingNav = forwardRef<HTMLDivElement, props>(
         document.getElementById(heading.id)
       ).filter(Boolean) as HTMLElement[];
 
-      const observer = new IntersectionObserver(
+      const headingPositions = new Map<string, number>();
+      
+      const calculateHeadingPositions = () => {
+        headingElements.forEach(el => {
+          if (el) {
+            headingPositions.set(el.id, el.getBoundingClientRect().top + window.scrollY - 150);
+          }
+        });
+      };
+      
+      calculateHeadingPositions();
+
+      const findActiveHeading = () => {
+        const scrollPosition = window.scrollY;
+        
+        let activeId = headings[0]?.id;
+        let closestPosition = -Infinity;
+        
+        headingPositions.forEach((position, id) => {
+          if (position <= scrollPosition && position > closestPosition) {
+            closestPosition = position;
+            activeId = id;
+          }
+        });
+        
+        if (activeId) {
+          debouncedUpdateActiveHeading(activeId);
+        }
+      };
+
+      let isScrolling = false;
+      const handleScroll = () => {
+        if (!isScrolling) {
+          window.requestAnimationFrame(() => {
+            findActiveHeading();
+            isScrolling = false;
+          });
+          isScrolling = true;
+        }
+      };
+
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      
+      observerRef.current = new IntersectionObserver(
         (entries) => {
-          const visibleEntries = entries.filter(entry => entry.isIntersecting);
-
-          if (visibleEntries.length > 0) {
-            const visibleIds = visibleEntries.map(entry => entry.target.id);
-            const firstVisibleHeadingId = visibleIds[0];
-
-            const index = headings.findIndex(h => h.id === firstVisibleHeadingId);
-
-            if (index !== -1) {
-              setActiveHeadingId(firstVisibleHeadingId);
-              setActiveIndex(index);
-
-              if (indicatorRef.current) {
-                indicatorRef.current.style.top = `calc(${index} * var(--static-space-32))`;
-              }
-            }
-          } else if (entries.length > 0) {
-            let closestHeading = null;
-            let closestDistance = Infinity;
-
-            entries.forEach(entry => {
-              const rect = entry.boundingClientRect;
-              const distance = Math.abs(rect.top);
-
-              if (distance < closestDistance) {
-                closestDistance = distance;
-                closestHeading = entry.target.id as any;
-              }
-            });
-
-            if (closestHeading) {
-              const index = headings.findIndex(h => h.id === closestHeading);
-              if (index !== -1) {
-                setActiveHeadingId(closestHeading);
-                setActiveIndex(index);
-
-                if (indicatorRef.current) {
-                  indicatorRef.current.style.top = `calc(${index} * var(--static-space-32))`;
-                }
-              }
+          if (Date.now() - lastUpdateTimeRef.current > 300) {
+            const enteringEntries = entries.filter(entry => entry.isIntersecting);
+            
+            if (enteringEntries.length > 0) {
+              enteringEntries.sort((a, b) => {
+                const aRect = a.boundingClientRect;
+                const bRect = b.boundingClientRect;
+                return aRect.top - bRect.top;
+              });
+              
+              debouncedUpdateActiveHeading(enteringEntries[0].target.id);
             }
           }
         },
         {
-          rootMargin: "-80px 0px -70% 0px",
-          threshold: 0.1
+          rootMargin: "-150px 0px -30% 0px",
+          threshold: [0, 0.1, 0.5, 1]
         }
       );
 
       headingElements.forEach(element => {
-        if (element) observer.observe(element);
+        if (element && observerRef.current) {
+          observerRef.current.observe(element);
+        }
       });
 
+      window.addEventListener('resize', calculateHeadingPositions);
+
+      findActiveHeading();
+
       return () => {
-        headingElements.forEach(element => {
-          if (element) observer.unobserve(element);
-        });
+        if (observerRef.current) {
+          headingElements.forEach(element => {
+            if (element) observerRef.current?.unobserve(element);
+          });
+        }
+        window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('resize', calculateHeadingPositions);
+        
+        if (scrollTimeoutRef.current) {
+          clearTimeout(scrollTimeoutRef.current);
+        }
       };
     }, [headings]);
+
+    const handleHeadingClick = (id: string, index: number) => {
+      setActiveHeadingId(id);
+      setActiveIndex(index);
+      
+      if (indicatorRef.current) {
+        indicatorRef.current.style.top = `calc(${index} * var(--static-space-32))`;
+      }
+      
+      lastUpdateTimeRef.current = Date.now();
+    };
 
     return (
       <Row paddingLeft="8" gap="12" className={className} style={style} ref={ref} {...rest}>
@@ -125,18 +205,13 @@ export const HeadingNav = forwardRef<HTMLDivElement, props>(
                     const target = document.getElementById(heading.id);
                     if (target) {
                       const targetPosition =
-                        target.getBoundingClientRect().top + window.scrollY;
+                        target.getBoundingClientRect().top + window.scrollY - 150;
                       window.scrollTo({
                         top: targetPosition,
                         behavior: "smooth",
                       });
 
-                      setActiveHeadingId(heading.id);
-                      setActiveIndex(index);
-
-                      if (indicatorRef.current) {
-                        indicatorRef.current.style.top = `calc(${index} * var(--static-space-32))`;
-                      }
+                      handleHeadingClick(heading.id, index);
                     }
                   }}
                   style={{

@@ -9,9 +9,30 @@ import { baseURL, effects, style } from "@/app/resources";
 import { Inter } from "next/font/google";
 import { Source_Code_Pro } from "next/font/google";
 
-import { home } from "@/app/resources/content";
-import { Background, Column, Flex, ToastProvider } from "@/once-ui/components";
+import { Background, Column, Flex, ToastProvider, ThemeProvider } from "@/once-ui/components";
 import { layout } from "./resources/config";
+import { home } from "@/app/resources/content";
+
+const themeScript = `
+  (function() {
+    function getInitialTheme() {
+      try {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme && ['light', 'dark', 'system'].includes(savedTheme)) {
+          if (savedTheme === 'system') {
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          }
+          return savedTheme;
+        }
+      } catch (e) {
+        // Fallback
+      }
+      return 'dark';
+    }
+    
+    document.documentElement.setAttribute('data-theme', getInitialTheme());
+  })();
+`;
 
 export async function generateMetadata() {
   return {
@@ -19,10 +40,10 @@ export async function generateMetadata() {
     title: home.title,
     description: home.description,
     openGraph: {
-      title: "Documentation",
-      description: "Portfolio website showcasing my work.",
+      title: home.title,
+      description: home.description,
       url: baseURL,
-      siteName: "Documentation",
+      siteName: home.title,
       locale: "en_US",
       type: "website",
     },
@@ -50,14 +71,12 @@ type FontConfig = {
   variable: string;
 };
 
-/*
-	Replace with code for secondary and tertiary fonts
-	from https://once-ui.com/customize
-*/
+/**
+ * Replace with code for secondary and tertiary fonts
+ * from https://once-ui.com/customize
+ */
 const secondary: FontConfig | undefined = undefined;
 const tertiary: FontConfig | undefined = undefined;
-/*
- */
 
 const code = Source_Code_Pro({
   variable: "--font-code",
@@ -70,91 +89,100 @@ interface RootLayoutProps {
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {
+  // Set default theme to dark to match client-side
   return (
-    <Flex
-      as="html"
-      lang="en"
-      background="page"
-      data-neutral={style.neutral}
-      data-brand={style.brand}
-      data-accent={style.accent}
-      data-solid={style.solid}
-      data-solid-style={style.solidStyle}
-      data-theme={style.theme}
-      data-border={style.border}
-      data-surface={style.surface}
-      data-transition={style.transition}
-      className={classNames(
-        primary.variable,
-        secondary ? secondary.variable : "",
-        tertiary ? tertiary.variable : "",
-        code.variable,
-      )}
-    >
-      <ToastProvider>
-        <Column style={{ minHeight: "100vh" }} as="body" fillWidth margin="0" padding="0">
-          <Background
-            position="fixed"
-            mask={{
-              cursor: effects.mask.cursor,
-              x: effects.mask.x,
-              y: effects.mask.y,
-              radius: effects.mask.radius,
-            }}
-            gradient={{
-              display: effects.gradient.display,
-              x: effects.gradient.x,
-              y: effects.gradient.y,
-              width: effects.gradient.width,
-              height: effects.gradient.height,
-              tilt: effects.gradient.tilt,
-              colorStart: effects.gradient.colorStart,
-              colorEnd: effects.gradient.colorEnd,
-              opacity: effects.gradient.opacity as
-                | 0
-                | 10
-                | 20
-                | 30
-                | 40
-                | 50
-                | 60
-                | 70
-                | 80
-                | 90
-                | 100,
-            }}
-            dots={{
-              display: effects.dots.display,
-              color: effects.dots.color,
-              size: effects.dots.size as any,
-              opacity: effects.dots.opacity as any,
-            }}
-            grid={{
-              display: effects.grid.display,
-              color: effects.grid.color,
-              width: effects.grid.width as any,
-              height: effects.grid.height as any,
-              opacity: effects.grid.opacity as any,
-            }}
-            lines={{
-              display: effects.lines.display,
-              opacity: effects.lines.opacity as any,
-            }}
-          />
-          <Header />
+    <>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
+      <ThemeProvider defaultTheme="dark">
+        <ToastProvider>
           <Flex
-            position="relative"
-            fillWidth
-            padding="l"
-            horizontal="center"
+            as="html"
+            lang="en"
+            background="page"
+            data-neutral={style.neutral}
+            data-brand={style.brand}
+            data-accent={style.accent}
+            data-solid={style.solid}
+            data-solid-style={style.solidStyle}
+            data-theme={style.theme}
+            data-border={style.border}
+            data-surface={style.surface}
+            data-transition={style.transition}
+            className={classNames(
+              primary.variable,
+              secondary ? secondary.variable : "",
+              tertiary ? tertiary.variable : "",
+              code.variable,
+            )}
           >
-            <Flex horizontal="center" maxWidth={layout.body.width} minHeight="0">
-              {children}
-            </Flex>
+          <Column style={{ minHeight: "100vh" }} as="body" fillWidth margin="0" padding="0">
+              <Background
+                position="fixed"
+                mask={{
+                  cursor: effects.mask.cursor,
+                  x: effects.mask.x,
+                  y: effects.mask.y,
+                  radius: effects.mask.radius,
+                }}
+                gradient={{
+                  display: effects.gradient.display,
+                  x: effects.gradient.x,
+                  y: effects.gradient.y,
+                  width: effects.gradient.width,
+                  height: effects.gradient.height,
+                  tilt: effects.gradient.tilt,
+                  colorStart: effects.gradient.colorStart,
+                  colorEnd: effects.gradient.colorEnd,
+                  opacity: effects.gradient.opacity as
+                    | 0
+                    | 10
+                    | 20
+                    | 30
+                    | 40
+                    | 50
+                    | 60
+                    | 70
+                    | 80
+                    | 90
+                    | 100,
+                }}
+                dots={{
+                  display: effects.dots.display,
+                  color: effects.dots.color,
+                  size: effects.dots.size as any,
+                  opacity: effects.dots.opacity as any,
+                }}
+                grid={{
+                  display: effects.grid.display,
+                  color: effects.grid.color,
+                  width: effects.grid.width as any,
+                  height: effects.grid.height as any,
+                  opacity: effects.grid.opacity as any,
+                }}
+                lines={{
+                  display: effects.lines.display,
+                  opacity: effects.lines.opacity as any,
+                }}
+              />
+              <Header />
+              <Flex
+                position="relative"
+                fillWidth
+                padding="l"
+                horizontal="center"
+                flex={1}
+              >
+                <Flex horizontal="center" maxWidth={layout.body.width} minHeight="0">
+                  {children}
+                </Flex>
+              </Flex>
+              <Footer />
+            </Column>
           </Flex>
-          <Footer />
-        </Column>
-      </ToastProvider>
-    </Flex>
+        </ToastProvider>
+      </ThemeProvider>
+    </>
   );
 }

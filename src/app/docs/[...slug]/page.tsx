@@ -1,14 +1,13 @@
 import { notFound } from "next/navigation";
-import { CustomMDX } from "@/product/mdx";
 import { getPages, getAdjacentPages } from "@/app/utils/utils";
-import { Column, Heading, Icon, Row, SmartImage, Text } from "@/once-ui/components";
-import { baseURL } from "@/app/resources";
 import { formatDate } from "@/app/utils/formatDate";
+import { Column, Heading, Icon, Row, SmartImage, Text, Card } from "@/once-ui/components";
+import { Meta, Schema } from "@/once-ui/modules";
+import { baseURL, layout, schema } from "@/app/resources";
 import { HeadingNav } from "@/product/HeadingNav";
-import { Card } from "@/once-ui/components";
+import { CustomMDX } from "@/product/mdx";
 import { Metadata } from "next";
 import React from "react";
-import { layout } from "@/app/resources/config";
 
 export async function generateMetadata({
   params,
@@ -23,43 +22,22 @@ export async function generateMetadata({
 
   if (!doc) return {};
 
-  let {
-    title,
-    updatedAt: publishedTime,
-    summary: description,
-    image,
-  } = doc.metadata;
-  let ogImage = image ? `${baseURL}${image}` : `${baseURL}/og?title=${title}`;
-
-  return {
-    title,
-    description,
-    openGraph: {
-      title,
-      description,
-      type: "article",
-      publishedTime,
-      url: `${baseURL}/docs/${doc.slug}`,
-      images: [
-        {
-          url: ogImage,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [ogImage],
-    },
-  };
+  return Meta.generate({
+    title: doc.metadata.title,
+    description: doc.metadata.summary,
+    baseURL,
+    path: `/docs/${doc.slug}`,
+    type: "article",
+    publishedTime: doc.metadata.updatedAt,
+    image: doc.metadata.image,
+  });
 }
 
 export default async function Docs({
   params,
  }: { params: Promise<{ slug: string[] }> }) {
-  const slugParams = await params;
-  const slugPath = slugParams.slug.join('/');
+  const routeParams = await params;
+  const slugPath = routeParams.slug.join('/');
 
   let doc = getPages().find((doc) => doc.slug === slugPath);
 
@@ -67,36 +45,35 @@ export default async function Docs({
     notFound();
   }
   
-  // Get adjacent pages using the centralized function
   const { prevPage, nextPage } = getAdjacentPages(slugPath, 'section');
+  
+  // Determine section title - use "Docs" for top-level elements
+  const sectionTitle = routeParams.slug.length === 1 && !routeParams.slug[0].includes('/') 
+    ? "Docs"
+    : routeParams.slug[0]
+      ?.split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
   
   return (
     <>
       <Row fillWidth horizontal="center">
         <Column as="main" maxWidth={layout.content.width} gap="l" paddingBottom="xl">
-          <script
-            type="application/ld+json"
-            suppressHydrationWarning
-            dangerouslySetInnerHTML={{
-              __html: JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "BlogPosting",
-                headline: doc.metadata.title,
-                datePublished: doc.metadata.updatedAt,
-                dateModified: doc.metadata.updatedAt,
-                description: doc.metadata.summary,
-                image: doc.metadata.image
-                  ? `${baseURL}${doc.metadata.image}`
-                  : `${baseURL}/og?title=${doc.metadata.title}`,
-                url: `${baseURL}/blog/${doc.slug}`,
-                author: {
-                  "@type": "Person",
-                  name: "Name",
-                },
-              }),
+          <Schema
+            as="techArticle"
+            title={doc.metadata.title}
+            description={doc.metadata.summary}
+            baseURL={baseURL}
+            path={`/docs/${doc.slug}`}
+            datePublished={doc.metadata.updatedAt}
+            dateModified={doc.metadata.updatedAt}
+            image={doc.metadata.image}
+            author={{
+              name: schema.name
             }}
           />
           <Column fillWidth gap="8" vertical="center">
+            <Text variant="label-default-l" onBackground="neutral-medium">{sectionTitle}</Text>
             <Heading variant="display-strong-s">{doc.metadata.title}</Heading>
             <Text variant="body-default-s" onBackground="neutral-weak">
               Last update: {formatDate(doc.metadata.updatedAt)}
@@ -151,7 +128,7 @@ export default async function Docs({
           </Row>
         </Column>
       </Row>
-      <Column gap="16" maxWidth={12} hide="s" position="sticky" top="80" fitHeight>
+      <Column gap="16" maxWidth={layout.sideNav.width} hide="s" position="sticky" top="80" fitHeight>
         <Row gap="12" paddingLeft="2" vertical="center" onBackground="neutral-medium" textVariant="label-default-s">
           <Icon name="document" size="xs"/>
           On this page

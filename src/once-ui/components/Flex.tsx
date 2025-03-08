@@ -28,6 +28,8 @@ const Flex = forwardRef<HTMLDivElement, ComponentProps>(
     {
       as: Component = "div",
       inline,
+      dark,
+      light,
       direction,
       tabletDirection,
       mobileDirection,
@@ -246,6 +248,8 @@ const Flex = forwardRef<HTMLDivElement, ComponentProps>(
       zIndex && `z-index-${zIndex}`,
       textType && `font-${textType}`,
       cursor && `cursor-${cursor}`,
+      dark && "dark-flex",
+      light && "light-flex",
       colorClass,
       className,
       ...variantClasses,

@@ -63,5 +63,7 @@ export * from "./Toaster";
 export * from "./ToastProvider";
 export * from "./ToggleButton";
 export * from "./Tooltip";
+export * from "./ThemeSwitcher";
+export * from "./ThemeProvider";
 export * from "./User";
 export * from "./UserMenu";

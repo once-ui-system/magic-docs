@@ -14,17 +14,20 @@ const style = {
 
 const layout = {
   header: {
-    width: 88,
+    width: 90,
   },
   body: {
-    width: 88,
+    width: 90,
   },
   sidebar: {
-    width: 14,
+    width: 16,
     collapsible: true,
   },
   content: {
-    width: 48,
+    width: 44,
+  },
+  sideNav: {
+    width: 14,
   },
   footer: {
     width: 64,

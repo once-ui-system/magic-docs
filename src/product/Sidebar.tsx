@@ -76,7 +76,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ initialNavigation, ...rest }) 
                       paddingLeft="4"
                       paddingTop="4"
                       title={
-                        <Row textVariant="label-strong-s" onBackground="brand-medium">
+                        <Row textVariant="label-strong-s" onBackground="brand-strong">
                           {toTitleCase(item.title)}
                         </Row>
                       }>
@@ -107,7 +107,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ initialNavigation, ...rest }) 
                       <Row
                         overflow="hidden"
                         gap="8"
-                        onBackground={pathname.startsWith(`/docs/${correctedSlug}`) ? "neutral-strong" : "neutral-medium"}
+                        onBackground={pathname.startsWith(`/docs/${correctedSlug}`) ? "neutral-strong" : "neutral-weak"}
                         textVariant={pathname.startsWith(`/docs/${correctedSlug}`) ? "label-strong-s" : "label-default-s"}
                         style={{ textOverflow: "ellipsis", whiteSpace: "nowrap"}}>
                           {item.navIcon && <Icon size="xs" name={item.navIcon}/>}

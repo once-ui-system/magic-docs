@@ -1,9 +1,0 @@
-{ 
-  "order": 1,
-  "title": "turbocustom",
-  "pages": {
-    "update-post.mdx": 0,
-    "get-posts": 1,
-    "delete-post.mdx": 2
-  }
-}

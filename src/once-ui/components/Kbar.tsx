@@ -300,6 +300,7 @@ export const KbarContent: React.FC<KbarContentProps> = ({ isOpen, onClose, items
       <Column
         ref={containerRef}
         maxHeight={32}
+        fitHeight
         maxWidth="xs"
         background="surface"
         radius="l"

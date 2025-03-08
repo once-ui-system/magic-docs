@@ -32,7 +32,7 @@ function Table({ data }: TableProps) {
 
   return (
     <Row fillWidth radius="m" overflowY="hidden" border="neutral-alpha-medium" overflowX="auto">
-      <table className="w-full surface-background" style={{borderSpacing: 0, borderCollapse: "collapse", minWidth: "32rem"}}>
+      <table className="fill-width surface-background" style={{borderSpacing: 0, borderCollapse: "collapse", minWidth: "32rem"}}>
         <thead className="neutral-on-background-strong">
           <tr>{headers}</tr>
         </thead>
@@ -155,10 +155,15 @@ const components = {
   Text,
   Table,
   CodeBlock,
-  SmartImage,
   Accordion: dynamic(() => import("@/once-ui/components").then(mod => mod.Accordion)),
   Feedback: dynamic(() => import("@/once-ui/components").then(mod => mod.Feedback)),
   Card: dynamic(() => import("@/once-ui/components").then(mod => mod.Card)),
+  PageList: dynamic(() => import("@/product/PageList").then(mod => mod.PageList)),
+  Grid: dynamic(() => import("@/once-ui/components").then(mod => mod.Grid)),
+  Row: dynamic(() => import("@/once-ui/components").then(mod => mod.Row)),
+  Column: dynamic(() => import("@/once-ui/components").then(mod => mod.Column)),
+  Icon: dynamic(() => import("@/once-ui/components").then(mod => mod.Icon)),
+  SmartImage: dynamic(() => import("@/once-ui/components").then(mod => mod.SmartImage)),
 };
 
 type CustomMDXProps = MDXRemoteProps & {

@@ -31,6 +31,13 @@ import {
   HiOutlineBars3BottomLeft,
   HiOutlineHome,
   HiOutlineComputerDesktop,
+  HiOutlineAcademicCap,
+  HiOutlineInformationCircle,
+  HiOutlineQuestionMarkCircle,
+  HiOutlineQueueList,
+  HiOutlineRocketLaunch,
+  HiOutlineIdentification,
+  HiOutlinePhoto,
 } from "react-icons/hi2";
 
 import { RiVisaLine } from "react-icons/ri";
@@ -47,8 +54,8 @@ export const iconLibrary: Record<string, IconType> = {
   light: HiOutlineSun,
   dark: HiOutlineMoon,
   computer: HiOutlineComputerDesktop,
-  helpCircle: HiMiniQuestionMarkCircle,
-  infoCircle: HiInformationCircle,
+  helpCircle: HiOutlineQuestionMarkCircle,
+  infoCircle: HiOutlineInformationCircle,
   warningTriangle: HiExclamationTriangle,
   errorCircle: HiExclamationCircle,
   checkCircle: HiCheckCircle,
@@ -74,4 +81,9 @@ export const iconLibrary: Record<string, IconType> = {
   linkedin: FaLinkedin,
   threads: FaThreads,
   home: HiOutlineHome,
+  scholar: HiOutlineAcademicCap,
+  queue: HiOutlineQueueList,
+  rocket: HiOutlineRocketLaunch,
+  card: HiOutlineIdentification,
+  image: HiOutlinePhoto
 };

@@ -7,6 +7,7 @@ interface props extends Omit<React.ComponentProps<typeof Card>, 'onClick'> {
   thumbnail?: boolean;
   path?: string[];
   sortType?: 'order' | 'alphabetical' | 'date' | 'section';
+  depth?: number;
 }
 
 function formatSlug(slug: string): React.JSX.Element {
@@ -44,7 +45,8 @@ export function PageList({
   range,
   thumbnail = false,
   path = [],
-  sortType = 'date', // Default to date sorting for the page list
+  sortType = 'order', // Changed default from 'date' to 'order' to respect meta.json ordering
+  depth,
   ...rest
 }: props) {
   // Create a base path array starting with src/content
@@ -55,6 +57,21 @@ export function PageList({
   
   // Get pages from the specified path
   let pages = getPages(fullPath);
+
+  // Filter pages by depth if specified
+  if (depth !== undefined) {
+    pages = pages.filter(page => {
+      // Count the number of slashes in the slug to determine depth
+      // Exclude the path prefix from the count
+      const pathPrefix = path.join('/');
+      const relativePath = pathPrefix ? 
+        page.slug.replace(pathPrefix + '/', '') : 
+        page.slug;
+      
+      const slashCount = (relativePath.match(/\//g) || []).length;
+      return slashCount < depth;
+    });
+  }
 
   // Sort pages using the centralized sorting function
   const sortedPages = sortPages(pages, sortType);
@@ -89,6 +106,11 @@ export function PageList({
             <Heading as="h2" variant="heading-strong-l" wrap="balance">
               {page.metadata.title}
             </Heading>
+            {page.metadata.summary && (
+              <Text variant="body-default-s" onBackground="neutral-medium" marginTop="12" wrap="balance">
+                {page.metadata.summary}
+              </Text>
+            )}
           </Column>
         </Card>
       ))}

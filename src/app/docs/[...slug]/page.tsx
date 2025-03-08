@@ -90,6 +90,7 @@ export default async function Docs({
               {prevPage ? (
                 <Row maxWidth={20}>
                 <Card
+                  fillWidth
                   border="neutral-alpha-medium"
                   vertical="center" gap="4"
                   href={`/docs/${prevPage.slug}`} 
@@ -109,6 +110,7 @@ export default async function Docs({
               {nextPage ? (
                 <Row maxWidth={20}>
                   <Card
+                    fillWidth
                     border="neutral-alpha-medium"
                     horizontal="end" vertical="center" gap="4"
                     href={`/docs/${nextPage.slug}`} 

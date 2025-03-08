@@ -37,6 +37,7 @@ export default function Home() {
           </Text>
           <Button data-border="rounded" size="s" href="/docs" variant="secondary">Quick start</Button>
         </Column>
+        <PageList direction="column" depth={1} thumbnail={true}></PageList>
       </Column>
     </Column>
   );

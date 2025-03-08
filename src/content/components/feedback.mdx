@@ -2,11 +2,9 @@
 title: "Feedback"
 summary: "Learn how to use the Feedback component to display informational, success, warning, and error messages to users."
 updatedAt: "2025-03-08"
-image: "/images/feedback-component.jpg"
 navLabel: "Feedback"
+navIcon: "infoCircle"
 ---
-
-# Feedback Component
 
 The Feedback component provides a consistent way to communicate status messages, alerts, and notifications to users. It supports different variants to convey different types of information effectively.
 
@@ -15,6 +13,7 @@ The Feedback component provides a consistent way to communicate status messages,
 The Feedback component has four main variants: info, success, warning, and danger.
 
 <Feedback
+  icon
   variant="info"
   title="Information"
   description="This is an informational message for the user."
@@ -25,6 +24,8 @@ The Feedback component has four main variants: info, success, warning, and dange
 Each variant is designed to communicate a specific type of message:
 
 <Feedback
+  icon
+  marginBottom="24"
   variant="success"
   title="Success"
   description="Your changes have been saved successfully."
@@ -32,6 +33,8 @@ Each variant is designed to communicate a specific type of message:
 />
 
 <Feedback
+  icon
+  marginBottom="24"
   variant="warning"
   title="Warning"
   description="Your session will expire in 5 minutes. Please save your work."
@@ -39,6 +42,8 @@ Each variant is designed to communicate a specific type of message:
 />
 
 <Feedback
+  icon
+  marginBottom="24"
   variant="danger"
   title="Error"
   description="There was a problem processing your request. Please try again."

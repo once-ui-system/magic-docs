@@ -1,7 +1,5 @@
 { 
   "pages": {
-    "styles": 0,
-    "templates": 1,
-    "about": 2
+    "about": 1
   }
 }

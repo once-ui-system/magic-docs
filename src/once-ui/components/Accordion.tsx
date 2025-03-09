@@ -39,7 +39,7 @@ const Accordion = forwardRef<AccordionHandle, AccordionProps>(
         
         return Object.assign(document.createElement('div'), methods) as unknown as AccordionHandle;
       },
-      []
+      [toggleAccordion]
     );
 
     return (

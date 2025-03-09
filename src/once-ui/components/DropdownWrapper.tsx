@@ -98,13 +98,13 @@ const DropdownWrapper = forwardRef<HTMLDivElement, DropdownWrapperProps>(
       if (wrapperRef.current) {
         refs.setReference(wrapperRef.current);
       }
-    }, [refs]);
+    }, [refs, mounted]);
 
     useEffect(() => {
       if (!mounted) {
         setMounted(true);
       }
-    }, []);
+    }, [mounted]);
 
     useEffect(() => {
       if (isOpen && mounted) {
@@ -130,13 +130,16 @@ const DropdownWrapper = forwardRef<HTMLDivElement, DropdownWrapperProps>(
     };
 
     useEffect(() => {
+      const currentWrapperRef = wrapperRef.current;
+      
       document.addEventListener("mousedown", handleClickOutside);
-      wrapperRef.current?.addEventListener("focusout", handleFocusOut);
+      currentWrapperRef?.addEventListener("focusout", handleFocusOut);
+      
       return () => {
         document.removeEventListener("mousedown", handleClickOutside);
-        wrapperRef.current?.removeEventListener("focusout", handleFocusOut);
+        currentWrapperRef?.removeEventListener("focusout", handleFocusOut);
       };
-    }, []);
+    }, [handleClickOutside, handleFocusOut]);
 
     return (
       <Flex

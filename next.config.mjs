@@ -18,6 +18,9 @@ const nextConfig = {
     serverActions: {
       bodySizeLimit: '2mb',
     },
+    // Add optimizations to reduce bundle size
+    optimizeCss: true,
+    optimizePackageImports: ['react-icons'],
   },
   // Configure image optimization
   images: {
@@ -28,6 +31,21 @@ const nextConfig = {
         hostname: '**',
       },
     ],
+  },
+  // Reduce webpack cache size
+  webpack: (config, { dev, isServer }) => {
+    // Only enable source maps in development
+    if (!dev) {
+      config.devtool = false;
+    }
+    
+    // Optimize bundle size
+    config.optimization = {
+      ...config.optimization,
+      moduleIds: 'deterministic',
+    };
+    
+    return config;
   },
 };
 

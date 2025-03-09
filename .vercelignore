@@ -1,6 +1,8 @@
 .git
 node_modules
-.next
+# Only ignore the cache, not the entire .next directory
+!.next
+.next/cache
 README.md
 .github
 .vscode

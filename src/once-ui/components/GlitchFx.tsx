@@ -57,7 +57,7 @@ const GlitchFx = forwardRef<HTMLDivElement, GlitchFxProps>(
         const glitchInterval = setInterval(triggerGlitch, interval);
         return () => clearInterval(glitchInterval);
       }
-    }, [trigger, interval]);
+    }, [trigger, interval, triggerGlitch]);
 
     const speedClass = styles[speed];
 

@@ -155,7 +155,7 @@ export const HeadingNav = forwardRef<HTMLDivElement, props>(
           clearTimeout(scrollTimeoutRef.current);
         }
       };
-    }, [headings]);
+    }, [headings, debouncedUpdateActiveHeading]);
 
     const handleHeadingClick = (id: string, index: number) => {
       setActiveHeadingId(id);

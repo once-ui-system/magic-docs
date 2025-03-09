@@ -1,7 +1,5 @@
 .git
 node_modules
-# Only ignore the cache, not the entire .next directory
-!.next
 .next/cache
 README.md
 .github

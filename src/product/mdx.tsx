@@ -2,8 +2,8 @@ import { MDXRemote, MDXRemoteProps } from "next-mdx-remote/rsc";
 import React, { ReactNode } from "react";
 import dynamic from "next/dynamic";
 
-import { Heading, Row, SmartImage, SmartLink, Text } from "@/once-ui/components";
-import { CodeBlock } from "@/once-ui/modules";
+import { Heading, Row, SmartImage, SmartLink, Text, InlineCode } from "@/once-ui/components";
+import { CodeBlock } from "@/once-ui/modules/code/CodeBlock";
 import { TextProps } from "@/once-ui/interfaces";
 import { HeadingLink } from "./HeadingLink";
 import { SmartImageProps } from "@/once-ui/components/SmartImage";
@@ -87,7 +87,8 @@ function createImage({ alt, src, ...props }: SmartImageProps & { src: string }) 
 
   return (
     <SmartImage
-      className="my-20"
+      marginTop="8"
+      marginBottom="16"
       enlarge
       radius="m"
       aspectRatio="16 / 9"
@@ -141,6 +142,39 @@ function createParagraph({ children }: TextProps) {
   );
 }
 
+function createInlineCode({ children }: { children: ReactNode }) {
+  return <InlineCode>{children}</InlineCode>;
+}
+
+function createCodeBlock(props: any) {
+  // For pre tags that contain code blocks
+  if (props.children && props.children.props && props.children.props.className) {
+    const { className, children } = props.children.props;
+    
+    // Extract language from className (format: language-xxx)
+    const language = className.replace('language-', '');
+    const label = language.charAt(0).toUpperCase() + language.slice(1);
+    
+    return (
+      <CodeBlock
+        marginTop="8"
+        marginBottom="16"
+        codeInstances={[
+          {
+            code: children,
+            language,
+            label
+          }
+        ]}
+        copyButton={true}
+      />
+    );
+  }
+  
+  // Fallback for other pre tags or empty code blocks
+  return <pre {...props} />;
+}
+
 const components = {
   p: createParagraph as any,
   h1: createHeading("h1") as any,
@@ -151,6 +185,8 @@ const components = {
   h6: createHeading("h6") as any,
   img: createImage as any,
   a: CustomLink as any,
+  code: createInlineCode as any,
+  pre: createCodeBlock as any,
   Heading,
   Text,
   Table,
@@ -164,6 +200,7 @@ const components = {
   Column: dynamic(() => import("@/once-ui/components").then(mod => mod.Column)),
   Icon: dynamic(() => import("@/once-ui/components").then(mod => mod.Icon)),
   SmartImage: dynamic(() => import("@/once-ui/components").then(mod => mod.SmartImage)),
+  InlineCode,
 };
 
 type CustomMDXProps = MDXRemoteProps & {

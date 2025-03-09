@@ -6,36 +6,51 @@ navLabel: "SmartImage"
 navIcon: "image"
 ---
 
+```tsx
+import { SmartImage, Column } from "@/once-ui/components";
+
+export function ProductGallery() {
+  return (
+    <Column gap="l">
+      <SmartImage
+        src="/images/product-hero.jpg"
+        alt="Product hero image"
+        aspectRatio="16/9"
+        radius="l"
+        priority
+        enlarge
+      />
+      
+      <SmartImage
+        src="https://www.youtube.com/watch?v=product-demo-id"
+        aspectRatio="16/9"
+        radius="m"
+      />
+      
+      <SmartImage
+        src="/videos/product-features.mp4"
+        aspectRatio="16/9"
+        radius="m"
+      />
+    </Column>
+  );
+}
+```
+
 The SmartImage component is a versatile media display solution that handles images, videos, and YouTube embeds with advanced features like zoom functionality, aspect ratio control, and responsive sizing.
 
 ## Basic Usage
 
-SmartImage wraps Next.js's Image component and adds additional functionality:
+SmartImage wraps Next.js's Image component and adds additional functionality. You can access it in an MDX file through the mdx image syntax or the custom SmartImage component if you need full customization.
 
-<SmartImage 
-  enlarge
-  src="/images/cover.png" 
-  alt="Example image showing SmartImage capabilities" 
-  aspectRatio="16/9"
-  radius="m"
-/>
-
-## Video Support
-
-SmartImage can display video content seamlessly:
-
-<SmartImage 
-  src="/videos/product-demo.mp4" 
-  aspectRatio="16/9"
-  radius="m"
-/>
+![Props Reference](/images/cover.jpg)
 
 ## YouTube Embedding
 
 You can embed YouTube videos directly using the same component:
 
 <SmartImage 
-  src="https://www.youtube.com/watch?v=dQw4w9WgXcQ" 
+  src="https://www.youtube.com/watch?v=fyrILUldVP0" 
   aspectRatio="16/9"
   radius="m"
 />
@@ -45,45 +60,16 @@ You can embed YouTube videos directly using the same component:
 Enable zoom functionality with the `enlarge` prop:
 
 <SmartImage 
-  src="/images/detailed-diagram.jpg" 
-  alt="Detailed architecture diagram" 
+  src="/images/cover.jpg" 
+  alt="Example image with zoom functionality" 
   aspectRatio="16/9"
   radius="m"
   enlarge
 />
 
-When the `enlarge` prop is enabled:
+When the `enlarge` prop is added:
 - Click on the image to zoom
-- Press Escape to exit zoom view
 - Click outside the image to close
 - Use the mouse wheel to close the zoomed view
-
-## Implementation Example
-
-Here's how to implement SmartImage with various options:
-
-<CodeBlock
-  codeInstances={[
-    {
-      code: 'import { SmartImage, Column } from "@/once-ui/components";\n\nexport function ProductGallery() {\n  return (\n    <Column gap="l">\n      <SmartImage\n        src="/images/product-hero.jpg"\n        alt="Product hero image"\n        aspectRatio="16/9"\n        radius="l"\n        priority\n        enlarge\n      />\n      \n      <SmartImage\n        src="https://www.youtube.com/watch?v=product-demo-id"\n        aspectRatio="16/9"\n        radius="m"\n      />\n      \n      <SmartImage\n        src="/videos/product-features.mp4"\n        aspectRatio="16/9"\n        radius="m"\n      />\n    </Column>\n  );\n}',
-      label: 'Product Gallery',
-      language: 'tsx'
-    }
-  ]}
-  copyButton
-/>
-
-## Props Reference
-
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| src | string | required | URL of the image, video, or YouTube link |
-| alt | string | "" | Alt text for images (important for accessibility) |
-| aspectRatio | string | undefined | Aspect ratio in CSS format (e.g., "16/9") |
-| radius | string | undefined | Border radius (xs, s, m, l, full) |
-| enlarge | boolean | false | Enable zoom functionality |
-| priority | boolean | false | Prioritize loading (for LCP images) |
-| objectFit | string | "cover" | How the image should be resized |
-| sizes | string | "100vw" | Responsive size hints for the browser |
 
 The SmartImage component simplifies media handling while providing advanced features that enhance the user experience.

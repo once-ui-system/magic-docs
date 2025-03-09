@@ -18,8 +18,7 @@ const nextConfig = {
     serverActions: {
       bodySizeLimit: '2mb',
     },
-    // Add optimizations to reduce bundle size
-    optimizeCss: true,
+    // Optimize package imports for react-icons
     optimizePackageImports: ['react-icons'],
   },
   // Configure image optimization

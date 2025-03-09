@@ -135,9 +135,9 @@ export function Header() {
             <NavIcon show="m" onClick={toggleSidebar}/>
             <Logo icon={false} size="s" href="/"/>
           </Row>
-          <Kbar hide="m" items={kbar} maxWidth={16} radius="full" background="neutral-alpha-weak">
-            <Button data-border="rounded" size="s" variant="tertiary" fillWidth weight="default">
-              <Row vertical="center" gap="16">
+          <Kbar hide="m" items={kbar} radius="full" background="neutral-alpha-weak">
+            <Button data-border="rounded" size="s" variant="tertiary" weight="default">
+              <Row vertical="center" gap="16" style={{marginLeft: '-0.5rem'}} paddingRight="8">
                 <Row background="neutral-alpha-medium" paddingX="8" paddingY="4" radius="full" data-scaling="90" textVariant="body-default-xs" onBackground="neutral-medium">{isMac ? 'Cmd' : 'Ctrl'} k</Row>
                 Search docs...
               </Row>

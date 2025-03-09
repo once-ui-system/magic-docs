@@ -1,27 +1,32 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Button, Flex, Logo, NavIcon, Row, ToggleButton, Kbar, Kbd } from "@/once-ui/components";
 import { layout } from "@/app/resources/config";
 import { Sidebar, NavigationItem } from "./Sidebar";
+import { useTheme } from "@/once-ui/components/ThemeProvider";
 
 export function Header() {
   const [sidebarVisible, setSidebarVisible] = useState(false);
+  const [isMac, setIsMac] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     setSidebarVisible(false);
   }, [pathname]);
 
+  useEffect(() => {
+    setIsMac(navigator.userAgent.toLowerCase().indexOf('mac') !== -1);
+  }, []);
+
   const toggleSidebar = () => {
     setSidebarVisible(!sidebarVisible);
   };
 
-  // State to store navigation items from API
   const [navigationItems, setNavigationItems] = useState<NavigationItem[]>([]);
   
-  // Fetch navigation data
   useEffect(() => {
     fetch("/api/navigation")
       .then((res) => res.json())
@@ -67,10 +72,10 @@ export function Header() {
     return kbarItems;
   };
 
-  // Generate Kbar items from navigation
   const docsItems = convertToKbarItems(navigationItems);
-  
-  // Add static items
+
+  const { theme, setTheme } = useTheme();
+
   const kbar = [
     {
       id: "home",
@@ -82,6 +87,17 @@ export function Header() {
       icon: "home",
     },
     ...docsItems,
+    {
+      id: "theme-toggle",
+      name: theme === 'dark' ? "Light mode" : "Dark mode",
+      section: "Theme",
+      shortcut: [],
+      keywords: "light mode, dark mode, theme, toggle, switch, appearance",
+      perform: () => {
+        setTheme(theme === 'dark' ? 'light' : 'dark');
+      },
+      icon: theme === 'dark' ? "light" : "dark",
+    },
   ];
 
   useEffect(() => {
@@ -122,18 +138,18 @@ export function Header() {
           <Kbar hide="m" items={kbar} maxWidth={16} radius="full" background="neutral-alpha-weak">
             <Button data-border="rounded" size="s" variant="tertiary" fillWidth weight="default">
               <Row vertical="center" gap="16">
-                <Row background="neutral-alpha-medium" paddingX="8" paddingY="4" radius="full" data-scaling="90" textVariant="body-default-xs" onBackground="neutral-medium">Cmd k</Row>
+                <Row background="neutral-alpha-medium" paddingX="8" paddingY="4" radius="full" data-scaling="90" textVariant="body-default-xs" onBackground="neutral-medium">{isMac ? 'Cmd' : 'Ctrl'} k</Row>
                 Search docs...
               </Row>
             </Button>
           </Kbar>
           <Row gap="8">
             <Row hide="s">
-              <Button size="s" variant="secondary">
+              <Button size="s" variant="secondary" href="https://docs.once-ui.com">
                 Get started
               </Button>
             </Row>
-            <Button href=" " size="s">
+            <Button href="https://once-ui.com/auth" size="s">
               Sign up
             </Button>
           </Row>

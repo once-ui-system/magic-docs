@@ -6,6 +6,7 @@ interface props extends Omit<React.ComponentProps<typeof Card>, 'onClick'> {
   range?: [number] | [number, number];
   thumbnail?: boolean;
   path?: string[];
+  description?: boolean;
   sortType?: 'order' | 'alphabetical' | 'date' | 'section';
   depth?: number;
 }
@@ -47,6 +48,7 @@ export function PageList({
   path = [],
   sortType = 'order', // Changed default from 'date' to 'order' to respect meta.json ordering
   depth,
+  description = true,
   ...rest
 }: props) {
   // Create a base path array starting with src/content
@@ -85,7 +87,7 @@ export function PageList({
   return (
     <>
       {displayedPages.length > 0 && displayedPages.map((page) => (
-        <Card href={`/docs/${page.slug}`} key={page.slug} radius="l" padding="2" gap="16" {...rest}>
+        <Card href={`/docs/${page.slug}`} key={page.slug} radius="l" padding="2" gap="16" fillWidth {...rest}>
           {page.metadata.image && thumbnail && (
             <SmartImage
               priority
@@ -106,7 +108,7 @@ export function PageList({
             <Text variant="heading-strong-l" wrap="balance" onBackground="neutral-strong">
               {page.metadata.title}
             </Text>
-            {page.metadata.summary && (
+            {description && page.metadata.summary && (
               <Text variant="body-default-s" onBackground="neutral-medium" marginTop="12" wrap="balance">
                 {page.metadata.summary}
               </Text>

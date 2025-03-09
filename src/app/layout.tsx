@@ -11,7 +11,7 @@ import { Source_Code_Pro } from "next/font/google";
 
 import { Background, Column, Flex, ToastProvider, ThemeProvider } from "@/once-ui/components";
 import { layout } from "./resources/config";
-import { home } from "@/app/resources";
+import { meta } from "@/app/resources";
 
 const themeScript = `
   (function() {
@@ -37,13 +37,13 @@ const themeScript = `
 export async function generateMetadata() {
   return {
     metadataBase: new URL(`${baseURL}`),
-    title: home.title,
-    description: home.description,
+    title: meta.home.title,
+    description: meta.home.description,
     openGraph: {
-      title: home.title,
-      description: home.description,
+      title: meta.home.title,
+      description: meta.home.description,
       url: baseURL,
-      siteName: home.title,
+      siteName: meta.home.title,
       locale: "en_US",
       type: "website",
     },

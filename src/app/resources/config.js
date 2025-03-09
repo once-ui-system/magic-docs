@@ -85,18 +85,15 @@ const schema = {
   logo: "",
   type: "Organization",
   name: "Magic Docs",
-  description: "Magic Docs is a simple and beautiful documentation tempalte built with Once UI.",
+  description: "Magic Docs is a simple and beautiful documentation template built with Once UI.",
   email: "",
 };
 
-const home = {
-  title: `Docs – ${schema.name}`,
-  description: `Documentation`,
+const meta = {
+  home: {
+    title: `Docs – ${schema.name}`,
+    description: `Documentation`,
+  }
 };
 
-const docs = {
-  title: `Docs – ${schema.name}`,
-  description: `Docs site`,
-};
-
-export { effects, style, layout, baseURL, social, schema, home, docs };
+export { effects, style, layout, baseURL, social, schema, meta };

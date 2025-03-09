@@ -5,7 +5,6 @@ export {
   layout,
   baseURL,
   social,
-  home,
   schema,
-  docs,
+  meta,
 } from "@/app/resources/config";

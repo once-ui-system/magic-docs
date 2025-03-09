@@ -1,0 +1,11 @@
+.git
+node_modules
+.next
+README.md
+.github
+.vscode
+*.log
+.DS_Store
+.env*
+!.env.example
+public/images/original

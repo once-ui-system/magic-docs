@@ -15,6 +15,7 @@
     "classnames": "^2.5.1",
     "cookie": "^1.0.1",
     "eslint": "^9.21.0",
+    "eslint-config-next": "15.1.4",
     "gray-matter": "^4.0.3",
     "next": "15.1.4",
     "next-mdx-remote": "^5.0.0",

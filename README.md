@@ -67,8 +67,6 @@ Connect with us on Threads or LinkedIn.
 Lorant One: [Threads](https://www.threads.net/@lorant.one), [LinkedIn](https://www.linkedin.com/in/lorant-one/)  
 Zsofia Komaromi: [Threads](https://www.threads.net/@zsofia_kom), [LinkedIn](https://www.linkedin.com/in/zsofiakomaromi/)
 
-Localization added by [François Hernandez](https://github.com/francoishernandez)
-
 # Get involved
 
 - Join the [Design Engineers Club on Discord](https://discord.com/invite/5EyAQ4eNdS) and share your project with us!

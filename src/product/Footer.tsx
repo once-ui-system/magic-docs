@@ -1,4 +1,4 @@
-import { layout } from "@/app/resources/config";
+import { layout, social } from "@/app/resources/config";
 import {
   Button,
   Column,
@@ -60,9 +60,9 @@ export const Footer = () => {
           <Row paddingX="2" marginBottom="8">
             Social
           </Row>
-          <Button href=" " weight="default" prefixIcon="github" label="GitHub" size="s" variant="secondary" />
-          <Button href=" " weight="default" prefixIcon="linkedin" label="LinkedIn" size="s" variant="secondary" />
-          <Button href=" " weight="default" prefixIcon="threads" label="Threads" size="s" variant="secondary" />
+          {social.map((link, index) => (
+            <Button key={index} href={link.link} weight="default" prefixIcon={link.icon} label={link.name} size="s" variant="secondary" />
+          ))}
         </Column>
       </Row>
       <Row maxWidth={layout.footer.width}>

@@ -54,9 +54,16 @@ const Accordion = forwardRef<AccordionHandle, AccordionProps>(
           vertical="center"
           horizontal="space-between"
           onClick={toggleAccordion}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              toggleAccordion();
+            }
+          }}
           aria-expanded={isOpen}
           aria-controls="accordion-content"
           radius={radius}
+          role="button"
         >
           <Text variant="heading-strong-s">
             {title}

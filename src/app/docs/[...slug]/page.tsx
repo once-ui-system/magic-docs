@@ -23,7 +23,7 @@ export async function generateMetadata({
   if (!doc) return {};
 
   return Meta.generate({
-    title: doc.metadata.title,
+    title: doc.metadata.title + " – " + schema.name,
     description: doc.metadata.summary,
     baseURL,
     path: `/docs/${doc.slug}`,
@@ -61,7 +61,7 @@ export default async function Docs({
         <Column as="main" maxWidth={layout.content.width} gap="l" paddingBottom="xl">
           <Schema
             as="techArticle"
-            title={doc.metadata.title}
+            title={doc.metadata.title + " – " + schema.name}
             description={doc.metadata.summary}
             baseURL={baseURL}
             path={`/docs/${doc.slug}`}

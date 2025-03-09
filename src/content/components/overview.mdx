@@ -35,15 +35,12 @@ Here's a quick overview of some of our most commonly used components:
 
 Here's a simple example of using our components together:
 
-<CodeBlock
-  codeInstances={[
-    {
-      code: 'import { Card, Text, SmartImage } from "@/once-ui/components";\n\nexport function ProductCard({ title, description, image }) {\n  return (\n    <Card padding="m" radius="l" shadow="m">\n      <SmartImage src={image} alt={title} aspectRatio="16/9" />\n      <Text variant="heading-strong-m">{title}</Text>\n      <Text variant="body-default-s">{description}</Text>\n    </Card>\n  );\n}',
-      label: 'Product Card Component',
-      language: 'tsx'
-    }
-  ]}
-  copyButton
-/>
+```tsx
+<Card padding="m" radius="l" shadow="m">
+  <SmartImage src={image} alt={title} aspectRatio="16/9" />
+  <Text variant="heading-strong-m">{title}</Text>
+  <Text variant="body-default-s">{description}</Text>
+</Card>
+```
 
 In the following sections, we'll explore each component in detail.

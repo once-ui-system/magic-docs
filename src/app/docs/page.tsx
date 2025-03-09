@@ -2,12 +2,12 @@ import { Column, Heading } from "@/once-ui/components";
 import { Meta, Schema } from "@/once-ui/modules";
 import { PageList } from "@/product/PageList";
 import { baseURL, layout } from "@/app/resources";
-import { home, schema } from "@/app/resources/content";
+import { docs, schema } from "@/app/resources";
 
 export async function generateMetadata() {
   return Meta.generate({
-    title: home.title,
-    description: home.description,
+    title: docs.title,
+    description: docs.description,
     baseURL,
     path: "/docs",
   });
@@ -18,8 +18,8 @@ export default function Blog() {
     <Column maxWidth={layout.content.width}>
       <Schema
         as="website"
-        title={home.title}
-        description={home.description}
+        title={docs.title}
+        description={docs.description}
         baseURL={baseURL}
         path="/docs"
         author={{

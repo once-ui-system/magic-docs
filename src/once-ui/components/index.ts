@@ -1,4 +1,5 @@
 export * from "./Accordion";
+export * from "./AccordionGroup";
 export * from "./Arrow";
 export * from "./Avatar";
 export * from "./AvatarGroup";

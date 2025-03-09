@@ -6,37 +6,6 @@ navLabel: "SmartImage"
 navIcon: "image"
 ---
 
-```tsx
-import { SmartImage, Column } from "@/once-ui/components";
-
-export function ProductGallery() {
-  return (
-    <Column gap="l">
-      <SmartImage
-        src="/images/product-hero.jpg"
-        alt="Product hero image"
-        aspectRatio="16/9"
-        radius="l"
-        priority
-        enlarge
-      />
-      
-      <SmartImage
-        src="https://www.youtube.com/watch?v=product-demo-id"
-        aspectRatio="16/9"
-        radius="m"
-      />
-      
-      <SmartImage
-        src="/videos/product-features.mp4"
-        aspectRatio="16/9"
-        radius="m"
-      />
-    </Column>
-  );
-}
-```
-
 The SmartImage component is a versatile media display solution that handles images, videos, and YouTube embeds with advanced features like zoom functionality, aspect ratio control, and responsive sizing.
 
 ## Basic Usage
@@ -54,22 +23,5 @@ You can embed YouTube videos directly using the same component:
   aspectRatio="16/9"
   radius="m"
 />
-
-## Zoom Functionality
-
-Enable zoom functionality with the `enlarge` prop:
-
-<SmartImage 
-  src="/images/cover.jpg" 
-  alt="Example image with zoom functionality" 
-  aspectRatio="16/9"
-  radius="m"
-  enlarge
-/>
-
-When the `enlarge` prop is added:
-- Click on the image to zoom
-- Click outside the image to close
-- Use the mouse wheel to close the zoomed view
 
 The SmartImage component simplifies media handling while providing advanced features that enhance the user experience.

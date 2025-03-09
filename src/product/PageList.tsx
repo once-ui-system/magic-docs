@@ -103,9 +103,9 @@ export function PageList({
             <Text variant="label-default-s" onBackground="neutral-weak">
               {formatSlug(page.slug)}
             </Text>
-            <Heading as="h2" variant="heading-strong-l" wrap="balance">
+            <Text variant="heading-strong-l" wrap="balance" onBackground="neutral-strong">
               {page.metadata.title}
-            </Heading>
+            </Text>
             {page.metadata.summary && (
               <Text variant="body-default-s" onBackground="neutral-medium" marginTop="12" wrap="balance">
                 {page.metadata.summary}

@@ -2,7 +2,16 @@ import { MDXRemote, MDXRemoteProps } from "next-mdx-remote/rsc";
 import React, { ReactNode } from "react";
 import dynamic from "next/dynamic";
 
-import { Heading, Row, SmartImage, SmartLink, Text, InlineCode } from "@/once-ui/components";
+import { 
+  Heading, 
+  Row, 
+  SmartImage, 
+  SmartLink, 
+  Text,
+  InlineCode, 
+  Accordion, 
+  AccordionGroup 
+} from "@/once-ui/components";
 import { CodeBlock } from "@/once-ui/modules/code/CodeBlock";
 import { TextProps } from "@/once-ui/interfaces";
 import { HeadingLink } from "./HeadingLink";
@@ -31,7 +40,9 @@ function Table({ data }: TableProps) {
   ));
 
   return (
-    <Row fillWidth radius="m" overflowY="hidden" border="neutral-alpha-medium" overflowX="auto">
+    <Row fillWidth radius="m" overflowY="hidden" border="neutral-alpha-medium" overflowX="auto" 
+      marginTop="8"
+      marginBottom="16">
       <table className="fill-width surface-background" style={{borderSpacing: 0, borderCollapse: "collapse", minWidth: "32rem"}}>
         <thead className="neutral-on-background-strong">
           <tr>{headers}</tr>
@@ -92,6 +103,7 @@ function createImage({ alt, src, ...props }: SmartImageProps & { src: string }) 
       enlarge
       radius="m"
       aspectRatio="16 / 9"
+      sizes="(max-width: 960px) 100vw, 960px"
       alt={alt}
       src={src}
       {...props}
@@ -191,7 +203,9 @@ const components = {
   Text,
   Table,
   CodeBlock,
-  Accordion: dynamic(() => import("@/once-ui/components").then(mod => mod.Accordion)),
+  InlineCode,
+  Accordion,
+  AccordionGroup,
   Feedback: dynamic(() => import("@/once-ui/components").then(mod => mod.Feedback)),
   Card: dynamic(() => import("@/once-ui/components").then(mod => mod.Card)),
   PageList: dynamic(() => import("@/product/PageList").then(mod => mod.PageList)),
@@ -200,7 +214,7 @@ const components = {
   Column: dynamic(() => import("@/once-ui/components").then(mod => mod.Column)),
   Icon: dynamic(() => import("@/once-ui/components").then(mod => mod.Icon)),
   SmartImage: dynamic(() => import("@/once-ui/components").then(mod => mod.SmartImage)),
-  InlineCode,
+  SmartLink: dynamic(() => import("@/once-ui/components").then(mod => mod.SmartLink)),
 };
 
 type CustomMDXProps = MDXRemoteProps & {

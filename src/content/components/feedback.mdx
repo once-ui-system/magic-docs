@@ -29,7 +29,6 @@ Each variant is designed to communicate a specific type of message:
   variant="success"
   title="Success"
   description="Your changes have been saved successfully."
-  showCloseButton
 />
 
 <Feedback
@@ -38,7 +37,6 @@ Each variant is designed to communicate a specific type of message:
   variant="warning"
   title="Warning"
   description="Your session will expire in 5 minutes. Please save your work."
-  showCloseButton
 />
 
 <Feedback
@@ -47,7 +45,6 @@ Each variant is designed to communicate a specific type of message:
   variant="danger"
   title="Error"
   description="There was a problem processing your request. Please try again."
-  showCloseButton
 />
 
 ## With Action Button
@@ -58,7 +55,6 @@ You can add an action button to provide users with a direct way to respond:
   variant="info"
   title="New Feature Available"
   description="We've added a new feature that you might be interested in."
-  showCloseButton
   actionButtonProps={{
     children: "Learn More",
     variant: "primary"
@@ -69,16 +65,13 @@ You can add an action button to provide users with a direct way to respond:
 
 Here's how to implement Feedback components in your application:
 
-<CodeBlock
-  codeInstances={[
-    {
-      code: 'import { Feedback, Column } from "@/once-ui/components";\n\nexport function FormSubmissionStatus({ status }) {\n  if (status === "success") {\n    return (\n      <Feedback\n        variant="success"\n        title="Form Submitted"\n        description="Thank you for your submission. We\'ll be in touch soon."\n        showCloseButton\n      />\n    );\n  }\n  \n  if (status === "error") {\n    return (\n      <Feedback\n        variant="danger"\n        title="Submission Failed"\n        description="There was an error submitting your form. Please try again."\n        showCloseButton\n        actionButtonProps={{\n          children: "Try Again",\n          variant: "primary"\n        }}\n      />\n    );\n  }\n  \n  return null;\n}',
-      label: 'Form Submission Feedback',
-      language: 'tsx'
-    }
-  ]}
-  copyButton
+```tsx
+<Feedback
+  variant="success"
+  title="Form Submitted"
+  description="Thank you for your submission. We'll be in touch soon."
 />
+```
 
 ## Best Practices
 

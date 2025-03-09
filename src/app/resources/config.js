@@ -71,4 +71,32 @@ const effects = {
   },
 };
 
-export { effects, style, layout, baseURL };
+const social = [
+  // Links are automatically displayed.
+  // Import new icons in /once-ui/icons.ts
+  {
+    name: "GitHub",
+    icon: "github",
+    link: "https://github.com/once-ui-system",
+  }
+];
+
+const schema = {
+  logo: "",
+  type: "Organization",
+  name: "Magic Docs",
+  description: "Magic Docs is a simple and beautiful documentation tempalte built with Once UI.",
+  email: "",
+};
+
+const home = {
+  title: `Docs – ${schema.name}`,
+  description: `Documentation`,
+};
+
+const docs = {
+  title: `Docs – ${schema.name}`,
+  description: `Docs site`,
+};
+
+export { effects, style, layout, baseURL, social, schema, home, docs };

@@ -37,19 +37,38 @@ The Accordion component supports various customization options:
 - **Radius**: Adjust corner rounding with the `radius` prop
 - **Initial state**: Control whether it's initially open with the `open` prop
 
-## Implementation Example
+## Custom Syntax
 
-Here's how to implement a custom accordion group:
+Magic Docs provides an AccordionGroup component for creating groups of accordions with consistent styling:
 
-<CodeBlock
-  codeInstances={[
+```tsx
+<AccordionGroup 
+  items={[
     {
-      code: 'import { Accordion, Column } from "@/once-ui/components";\n\nexport function FAQSection() {\n  return (\n    <Column gap="m">\n      <Accordion\n        title="How do I reset my password?"\n        size="m"\n        radius="m"\n      >\n        Visit the login page and click on "Forgot Password". Follow the\n        instructions sent to your email to reset your password.\n      </Accordion>\n      \n      <Accordion\n        title="Can I change my username?"\n        size="m"\n        radius="m"\n      >\n        Yes, you can change your username in your account settings.\n        Note that username changes are limited to once every 30 days.\n      </Accordion>\n    </Column>\n  );\n}',
-      label: 'FAQ Accordion Group',
-      language: 'tsx'
+      title: "First accordion title",
+      content: "Content for the first accordion"
+    },
+    {
+      title: "Second accordion title",
+      content: "Content for the second accordion"
     }
   ]}
-  copyButton
+/>
+```
+
+Here's an example of the AccordionGroup in action:
+
+<AccordionGroup 
+  items={[
+    {
+      title: "How do I use the AccordionGroup component?",
+      content: "Just pass an array of items with title and content properties to the AccordionGroup component. You can include any MDX content in the content property, including lists, bold text, italic text, and links."
+    },
+    {
+      title: "Frequently Asked Questions",
+      content: <Text>You can also use <InlineCode>custom components</InlineCode> to display in the accordion title / content.</Text>
+    }
+  ]}
 />
 
 ## Accessibility Considerations

@@ -16,9 +16,11 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ children, href, onClick, style, className, ...rest }, ref) => {
     return (
       <ElementType
-        className={classNames("reset-button-styles", "display-flex", "fill-width", onClick && "focus-ring", onClick && "radius-l")}
+        tabIndex={0}
+        className={classNames("reset-button-styles", "display-flex", "fill-width", (onClick || href) && "focus-ring", (onClick || href) && "radius-l")}
         href={href}
-        onClick={onClick}
+        onClick={onClick ? onClick : () => {}}
+        role="button"
         ref={ref}>
         <Flex
           background="surface"

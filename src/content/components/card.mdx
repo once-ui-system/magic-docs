@@ -13,47 +13,49 @@ The Card component provides a flexible container for grouping related content an
 Cards can contain various types of content including text, images, and interactive elements. They support different visual styles through props like `border`, `shadow`, and `radius`.
 
 <Card
-  padding="l"
+  padding="4"
   radius="l"
   shadow="m"
+  direction="column"
   border="neutral-alpha-medium"
+  horizontal="start"
 >
-  <Text variant="heading-strong-m">Card Title</Text>
-  <Text variant="body-default-m" marginTop="s">
-    This is a simple card with text content. Cards are versatile containers that can be used to group related information.
-  </Text>
-</Card>
-
-## Interactive Cards
-
-Cards can be made interactive by adding the `href` prop, which transforms the card into a link:
-
-<Card
-  padding="l"
-  radius="l"
-  shadow="m"
-  border="neutral-alpha-medium"
-  href="#"
-  horizontal="space-between"
-  vertical="center"
->
-  <Text variant="heading-strong-m">Interactive Card</Text>
-  <Text variant="body-default-s" onBackground="neutral-medium">Click to navigate</Text>
+  <SmartImage
+    src="/images/cover.jpg"
+    alt="Feature illustration"
+    aspectRatio="16/9"
+    radius="m"
+  />
+  <Column fillWidth paddingTop="20" paddingX="16" paddingBottom="16" gap="8" horizontal="start">
+    <Text variant="heading-strong-m" onBackground="neutral-strong">Feature Title</Text>
+    <Text variant="body-default-s" onBackground="neutral-weak">Description of this amazing feature and how it benefits users</Text>
+  </Column>
 </Card>
 
 ## Implementation Example
 
 Here's how to implement a card with an image and text:
 
-<CodeBlock
-  codeInstances={[
-    {
-      code: 'import { Card, Text, SmartImage } from "@/once-ui/components";\n\nexport function FeatureCard() {\n  return (\n    <Card\n      padding="l"\n      radius="l"\n      shadow="m"\n      border="neutral-alpha-medium"\n    >\n      <SmartImage\n        src="/images/feature-image.jpg"\n        alt="Feature illustration"\n        aspectRatio="16/9"\n        radius="m"\n      />\n      <Text variant="heading-strong-m" marginTop="m">Feature Title</Text>\n      <Text variant="body-default-m" marginTop="s">\n        Description of this amazing feature and how it benefits users.\n      </Text>\n    </Card>\n  );\n}',
-      label: 'Feature Card Component',
-      language: 'tsx'
-    }
-  ]}
-  copyButton
-/>
+```tsx
+<Card
+  padding="4"
+  radius="l"
+  shadow="m"
+  direction="column"
+  border="neutral-alpha-medium"
+  horizontal="start"
+>
+  <SmartImage
+    src="/images/cover.jpg"
+    alt="Feature illustration"
+    aspectRatio="16/9"
+    radius="m"
+  />
+  <Column fillWidth paddingTop="20" paddingX="16" paddingBottom="16" gap="8" horizontal="start">
+    <Text variant="heading-strong-m" onBackground="neutral-strong">Feature Title</Text>
+    <Text variant="body-default-s" onBackground="neutral-weak">Description of this amazing feature and how it benefits users</Text>
+  </Column>
+</Card>
+```
 
 Cards are highly customizable and can be adapted to fit various design requirements in your application.

@@ -11,7 +11,7 @@ import { Source_Code_Pro } from "next/font/google";
 
 import { Background, Column, Flex, ToastProvider, ThemeProvider } from "@/once-ui/components";
 import { layout } from "./resources/config";
-import { home } from "@/app/resources/content";
+import { home } from "@/app/resources";
 
 const themeScript = `
   (function() {

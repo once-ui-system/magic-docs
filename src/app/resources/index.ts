@@ -4,9 +4,8 @@ export {
   style,
   layout,
   baseURL,
-} from "@/app/resources/config";
-export {
   social,
   home,
   schema,
-} from "@/app/resources/content";
+  docs,
+} from "@/app/resources/config";

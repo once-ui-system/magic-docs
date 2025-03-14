@@ -1,6 +1,6 @@
 "use client";
 
-import React, { forwardRef, useEffect, useState, useRef } from "react";
+import React, { forwardRef, useEffect, useState, useRef, useCallback } from "react";
 import { Column, Flex, Row, SmartLink, Text } from "@/once-ui/components";
 import { useHeadingLinks } from "@/app/utils/generateHeadingLinks";
 
@@ -20,31 +20,9 @@ export const HeadingNav = forwardRef<HTMLDivElement, props>(
     const lastUpdateTimeRef = useRef<number>(0);
     const pendingUpdateRef = useRef<string | null>(null);
     const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const isUpdatingRef = useRef<boolean>(false);
 
-    const debouncedUpdateActiveHeading = (id: string) => {
-      const now = Date.now();
-      
-      if (now - lastUpdateTimeRef.current < 200) {
-        pendingUpdateRef.current = id;
-        
-        if (scrollTimeoutRef.current) {
-          clearTimeout(scrollTimeoutRef.current);
-        }
-        
-        scrollTimeoutRef.current = setTimeout(() => {
-          if (pendingUpdateRef.current) {
-            updateActiveHeadingInternal(pendingUpdateRef.current);
-            pendingUpdateRef.current = null;
-          }
-        }, 200);
-        
-        return;
-      }
-      
-      updateActiveHeadingInternal(id);
-    };
-
-    const updateActiveHeadingInternal = (id: string) => {
+    const updateActiveHeadingInternal = useCallback((id: string) => {
       const index = headings.findIndex(h => h.id === id);
       if (index !== -1) {
         setActiveHeadingId(id);
@@ -55,8 +33,9 @@ export const HeadingNav = forwardRef<HTMLDivElement, props>(
         }
         
         lastUpdateTimeRef.current = Date.now();
+        isUpdatingRef.current = false;
       }
-    };
+    }, [headings]);
 
     useEffect(() => {
       if (headings.length === 0) return;
@@ -79,6 +58,36 @@ export const HeadingNav = forwardRef<HTMLDivElement, props>(
       
       calculateHeadingPositions();
 
+      const debouncedUpdateActiveHeading = (id: string) => {
+        const now = Date.now();
+        
+        if (isUpdatingRef.current) {
+          pendingUpdateRef.current = id;
+          return;
+        }
+        
+        if (now - lastUpdateTimeRef.current < 200) {
+          pendingUpdateRef.current = id;
+          
+          if (scrollTimeoutRef.current) {
+            clearTimeout(scrollTimeoutRef.current);
+          }
+          
+          scrollTimeoutRef.current = setTimeout(() => {
+            if (pendingUpdateRef.current) {
+              isUpdatingRef.current = true;
+              updateActiveHeadingInternal(pendingUpdateRef.current);
+              pendingUpdateRef.current = null;
+            }
+          }, 200);
+          
+          return;
+        }
+        
+        isUpdatingRef.current = true;
+        updateActiveHeadingInternal(id);
+      };
+
       const findActiveHeading = () => {
         const scrollPosition = window.scrollY;
         
@@ -97,22 +106,22 @@ export const HeadingNav = forwardRef<HTMLDivElement, props>(
         }
       };
 
-      let isScrolling = false;
+      let ticking = false;
       const handleScroll = () => {
-        if (!isScrolling) {
+        if (!ticking) {
           window.requestAnimationFrame(() => {
             findActiveHeading();
-            isScrolling = false;
+            ticking = false;
           });
-          isScrolling = true;
+          ticking = true;
         }
       };
 
       window.addEventListener('scroll', handleScroll, { passive: true });
-      
+    
       observerRef.current = new IntersectionObserver(
         (entries) => {
-          if (Date.now() - lastUpdateTimeRef.current > 300) {
+          if (Date.now() - lastUpdateTimeRef.current > 400) {
             const enteringEntries = entries.filter(entry => entry.isIntersecting);
             
             if (enteringEntries.length > 0) {
@@ -155,7 +164,7 @@ export const HeadingNav = forwardRef<HTMLDivElement, props>(
           clearTimeout(scrollTimeoutRef.current);
         }
       };
-    }, [headings, debouncedUpdateActiveHeading]);
+    }, [headings, updateActiveHeadingInternal]);
 
     const handleHeadingClick = (id: string, index: number) => {
       setActiveHeadingId(id);
@@ -216,10 +225,21 @@ export const HeadingNav = forwardRef<HTMLDivElement, props>(
                   }}
                   style={{
                     paddingLeft: `calc(${indent} * var(--static-space-8))`,
-                    color: isActive ? "var(--neutral-on-background-strong)" : "var(--neutral-on-background-weak)"
+                    color: isActive ? "var(--neutral-on-background-strong)" : "var(--neutral-on-background-weak)",
+                    transition: "color 0.2s ease"
                   }}
                 >
-                  <Text variant={isActive ? "body-strong-s" : "body-default-s"} style={{overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap"}}>{heading.text}</Text>
+                  <Text 
+                    variant={isActive ? "body-strong-s" : "body-default-s"} 
+                    style={{
+                      overflow: "hidden", 
+                      textOverflow: "ellipsis", 
+                      whiteSpace: "nowrap",
+                      transition: "font-weight 0.2s ease"
+                    }}
+                  >
+                    {heading.text}
+                  </Text>
                 </SmartLink>
               </Flex>
             );

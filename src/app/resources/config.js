@@ -92,6 +92,7 @@ const schema = {
   name: "Magic Docs",
   description: "Magic Docs is a simple and beautiful documentation template built with Once UI.",
   email: "",
+  locale: "en_US"
 };
 
 const meta = {
@@ -99,16 +100,19 @@ const meta = {
     title: `Docs – ${schema.name}`,
     description: schema.description,
     path: "/",
+    image: "/og?title=Docs"
   },
   roadmap: {
     title: `Roadmap – ${schema.name}`,
     description: schema.description,
     path: "/roadmap",
+    image: "/og?title=Roadmap"
   },
   changelog: {
     title: `Changelog – ${schema.name}`,
     description: schema.description,
     path: "/changelog",
+    image: "/og?title=Changelog"
   }
 };
 

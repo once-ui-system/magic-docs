@@ -19,8 +19,9 @@ export async function generateMetadata() {
   return Meta.generate({
     title: meta.roadmap.title,
     description: meta.roadmap.description,
-    baseURL,
-    path: "/roadmap",
+    baseURL: baseURL,
+    path: meta.roadmap.path,
+    image: meta.roadmap.image
   });
 }
 

@@ -9,8 +9,9 @@ export async function generateMetadata() {
   return Meta.generate({
     title: meta.home.title,
     description: meta.home.description,
-    baseURL,
+    baseURL: baseURL,
     path: meta.home.path,
+    image: meta.home.image
   });
 }
 

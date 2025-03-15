@@ -10,8 +10,9 @@ export async function generateMetadata() {
   return Meta.generate({
     title: meta.changelog.title,
     description: meta.changelog.description,
-    baseURL,
+    baseURL: baseURL,
     path: meta.changelog.path,
+    image: meta.changelog.image
   });
 }
 

@@ -6,13 +6,14 @@ import classNames from "classnames";
 import { Footer, Header } from "@/product";
 import { baseURL, effects, style } from "@/app/resources";
 
-import { Inter } from "next/font/google";
-import { Source_Code_Pro } from "next/font/google";
+import { Geist } from "next/font/google";
+import { Geist_Mono } from "next/font/google";
 
 import { Background, Column, Flex, ToastProvider, ThemeProvider } from "@/once-ui/components";
-import { layout } from "./resources/config";
+import { layout, schema } from "./resources/config";
 import { meta } from "@/app/resources";
 import { RouteGuard } from "@/product/RouteGuard";
+import { Meta } from "@/once-ui/modules";
 
 const themeScript = `
   (function() {
@@ -36,17 +37,21 @@ const themeScript = `
 `;
 
 export async function generateMetadata() {
-  return {
-    metadataBase: new URL(`${baseURL}`),
+  const baseMetadata = Meta.generate({
     title: meta.home.title,
     description: meta.home.description,
+    baseURL: baseURL,
+    path: meta.home.path,
+    image: meta.home.image
+  });
+
+  return {
+    ...baseMetadata,
+    metadataBase: new URL(`${baseURL}`),
     openGraph: {
-      title: meta.home.title,
-      description: meta.home.description,
-      url: baseURL,
+      ...baseMetadata.openGraph,
       siteName: meta.home.title,
-      locale: "en_US",
-      type: "website",
+      locale: schema.locale,
     },
     robots: {
       index: true,
@@ -62,7 +67,7 @@ export async function generateMetadata() {
   };
 }
 
-const primary = Inter({
+const primary = Geist({
   variable: "--font-primary",
   subsets: ["latin"],
   display: "swap",
@@ -79,7 +84,7 @@ type FontConfig = {
 const secondary: FontConfig | undefined = undefined;
 const tertiary: FontConfig | undefined = undefined;
 
-const code = Source_Code_Pro({
+const code = Geist_Mono({
   variable: "--font-code",
   subsets: ["latin"],
   display: "swap",
@@ -90,7 +95,6 @@ interface RootLayoutProps {
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {
-  // Set default theme to dark to match client-side
   return (
     <>
       <head>

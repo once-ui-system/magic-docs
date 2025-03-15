@@ -37,7 +37,7 @@ const Changelog: React.FC = () => {
           Changelog
         </Heading>
         <Text wrap="balance" onBackground="neutral-weak" variant="body-default-xl" marginBottom="20">
-          See what's new
+          See what&apos;s new
         </Text>
       </Column>
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, Column, Row, Card, User, Heading, StatusIndicator } from "@/once-ui/components";
-import { baseURL, layout, meta, roadmap, schema, task } from "../resources";
+import { baseURL, layout, meta, roadmap, schema, task } from "@/app/resources";
 import { Meta, Schema } from "@/once-ui/modules";
 import { Schemes } from "@/once-ui/types";
 
@@ -76,7 +76,7 @@ export default function RoadmapPage() {
           name: schema.name
         }}
       />
-      <Column fillWidth gap="12" paddingY="l">
+      <Column fillWidth gap="12" paddingBottom="l">
         <Heading variant="display-strong-s">
           Roadmap
         </Heading>
@@ -111,18 +111,24 @@ export default function RoadmapPage() {
                 </Row>
                 
                 <Column gap="4" fillWidth>
-                  {column.tasks.map((taskItem, taskIndex) => (
-                    taskItem.href ? (
+                  {column.tasks.map((taskItem, taskIndex) => {
+                    // Ensure the task item conforms to the Task interface
+                    const typedTask: Task = {
+                      ...taskItem,
+                      type: taskItem.type as keyof typeof task
+                    };
+                    
+                    return typedTask.href ? (
                       <Card
                         onBackground="neutral-strong"
                         border="neutral-alpha-weak"
                         fillWidth
                         radius="s"
                         key={taskIndex} 
-                        href={taskItem.href}
+                        href={typedTask.href}
                         padding="16"
                       >
-                        <RoadmapTask task={taskItem} />
+                        <RoadmapTask task={typedTask} />
                       </Card>
                     ) : (
                       <Column
@@ -134,10 +140,10 @@ export default function RoadmapPage() {
                         padding="16"
                         gap="8"
                       >
-                        <RoadmapTask task={taskItem} />
+                        <RoadmapTask task={typedTask} />
                       </Column>
-                    )
-                  ))}
+                    );
+                  })}
                 </Column>
               </Column>
             ))}

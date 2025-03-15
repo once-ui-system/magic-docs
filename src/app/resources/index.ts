@@ -12,4 +12,8 @@ export {
 export {
   roadmap,
   task
-} from "@/app/resources/content";
+} from "@/app/resources/roadmap";
+
+export {
+  changelog
+} from "@/app/resources/changelog";

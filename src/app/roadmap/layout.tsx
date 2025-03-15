@@ -1,16 +1,20 @@
 import { Row } from "@/once-ui/components";
 import { Sidebar } from "@/product/Sidebar";
-import React from "react";
+import React, { memo } from "react";
 
-export default function DocsLayout({
+const DocsLayout = memo(({
   children,
 }: {
   children: React.ReactNode;
-}) {
+}) => {
   return (
     <Row fillWidth gap="24" position="relative">
       <Sidebar hide="m" />
       {children}
     </Row>
   );
-}
+});
+
+DocsLayout.displayName = 'RoadmapLayout';
+
+export default DocsLayout;

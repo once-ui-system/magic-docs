@@ -31,7 +31,7 @@ export default function Home() {
         <Column maxWidth="s" gap="l">
           <Row fillWidth gap="l">
             <Column fillWidth gap="12">
-              <Heading variant="display-default-s">
+              <Heading variant="display-strong-s">
                 Magic Docs
               </Heading>
               <Text wrap="balance" onBackground="neutral-weak" variant="body-default-xl" marginBottom="20">

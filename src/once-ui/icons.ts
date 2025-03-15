@@ -38,6 +38,8 @@ import {
   HiOutlineRocketLaunch,
   HiOutlineIdentification,
   HiOutlinePhoto,
+  HiOutlineMap,
+  HiOutlineClock,
 } from "react-icons/hi2";
 
 import { RiVisaLine } from "react-icons/ri";
@@ -85,5 +87,7 @@ export const iconLibrary: Record<string, IconType> = {
   queue: HiOutlineQueueList,
   rocket: HiOutlineRocketLaunch,
   card: HiOutlineIdentification,
-  image: HiOutlinePhoto
+  image: HiOutlinePhoto,
+  roadmap: HiOutlineMap,
+  changelog: HiOutlineClock
 };

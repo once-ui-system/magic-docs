@@ -1,4 +1,3 @@
-// import a pre-defined template for config and content options
 export {
   effects,
   style,
@@ -7,4 +6,10 @@ export {
   social,
   schema,
   meta,
+  routes
 } from "@/app/resources/config";
+
+export {
+  roadmap,
+  task
+} from "@/app/resources/content";

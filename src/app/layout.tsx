@@ -12,6 +12,7 @@ import { Source_Code_Pro } from "next/font/google";
 import { Background, Column, Flex, ToastProvider, ThemeProvider } from "@/once-ui/components";
 import { layout } from "./resources/config";
 import { meta } from "@/app/resources";
+import { RouteGuard } from "@/product/RouteGuard";
 
 const themeScript = `
   (function() {
@@ -175,7 +176,9 @@ export default async function RootLayout({ children }: RootLayoutProps) {
                 flex={1}
               >
                 <Flex horizontal="center" maxWidth={layout.body.width} minHeight="0">
-                  {children}
+                  <RouteGuard>
+                    {children}
+                  </RouteGuard>
                 </Flex>
               </Flex>
               <Footer />

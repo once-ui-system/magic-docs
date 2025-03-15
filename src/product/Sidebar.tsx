@@ -6,6 +6,7 @@ import { Accordion, Column, Flex, Icon, Row, Tag, Text } from "@/once-ui/compone
 import { usePathname } from 'next/navigation';
 import styles from './Sidebar.module.scss';
 import { layout } from "@/app/resources/config";
+import { routes } from "@/app/resources";
 import { Schemes } from "@/once-ui/types";
 
 export interface NavigationItem extends Omit<React.ComponentProps<typeof Flex>, "title" | "label" | "children">{
@@ -51,8 +52,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ initialNavigation, ...rest }) 
     return (
       <>
         {items.map((item) => {
-          // The slug should already be normalized from getNavigation.ts
-          // Just ensure it's a valid path for navigation
           const correctedSlug = item.slug;
   
           return (
@@ -127,11 +126,50 @@ export const Sidebar: React.FC<SidebarProps> = ({ initialNavigation, ...rest }) 
       </>
     );
   };
-  
 
   return (
     <Column maxWidth={layout.sidebar.width} position="sticky" top="64" fitHeight gap="2" as="nav" overflowY="auto" paddingRight="8" style={{maxHeight: "calc(100vh - var(--static-space-80))"}} {...rest}>
         {renderNavigation(navigation)}
+        {(routes['/roadmap'] || routes['/changelog']) && (
+          <Column gap="2" marginTop="32" paddingLeft="4">
+            <Row textVariant="label-strong-s" onBackground="brand-strong" paddingLeft="8" paddingY="12">
+              Resources
+            </Row>
+            {routes['/roadmap'] && (
+              <ToggleButton
+                fillWidth
+                justifyContent="space-between"
+                selected={pathname === '/roadmap'}
+                className={styles.navigation}
+                href="/roadmap">
+                <Row 
+                  gap="8"
+                  onBackground={pathname === '/roadmap' ? "neutral-strong" : "neutral-weak"}
+                  textVariant={pathname === '/roadmap' ? "label-strong-s" : "label-default-s"}>
+                  <Icon size="xs" name="roadmap"/>
+                  Roadmap
+                </Row>
+              </ToggleButton>
+            )}
+            
+            {routes['/changelog'] && (
+              <ToggleButton
+                fillWidth
+                justifyContent="space-between"
+                selected={pathname === '/changelog'}
+                className={styles.navigation}
+                href="/changelog">
+                <Row 
+                  gap="8"
+                  onBackground={pathname === '/changelog' ? "neutral-strong" : "neutral-weak"}
+                  textVariant={pathname === '/changelog' ? "label-strong-s" : "label-default-s"}>
+                  <Icon size="xs" name="changelog"/>
+                  Changelog
+                </Row>
+              </ToggleButton>
+            )}
+          </Column>
+        )}
     </Column>
   );
 };

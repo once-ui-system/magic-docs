@@ -10,7 +10,7 @@ export async function generateMetadata() {
     title: meta.home.title,
     description: meta.home.description,
     baseURL,
-    path: "",
+    path: meta.home.path,
   });
 }
 
@@ -22,7 +22,7 @@ export default function Home() {
         title={meta.home.title}
         description={meta.home.description}
         baseURL={baseURL}
-        path=""
+        path={meta.home.path}
         author={{
           name: schema.name
         }}

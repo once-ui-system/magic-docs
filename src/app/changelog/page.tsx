@@ -1,195 +1,132 @@
-"use client";
-
 import React from "react";
-import { Column, SmartLink, Row, Line, Text, Icon, Heading } from "@/once-ui/components";
+import { Column, SmartLink, Row, Line, Text, Icon, Heading, SmartImage } from "@/once-ui/components";
 import { HeadingLink } from "@/product";
+import { baseURL, meta, schema } from "@/app/resources";
+import { changelog } from "@/app/resources/content";
+import { Meta, Schema } from "@/once-ui/modules";
+import { formatDate } from "../utils/formatDate";
 
-// Define types for our changelog data
-type ChangelogItem = {
-  text: string;
-  link?: string;
-  type: 'add' | 'update' | 'fix' | 'remove';
-};
-
-type ChangelogEntry = {
-  date: string;
-  displayDate: string;
-  title: string;
-  items: ChangelogItem[];
-};
-
-type UpcomingItem = {
-  text: string;
-};
-
-type InProgressItem = {
-  text: string;
-};
-
-// Changelog data
-const upcomingItems: UpcomingItem[] = [
-  { text: "Page: Team" },
-  { text: "Module: Data visualization" },
-  { text: "Module: Comment system" },
-  { text: "Block: Call to action" },
-  { text: "Block: Social media post" },
-  { text: "Block: Notification center" },
-  { text: "Block: Message feed" },
-];
-
-const inprogressItems: InProgressItem[] = [
-  { text: "Template: Magic Store" },
-];
-
-const changelogEntries: ChangelogEntry[] = [
-  {
-    date: "2025-03-09",
-    displayDate: "Mar 9",
-    title: "New Template",
-    items: [
-      { text: "New template: Magic Docs", link: "/templates/magic-docs", type: "add" }
-    ]
-  },
-  {
-    date: "2025-02-27",
-    displayDate: "Feb 27",
-    title: "New Template",
-    items: [
-      { text: "New template: Magic Bio", link: "/templates/magic-bio", type: "add" }
-    ]
-  },
-  {
-    date: "2025-02-25",
-    displayDate: "Feb 25",
-    title: "New Careers Page",
-    items: [
-      { text: "New page: Careers", link: "/pro/careers", type: "add" }
-    ]
-  },
-  {
-    date: "2025-02-24",
-    displayDate: "Feb 24",
-    title: "Authentication & Plans Updates",
-    items: [
-      { text: "Reworked block: Authentication", link: "/pro/authentication", type: "update" },
-      { text: "Reworked block: Plans", link: "/pro/plans", type: "update" },
-      { text: "New page: Contact", link: "/pro/contact", type: "add" },
-      { text: "New block: Features", link: "/pro/features", type: "add" }
-    ]
-  },
-  {
-    date: "2025-02-22",
-    displayDate: "Feb 22",
-    title: "Features Block",
-    items: [
-      { text: "New block: Features", link: "/pro/features", type: "add" }
-    ]
-  },
-  {
-    date: "2025-02-20",
-    displayDate: "Feb 20",
-    title: "About Page",
-    items: [
-      { text: "New page: About", link: "/pro/about", type: "add" }
-    ]
-  },
-  {
-    date: "2025-02-19",
-    displayDate: "Feb 19",
-    title: "Newsletter Block",
-    items: [
-      { text: "New block: Newsletter", link: "/pro/newsletter", type: "add" }
-    ]
-  },
-  {
-    date: "2025-02-18",
-    displayDate: "Feb 18",
-    title: "Cookie Banner",
-    items: [
-      { text: "New block: Cookie banner", link: "/pro/cookie", type: "add" }
-    ]
-  },
-  {
-    date: "2025-02-17",
-    displayDate: "Feb 17",
-    title: "FAQ Block",
-    items: [
-      { text: "New block: FAQ", link: "/pro/faq", type: "add" }
-    ]
-  },
-  {
-    date: "2025-02-16",
-    displayDate: "Feb 16",
-    title: "Testimonial & Background",
-    items: [
-      { text: "New block: Testimonial", link: "/pro/testimonial", type: "add" },
-      { text: "New misc element: Gradient", link: "/pro/background", type: "add" }
-    ]
-  },
-  {
-    date: "2025-02-13",
-    displayDate: "Feb 13",
-    title: "Blog & Profile Pages",
-    items: [
-      { text: "New page: Blog post", link: "/pro/blog", type: "add" },
-      { text: "New page: Profile page", link: "/pro/profile", type: "add" },
-      { text: "New block: Testimonial", link: "/pro/testimonial", type: "add" }
-    ]
-  }
-];
+export async function generateMetadata() {
+  return Meta.generate({
+    title: meta.changelog.title,
+    description: meta.changelog.description,
+    baseURL,
+    path: meta.changelog.path,
+  });
+}
 
 const Changelog: React.FC = () => {
   return (
-      <Column
-        fillWidth
-        textVariant="body-default-m"
-        onBackground="neutral-medium"
-        as="section"
-        gap="8">
-        <Column fillWidth gap="12" paddingY="l">
-          <Heading variant="display-strong-s">
-            Changelog
-          </Heading>
-          <Text wrap="balance" onBackground="neutral-weak" variant="body-default-xl" marginBottom="20">
-            See what's new
-          </Text>
-        </Column>
+    <Column
+      maxWidth={56}
+      as="main"
+      gap="8">
+      <Schema
+        as="webPage"
+        title={meta.changelog.title}
+        description={meta.changelog.description}
+        baseURL={baseURL}
+        path={meta.changelog.path}
+        author={{
+          name: schema.name
+        }}
+      />
+      <Column fillWidth gap="8" paddingY="l">
+        <Heading variant="display-strong-s">
+          Changelog
+        </Heading>
+        <Text wrap="balance" onBackground="neutral-weak" variant="body-default-xl" marginBottom="20">
+          See what's new
+        </Text>
+      </Column>
 
-        {changelogEntries.map((entry, entryIndex) => (
-          <Row key={entry.date} fillWidth gap="20" vertical="start">
-            <Column minWidth="80" fillHeight gap="8" horizontal="center">
-              <Row 
+      {changelog.map((entry, index) => (
+        <Row key={entry.date} fillWidth gap="20" vertical="start" position="relative" mobileDirection="column">
+          <Column width={16} maxWidth={16} fillHeight>
+            <Column maxWidth="160" fitWidth fillHeight>
+              <Row
+                position="sticky" top="80"
                 fillWidth
                 minHeight="32" 
                 radius="full" 
-                background="neutral-alpha-weak" 
                 center
-                textVariant="label-strong-s"
+                paddingX="16"
+                paddingY="8"
+                textVariant="label-default-s"
                 onBackground="neutral-strong"
+                border="neutral-alpha-weak"
+                style={{backdropFilter: 'blur(1rem)'}}
               >
-                {entry.displayDate}
+                {formatDate(entry.date)}
               </Row>
-              {entryIndex < changelogEntries.length - 1 && (
-                <Line vert background="neutral-alpha-medium"/>
+              {index < changelog.length - 1 && (
+                <Line hide="s" marginLeft="40" vert background="neutral-alpha-weak"/>
               )}
             </Column>
-            <Column fillWidth gap="12" paddingBottom="40">
-              <HeadingLink id={entry.date} as="h2">
-                {entry.title}
-              </HeadingLink>
-              {entry.items.map((item, itemIndex) => (
-                <Row key={itemIndex} fillWidth gap="12" vertical="center">
-                  <Text variant="body-default-m" onBackground="neutral-medium">
-                    {item.link && (
-                      <SmartLink href={item.link}>{item.text}</SmartLink>
-                    )}
-                  </Text>
-                </Row>
-              ))}
-            </Column>
-          </Row>
-        ))}
-      </Column>
+          </Column>
+          <Column fillWidth gap="12" paddingBottom="48">
+            <HeadingLink id={entry.date} as="h2">
+              {entry.title}
+            </HeadingLink>
+            
+            {entry.description && (
+              <Text variant="body-default-m" onBackground="neutral-weak">
+                {entry.description}
+              </Text>
+            )}
+            
+            {entry.image && (
+              <SmartImage
+                priority={index === 0}
+                sizes="(max-width: 768px) 100vw, 768px"
+                marginTop="20"
+                radius="l"
+                src={entry.image} 
+                alt={`Illustration for ${entry.title}`}
+                border="neutral-alpha-weak"
+                aspectRatio="16 / 9"
+              />
+            )}
+            
+            {entry.sections.map((section, sectionIndex) => {
+              return (
+                <Column key={sectionIndex} fillWidth marginTop="20">
+                  <Heading as="h3" marginBottom="8">
+                    {section.title}
+                  </Heading>
+                  
+                  {section.description && (
+                    <Text variant="body-default-m" onBackground="neutral-weak" marginBottom="8">
+                      {section.description}
+                    </Text>
+                  )}
+                  
+                  {section.bullets && section.bullets.length > 0 && (
+                    <ul style={{marginTop: "var(--static-space-8)"}}>
+                      {section.bullets.map((bullet, bulletIndex) => (
+                        <li key={bulletIndex}>
+                          <Text variant="body-default-m" onBackground="neutral-weak">
+                            {bullet}
+                          </Text>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  
+                  {section.link && (
+                    <Row paddingY="8">
+                      <SmartLink href={section.link} suffixIcon="chevronRight">
+                        View update <Icon name="chevronRight" size="xs" />
+                      </SmartLink>
+                    </Row>
+                  )}
+                </Column>
+              );
+            })}
+          </Column>
+        </Row>
+      ))}
+    </Column>
   );
 };
 

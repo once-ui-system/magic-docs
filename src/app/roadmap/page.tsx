@@ -64,13 +64,13 @@ const RoadmapTask = ({ task: taskItem }: { task: Task }) => (
 
 export default function RoadmapPage() {
   return (
-    <Column maxWidth={layout.body.width} gap="24">
+    <Column maxWidth={layout.body.width} gap="24" as="main">
       <Schema
         as="webPage"
         title={meta.roadmap.title}
         description={meta.roadmap.description}
         baseURL={baseURL}
-        path="/roadmap"
+        path={meta.roadmap.path}
         author={{
           name: schema.name
         }}

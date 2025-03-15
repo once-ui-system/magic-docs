@@ -3,7 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Button, Flex, Logo, NavIcon, Row, ToggleButton, Kbar, Kbd } from "@/once-ui/components";
-import { layout } from "@/app/resources/config";
+import { layout, routes } from "@/app/resources/config";
 import { Sidebar, NavigationItem } from "./Sidebar";
 import { useTheme } from "@/once-ui/components/ThemeProvider";
 
@@ -50,10 +50,8 @@ export function Header() {
         });
         kbarItems.push(...childItems);
       } else {
-        // This is a page item
         const correctedSlug = item.slug.replace(/^src\\content\\/, '').replace(/\\/g, '/');
         
-        // Generate default keywords if none provided
         const defaultKeywords = `${item.title.toLowerCase()}, docs, documentation`;
         const keywords = item.keywords || defaultKeywords;
         
@@ -73,10 +71,9 @@ export function Header() {
   };
 
   const docsItems = convertToKbarItems(navigationItems);
-
   const { theme, setTheme } = useTheme();
 
-  const kbar = [
+  const navigationKbarItems = [
     {
       id: "home",
       name: "Home",
@@ -85,7 +82,35 @@ export function Header() {
       keywords: "home, landing page",
       href: "/",
       icon: "home",
-    },
+    }
+  ];
+  
+  if (routes['/changelog']) {
+    navigationKbarItems.push({
+      id: "changelog",
+      name: "Changelog",
+      section: "Navigation",
+      shortcut: [],
+      keywords: "changelog, changelog page",
+      href: "/changelog",
+      icon: "changelog",
+    });
+  }
+  
+  if (routes['/roadmap']) {
+    navigationKbarItems.push({
+      id: "roadmap",
+      name: "Roadmap",
+      section: "Navigation",
+      shortcut: [],
+      keywords: "roadmap, roadmap page",
+      href: "/roadmap",
+      icon: "roadmap",
+    });
+  }
+
+  const kbar = [
+    ...navigationKbarItems,
     ...docsItems,
     {
       id: "theme-toggle",

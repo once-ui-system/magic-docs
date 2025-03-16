@@ -33,12 +33,6 @@ interface SidebarProps extends Omit<React.ComponentProps<typeof Flex>, "children
   show?: "s" | "m" | "l";
 }
 
-const toTitleCase = (str: string) => {
-  return str
-    .replace(/-/g, ' ')
-    .replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
-};
-
 // Memoized navigation item component to prevent re-renders
 const NavigationItemComponent: React.FC<{
   item: NavigationItem;
@@ -70,7 +64,7 @@ const NavigationItemComponent: React.FC<{
             paddingTop="4"
             title={
               <Row textVariant="label-strong-s" onBackground="brand-strong">
-                {toTitleCase(item.title)}
+                {item.title}
               </Row>
             }>
               {renderNavigation(item.children, depth + 1)}
@@ -82,7 +76,7 @@ const NavigationItemComponent: React.FC<{
               paddingTop="4">
                 <Row 
                   paddingY="12" paddingLeft="8" textVariant="label-strong-s" onBackground="brand-strong">
-                  {toTitleCase(item.title)}
+                  {item.title}
                 </Row>
                 {renderNavigation(item.children, depth + 1)}
             </Column>

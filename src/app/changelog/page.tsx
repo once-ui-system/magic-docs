@@ -30,7 +30,7 @@ const Changelog: React.FC = () => {
           name: schema.name
         }}
       />
-      <Column fillWidth gap="8" paddingY="l">
+      <Column fillWidth gap="8" paddingBottom="l">
         <Heading variant="display-strong-s">
           Changelog
         </Heading>

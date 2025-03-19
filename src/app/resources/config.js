@@ -15,6 +15,7 @@ const style = {
   border: "playful", // rounded | playful | conservative
   surface: "translucent", // filled | translucent
   transition: "all", // all | micro | macro
+  scaling: "100" // 90 | 95 | 100 | 105 | 110
 };
 
 const layout = {

@@ -1,5 +1,5 @@
 import { getPages, sortPages } from "@/app/utils/utils";
-import { Card, Column, Heading, Icon, Row, SmartImage, Text } from "@/once-ui/components";
+import { Card, Column, Icon, Row, SmartImage, Text } from "@/once-ui/components";
 import React from "react";
 
 interface props extends Omit<React.ComponentProps<typeof Card>, 'onClick'> {
@@ -87,7 +87,7 @@ export function PageList({
   return (
     <>
       {displayedPages.length > 0 && displayedPages.map((page) => (
-        <Card href={`/docs/${page.slug}`} key={page.slug} radius="l" padding="2" gap="16" fillWidth {...rest}>
+        <Card href={`/docs/${page.slug}`} key={page.slug} radius="l" padding="2" gap="16" mobileDirection="column" fillWidth {...rest}>
           {page.metadata.image && thumbnail && (
             <SmartImage
               priority

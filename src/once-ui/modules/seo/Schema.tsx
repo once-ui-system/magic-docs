@@ -1,4 +1,5 @@
 import React from "react";
+import Script from "next/script";
 
 export interface SchemaProps {
   as: "website" | "article" | "blogPosting" | "techArticle" | "webPage" | "organization";
@@ -87,7 +88,8 @@ export function Schema({
   }
   
   return (
-    <script
+    <Script
+      id={`schema-${as}-${path}`}
       type="application/ld+json"
       dangerouslySetInnerHTML={{
         __html: JSON.stringify(schema),

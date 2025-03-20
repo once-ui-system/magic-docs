@@ -3,18 +3,18 @@ import React, { ReactNode } from "react";
 import dynamic from "next/dynamic";
 
 import { 
-  Heading, 
-  Row, 
-  SmartImage, 
-  SmartLink, 
+  Heading,
+  HeadingLink,
+  Row,
+  SmartImage,
+  SmartLink,
   Text,
-  InlineCode, 
-  Accordion, 
-  AccordionGroup 
+  InlineCode,
+  Accordion,
+  AccordionGroup
 } from "@/once-ui/components";
 import { CodeBlock } from "@/once-ui/modules/code/CodeBlock";
 import { TextProps } from "@/once-ui/interfaces";
-import { HeadingLink } from "./HeadingLink";
 import { SmartImageProps } from "@/once-ui/components/SmartImage";
 
 type TableProps = {
@@ -207,6 +207,7 @@ const components = {
   Accordion,
   AccordionGroup,
   Feedback: dynamic(() => import("@/once-ui/components").then(mod => mod.Feedback)),
+  Button: dynamic(() => import("@/once-ui/components").then(mod => mod.Button)),
   Card: dynamic(() => import("@/once-ui/components").then(mod => mod.Card)),
   PageList: dynamic(() => import("@/product/PageList").then(mod => mod.PageList)),
   Grid: dynamic(() => import("@/once-ui/components").then(mod => mod.Grid)),

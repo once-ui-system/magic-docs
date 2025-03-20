@@ -91,7 +91,6 @@ export function PageList({
           {page.metadata.image && thumbnail && (
             <SmartImage
               priority
-              maxWidth={20}
               sizes="480px"
               border="neutral-alpha-weak"
               cursor="interactive"

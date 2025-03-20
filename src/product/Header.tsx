@@ -1,8 +1,8 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Button, Flex, Logo, NavIcon, Row, ToggleButton, Kbar, Kbd } from "@/once-ui/components";
+import { Button, Flex, Logo, NavIcon, Row, Kbar } from "@/once-ui/components";
 import { layout, routes } from "@/app/resources/config";
 import { Sidebar, NavigationItem } from "./Sidebar";
 import { useTheme } from "@/once-ui/components/ThemeProvider";
@@ -11,7 +11,6 @@ export function Header() {
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [isMac, setIsMac] = useState(false);
   const pathname = usePathname();
-  const router = useRouter();
 
   useEffect(() => {
     setSidebarVisible(false);
@@ -170,7 +169,7 @@ export function Header() {
           </Kbar>
           <Row gap="8">
             <Row hide="s">
-              <Button size="s" variant="secondary" href="https://docs.once-ui.com">
+              <Button size="s" variant="secondary" href="https://once-ui.com">
                 Get started
               </Button>
             </Row>
@@ -184,10 +183,11 @@ export function Header() {
       {sidebarVisible && (
         <Sidebar 
           maxWidth={100}
-          style={{height: "calc(100vh - var(--static-space-64))"}} 
+          style={{height: "calc(100vh - var(--static-space-64))", backdropFilter: "blur(2rem)"}} 
           padding="8" 
-          background="page" 
-          position="absolute" 
+          background="overlay" 
+          position="fixed"
+          borderTop="neutral-alpha-weak"
           left="0" 
           top="64"
           zIndex={9}

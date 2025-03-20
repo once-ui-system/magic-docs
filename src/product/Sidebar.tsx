@@ -41,7 +41,43 @@ const NavigationItemComponent: React.FC<{
   renderNavigation: (items: NavigationItem[], depth: number) => React.ReactNode;
 }> = ({ item, depth, pathname, renderNavigation }) => {
   const correctedSlug = item.slug;
-  const isSelected = pathname.startsWith(`/docs/${correctedSlug}`);
+  
+  // Extract the path segments for better matching
+  const pathSegments = pathname.split('/').filter(Boolean);
+  
+  // For top-level directories, check if their name is in the pathname segments
+  // This will match routes like "/docs/once-ui/quick-start" for the "once-ui" parent
+  const isTopLevelMatch = depth === 0 && 
+                          pathSegments.length >= 2 && 
+                          pathSegments[0] === 'docs' && 
+                          correctedSlug.split('/')[0] === pathSegments[1];
+  
+  // For deeper items, check for exact match or if it's a parent path
+  const isExactMatch = pathname === `/docs/${correctedSlug}`;
+  const isParentPath = pathname.startsWith(`/docs/${correctedSlug}/`);
+  
+  // Combine all checks
+  const isSelected = isExactMatch || isParentPath || isTopLevelMatch;
+  
+  // For accordion sections, check if any child's path is in the current URL
+  const hasActiveChild = item.children?.some(child => {
+    const childSlug = child.slug;
+    const childSegments = childSlug.split('/');
+    
+    // Check if the pathname segments match this child's segments
+    // This handles nested paths like "/docs/once-ui/quick-start" for the "once-ui" parent
+    if (pathSegments.length >= childSegments.length + 1) {
+      // +1 for the "docs" segment
+      for (let i = 0; i < childSegments.length; i++) {
+        if (pathSegments[i + 1] !== childSegments[i]) {
+          return false;
+        }
+      }
+      return true;
+    }
+    
+    return false;
+  });
 
   if (item.children) {
     return (
@@ -62,6 +98,7 @@ const NavigationItemComponent: React.FC<{
             paddingBottom={undefined}
             paddingLeft="4"
             paddingTop="4"
+            open={hasActiveChild} // Set accordion to open if it contains the active route
             title={
               <Row textVariant="label-strong-s" onBackground="brand-strong">
                 {item.title}
@@ -221,9 +258,9 @@ const SidebarContent: React.FC<{
     </>
   );
 }, (prevProps, nextProps) => {
-  // Re-render if pathname changes
+  // Always re-render if pathname changes
   if (prevProps.pathname !== nextProps.pathname) {
-    return false;
+    return false; // Different pathname means we should re-render
   }
   
   // Otherwise, only re-render if navigation changes
@@ -277,7 +314,8 @@ const Sidebar: React.FC<SidebarProps> = ({ initialNavigation, ...rest }) => {
 
   return (
     <Column 
-      maxWidth={layout.sidebar.width} 
+      width={layout.sidebar.width} 
+      minWidth={layout.sidebar.width} 
       position="sticky" 
       top="64" 
       fitHeight 
@@ -288,7 +326,7 @@ const Sidebar: React.FC<SidebarProps> = ({ initialNavigation, ...rest }) => {
       style={containerStyle} 
       {...rest}
     >
-      {hasLoaded && <SidebarContent navigation={navigation} pathname={pathname} />}
+      {hasLoaded && <SidebarContent key={pathname} navigation={navigation} pathname={pathname} />}
     </Column>
   );
 };
@@ -296,6 +334,7 @@ const Sidebar: React.FC<SidebarProps> = ({ initialNavigation, ...rest }) => {
 // Use a custom comparison function for the entire Sidebar component
 const MemoizedSidebar = React.memo(Sidebar, (prevProps, nextProps) => {
   // Only re-render if the initialNavigation changes
+  // The component will re-render when pathname changes via usePathname hook internally
   return prevProps.initialNavigation === nextProps.initialNavigation;
 });
 

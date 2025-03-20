@@ -2,11 +2,11 @@
 
 import React, { forwardRef, useEffect, useState, useRef, useCallback } from "react";
 import { Column, Flex, Row, SmartLink, Text } from "@/once-ui/components";
-import { useHeadingLinks } from "@/app/utils/generateHeadingLinks";
+import { useHeadingLinks } from "@/once-ui/hooks/generateHeadingLinks";
 
 interface props extends React.ComponentProps<typeof Flex> { }
 
-export const HeadingNav = forwardRef<HTMLDivElement, props>(
+const HeadingNav = forwardRef<HTMLDivElement, props>(
   ({
     className,
     style,
@@ -251,3 +251,4 @@ export const HeadingNav = forwardRef<HTMLDivElement, props>(
 );
 
 HeadingNav.displayName = "HeadingNav";
+export { HeadingNav };

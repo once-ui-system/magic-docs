@@ -3,12 +3,14 @@
 import React, { useState, useEffect, useRef, ReactNode } from "react";
 
 import "./CodeHighlight.css";
+import "./LineNumber.css";
 import styles from "./CodeBlock.module.scss";
 
 import { Flex, Button, IconButton, Scroller, Row, StyleOverlay } from "@/once-ui/components";
 
 import Prism from "prismjs";
 import "prismjs/plugins/line-highlight/prism-line-highlight";
+import "prismjs/plugins/line-numbers/prism-line-numbers";
 import "prismjs/components/prism-jsx";
 import "prismjs/components/prism-css";
 import "prismjs/components/prism-typescript";
@@ -37,6 +39,7 @@ interface CodeBlockProps extends React.ComponentProps<typeof Flex> {
   className?: string;
   style?: React.CSSProperties;
   onInstanceChange?: (index: number) => void;
+  lineNumbers?: boolean;
 }
 
 const CodeBlock: React.FC<CodeBlockProps> = ({
@@ -50,6 +53,7 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
   styleButton = false,
   reloadButton = false,
   fullscreenButton = false,
+  lineNumbers = false,
   compact = false,
   className,
   style,
@@ -243,7 +247,9 @@ const CodeBlock: React.FC<CodeBlockProps> = ({
               style={{ maxHeight: `${codeHeight}rem` }}
               data-line={highlight}
               ref={preRef}
-              className={classNames(styles.pre, `language-${language}`)}
+              className={classNames(lineNumbers ? styles.lineNumberPadding : styles.padding, styles.pre, `language-${language}`, {
+                "line-numbers": lineNumbers,
+              })}
               tabIndex={-1}
             >
               <code ref={codeRef} className={classNames(styles.code, `language-${language}`)}>

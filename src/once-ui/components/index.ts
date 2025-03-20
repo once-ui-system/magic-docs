@@ -24,6 +24,8 @@ export * from "./Flex";
 export * from "./GlitchFx";
 export * from "./Grid";
 export * from "./Heading";
+export * from "./HeadingLink";
+export * from "./HeadingNav";
 export * from "./HoloFx";
 export * from "./Icon";
 export * from "./IconButton";

@@ -30,16 +30,13 @@ export const Footer = () => {
       <Row maxWidth={layout.footer.width} horizontal="space-between" gap="40" wrap paddingX="2">
         <Column gap="12" textVariant="label-default-m">
           <Row paddingX="2" marginBottom="8">
-            Solutions
+            Products
           </Row>
           <Row>
-            <SmartLink href=" ">Products</SmartLink>
+            <SmartLink href="https://once-ui.com">Once UI</SmartLink>
           </Row>
           <Row>
-            <SmartLink href=" ">Use cases</SmartLink>
-          </Row>
-          <Row>
-            <SmartLink href=" ">Customers</SmartLink>
+            <SmartLink href="https://magic-portfolio.com">Magic Portfolio</SmartLink>
           </Row>
         </Column>
         <Column gap="12" textVariant="label-default-m">
@@ -47,13 +44,16 @@ export const Footer = () => {
             Resources
           </Row>
           <Row>
-            <SmartLink href=" ">About us</SmartLink>
+            <SmartLink href="https://dopler.app">About us</SmartLink>
           </Row>
           <Row>
-            <SmartLink href=" ">Terms of Use</SmartLink>
+            <SmartLink href="https://dopler.app/terms">Terms of Use</SmartLink>
           </Row>
           <Row>
-            <SmartLink href=" ">Privacy Policy</SmartLink>
+            <SmartLink href="https://dopler.app/privacy">Privacy Policy</SmartLink>
+          </Row>
+          <Row>
+            <SmartLink href="https://dopler.app/license">License Agreement</SmartLink>
           </Row>
         </Column>
         <Column data-border="rounded" gap="12" textVariant="label-default-m">

@@ -15,6 +15,6 @@ const DocsLayout = memo(({
   );
 });
 
-DocsLayout.displayName = 'RoadmapLayout';
+DocsLayout.displayName = 'ChangelogLayout';
 
 export default DocsLayout;

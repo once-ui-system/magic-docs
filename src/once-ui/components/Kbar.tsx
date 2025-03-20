@@ -1,9 +1,9 @@
- "use client";
+"use client";
 
 import React, { useState, useEffect, useRef, useCallback, useMemo, ReactNode } from "react";
 import { Flex, Text, Icon, Column, Input, Option, Row } from ".";
 import { createPortal } from "react-dom";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import styles from "./Kbar.module.scss";
 
 export interface KbarItem {
@@ -221,28 +221,16 @@ export const KbarContent: React.FC<KbarContentProps> = ({ isOpen, onClose, items
   // Lock body scroll when kbar is open
   useEffect(() => {
     if (isOpen) {
-      // Save current scroll position
-      const scrollY = window.scrollY;
-      // Add styles to prevent scrolling but maintain position
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${scrollY}px`;
-      document.body.style.width = '100%';
+      // Prevent body scrolling when kbar is open
+      document.body.style.overflow = "hidden";
     } else {
-      // Restore scroll position when kbar is closed
-      const scrollY = document.body.style.top;
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
-      }
+      // Restore body scrolling when kbar is closed
+      document.body.style.overflow = "unset";
     }
     
     return () => {
       // Cleanup function to ensure body scroll is restored
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
+      document.body.style.overflow = "unset";
     };
   }, [isOpen]);
 
@@ -395,6 +383,8 @@ export interface KbarProps {
 
 export const Kbar: React.FC<KbarProps> = ({ items, children, ...rest }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -403,6 +393,13 @@ export const Kbar: React.FC<KbarProps> = ({ items, children, ...rest }) => {
   const handleClose = () => {
     setIsOpen(false);
   };
+
+  // Close Kbar when pathname changes
+  useEffect(() => {
+    if (isOpen) {
+      handleClose();
+    }
+  }, [pathname]);
 
   // Add keyboard shortcut listener
   useEffect(() => {

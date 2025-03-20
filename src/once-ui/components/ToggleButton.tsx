@@ -96,7 +96,7 @@ const ToggleButton = forwardRef<HTMLElement, ToggleButtonProps>(
             {label || children}
           </Flex>
         )}
-        {suffixIcon && <Icon name={suffixIcon} size={size === "l" ? "m" : "s"} />}
+        {suffixIcon && <Icon name={suffixIcon} size={size === "l" ? "s" : "xs"} />}
       </ElementType>
     );
   },

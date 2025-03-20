@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, Column, Row, Card, User, Heading, StatusIndicator } from "@/once-ui/components";
-import { baseURL, layout, meta, roadmap, schema, task } from "@/app/resources";
+import { baseURL, layout, meta, roadmap, schema, task } from "../resources";
 import { Meta, Schema } from "@/once-ui/modules";
 import { Schemes } from "@/once-ui/types";
 
@@ -37,19 +37,21 @@ const RoadmapTask = ({ task: taskItem }: { task: Task }) => (
       </Text>
     )}
     
-    {taskItem.user && (
-      <Row marginTop="8" fillWidth vertical="center" horizontal="space-between">
-        <User
-          avatarProps={{ 
-            size: "s",
-            src: taskItem.user.avatar,
-            empty: !taskItem.user.avatar
-          }}
-        >
-          <Row paddingLeft="4" textVariant="label-default-s">
-            {taskItem.user.name}
-          </Row>
-        </User>
+    {(taskItem.user || taskItem.type) && (
+        <Row marginTop="8" fillWidth vertical="center" horizontal="space-between">
+          {taskItem.user && (
+            <User
+              avatarProps={{ 
+                size: "s",
+                src: taskItem.user.avatar,
+                empty: !taskItem.user.avatar
+            }}
+          >
+            <Row paddingLeft="4" textVariant="label-default-s">
+              {taskItem.user.name}
+            </Row>
+          </User>
+        )}
         {taskItem.type && (
           <Row vertical="center" gap="8">
             <StatusIndicator 
@@ -65,7 +67,7 @@ const RoadmapTask = ({ task: taskItem }: { task: Task }) => (
 
 export default function RoadmapPage() {
   return (
-    <Column maxWidth={layout.body.width} gap="24" as="main">
+    <Column maxWidth={layout.body.width} minWidth={0} gap="24" as="main">
       <Schema
         as="webPage"
         title={meta.roadmap.title}
@@ -86,9 +88,9 @@ export default function RoadmapPage() {
       </Column>
 
       {roadmap.map((product, productIndex) => (
-        <Column key={productIndex} gap="24" marginTop={productIndex > 0 ? "48" : "0"}>
+        <Column key={productIndex} gap="24" marginTop={productIndex > 0 ? "48" : "0"} fillWidth>
           {product.product && (
-            <Row gap="16" marginBottom="16" vertical="center">
+            <Row gap="16" marginBottom="16" vertical="center" fillWidth>
               <Row minWidth="40" width="40" height="40" padding="8" vertical="center">
                 <Row radius="full" fillWidth minHeight="4" solid="brand-medium" data-brand={product.brand as Schemes} data-solid="inverse"/>
               </Row>

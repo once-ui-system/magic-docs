@@ -1,6 +1,5 @@
 import React from "react";
-import { Column, SmartLink, Row, Line, Text, Heading, SmartImage } from "@/once-ui/components";
-import { HeadingLink } from "@/product";
+import { Column, SmartLink, Row, Line, Text, Heading, SmartImage, HeadingLink } from "@/once-ui/components";
 import { baseURL, meta, schema, changelog } from "@/app/resources";
 import { Meta, Schema } from "@/once-ui/modules";
 import { formatDate } from "../utils/formatDate";
@@ -47,7 +46,7 @@ const Changelog: React.FC = () => {
                 position="sticky" top="80"
                 fillWidth
                 minHeight="32" 
-                radius="full" 
+                radius="full"
                 center
                 paddingX="16"
                 paddingY="8"

@@ -9,7 +9,6 @@ import {
   HiCheck,
   HiOutlineSun,
   HiOutlineMoon,
-  HiMiniQuestionMarkCircle,
   HiMiniMinus,
   HiOutlineEye,
   HiOutlineEyeSlash,
@@ -23,9 +22,7 @@ import {
   HiOutlineLink,
   HiExclamationTriangle,
   HiArrowUpRight,
-  HiInformationCircle,
   HiExclamationCircle,
-  HiCheckCircle,
   HiOutlineShieldCheck,
   HiOutlineSparkles,
   HiOutlineBars3BottomLeft,
@@ -40,11 +37,24 @@ import {
   HiOutlinePhoto,
   HiOutlineMap,
   HiOutlineClock,
+  HiOutlineLightBulb,
+  HiOutlineAdjustmentsHorizontal,
+  HiOutlinePaintBrush,
+  HiOutlineDocumentDuplicate,
+  HiOutlineDocumentText,
+  HiOutlineSquare3Stack3D,
+  HiOutlineLanguage,
+  HiOutlineCheckCircle,
+  HiOutlineCube,
+  HiOutlineBars3,
+  HiOutlineExclamationTriangle,
+  HiOutlineExclamationCircle,
+  HiOutlineKey
 } from "react-icons/hi2";
 
 import { RiVisaLine } from "react-icons/ri";
 
-import { FaDiscord, FaGithub, FaGoogle, FaLinkedin, FaThreads } from "react-icons/fa6";
+import { FaDiscord, FaGithub, FaGoogle, FaLinkedin, FaMailchimp, FaThreads } from "react-icons/fa6";
 
 export const iconLibrary: Record<string, IconType> = {
   chevronUp: HiChevronUp,
@@ -58,9 +68,9 @@ export const iconLibrary: Record<string, IconType> = {
   computer: HiOutlineComputerDesktop,
   helpCircle: HiOutlineQuestionMarkCircle,
   infoCircle: HiOutlineInformationCircle,
-  warningTriangle: HiExclamationTriangle,
-  errorCircle: HiExclamationCircle,
-  checkCircle: HiCheckCircle,
+  warningTriangle: HiOutlineExclamationTriangle,
+  errorCircle: HiOutlineExclamationCircle,
+  checkCircle: HiOutlineCheckCircle,
   eyeDropper: HiEyeDropper,
   clipboard: HiOutlineClipboard,
   person: HiMiniUser,
@@ -89,5 +99,18 @@ export const iconLibrary: Record<string, IconType> = {
   card: HiOutlineIdentification,
   image: HiOutlinePhoto,
   roadmap: HiOutlineMap,
-  changelog: HiOutlineClock
+  changelog: HiOutlineClock,
+  lightbulb: HiOutlineLightBulb,
+  config: HiOutlineAdjustmentsHorizontal,
+  mailchimp: FaMailchimp,
+  style: HiOutlinePaintBrush,
+  pages: HiOutlineDocumentDuplicate,
+  learn: HiOutlineAcademicCap,
+  page: HiOutlineDocumentText,
+  project: HiOutlineSquare3Stack3D,
+  article: HiOutlineQueueList,
+  language: HiOutlineLanguage,
+  components: HiOutlineCube,
+  sidebar: HiOutlineBars3,
+  password: HiOutlineKey,
 };

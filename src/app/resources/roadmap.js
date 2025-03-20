@@ -154,12 +154,30 @@ const roadmap = [
 ];
 
 const task = {
-  bug: { label: "Bug", color: "red" },
-  feature: { label: "Feature", color: "green" },
-  improvement: { label: "Improvement", color: "blue" },
-  documentation: { label: "Docs", color: "magenta" },
-  performance: { label: "Performance", color: "orange" },
-  security: { label: "Security", color: "indigo" }
+  bug: {
+    label: "Bug", 
+    color: "red" 
+  },
+  feature: { 
+    label: "Feature", 
+    color: "green" 
+  },
+  improvement: { 
+    label: "Improvement", 
+    color: "blue" 
+  },
+  documentation: { 
+    label: "Docs", 
+    color: "magenta" 
+  },
+  performance: { 
+    label: "Performance", 
+    color: "orange" 
+  },
+  security: { 
+    label: "Security", 
+    color: "indigo" 
+  }
 };
 
 export { roadmap, task };

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { useLinearPublicLabels } from '@/app/resources/roadmap';
+import { useLinearPublicLabels, specificTeams, teamNameorID } from '@/app/resources/roadmap';
 
 // Linear API endpoint - handles server-side requests to Linear
 export async function GET() {
@@ -71,8 +71,24 @@ export async function GET() {
       });
     }
     
-    const teams = teamsResult.data.teams.nodes;
+    let teams = teamsResult.data.teams.nodes;
     console.log(`Found ${teams.length} teams in Linear workspace`);
+    
+    // Filter teams if specificTeams is enabled
+    if (specificTeams && Array.isArray(teamNameorID) && teamNameorID.length > 0) {
+      console.log(`Filtering teams to only include: ${teamNameorID.join(', ')}`);
+      teams = teams.filter(team => {
+        // Check if team name, key (ID), or id matches any in the teamNameorID array
+        return teamNameorID.some(nameOrId => {
+          const teamNameLower = team.name?.toLowerCase();
+          const teamKeyLower = team.key?.toLowerCase();
+          const nameOrIdLower = nameOrId.toLowerCase();
+          
+          return teamNameLower === nameOrIdLower || teamKeyLower === nameOrIdLower || team.id === nameOrId;
+        });
+      });
+      
+    }
     
     // Initialize structure to hold all team data with their issues
     const roadmapData = [];

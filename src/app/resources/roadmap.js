@@ -1,5 +1,6 @@
 
 import { baseURL } from "./config";
+
 //_LINEAR_______________________________
 // If using linear, set this to true and set LINEAR_API_KEY in .env to your Linear API key
 const useLinear = false; // Set to false to use static data below
@@ -8,9 +9,10 @@ const useLinearPublicLabels = false; // When true, only linear tasks with the pu
 // Linear data refreshes every hour, to always fetch fresh data, delete line 218
 
 const specificTeams = false; // Set to true to only show specific teams specified in the array below
-const teamNameorID = ["Development", "BUS"]; // Specify the team names or IDs to filter by
+const teamNameorID = ["Development"]; // Specify the team names or IDs to filter by
 //______________________________________
 
+// Static data
 const roadmap = [
   {
     product: "Magic Docs Core",
@@ -216,7 +218,6 @@ const fetchLinearRoadmap = async () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      next: { revalidate: 3600 }, // Cache for 1 hour (3600 seconds)
     });
     
     // If the API call fails, log it and return null

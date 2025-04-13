@@ -1,4 +1,5 @@
 
+import { baseURL } from "./config";
 //_LINEAR_______________________________
 // If using linear, set this to true and set LINEAR_API_KEY in .env to your Linear API key
 const useLinear = false; // Set to false to use static data below

@@ -1,3 +1,11 @@
+import { baseURL } from "./config";
+
+// If set to true, make sure to set LINEAR_API_KEY in .env & baseURL in config.js
+const useLinear = false; // Set to false to use static data 
+// Linear roadmap data resets every hour (delete line 211 for fresh data)
+export const useLinearPublicLabels = false; // When true, only linear tasks with the public label will be shown
+
+// Static data
 const roadmap = [
   {
     product: "Magic Docs Core",
@@ -180,4 +188,72 @@ const task = {
   }
 };
 
-export { roadmap, task };
+// Function to fetch roadmap data from Linear API endpoint
+const fetchLinearRoadmap = async () => {
+  try {
+    console.log('Fetching Linear roadmap data...');
+    
+    let baseUrl = '';
+    if (typeof window !== 'undefined') {
+    // Client-side: Use the current origin
+    baseUrl = window.location.origin;
+  } else {
+    // Server-side: Use baseURL in production, otherwise default to the current localhost
+    const defaultLocalhost = `http://localhost:${process.env.PORT || 3000}`;
+    baseUrl = process.env.NODE_ENV === 'production' ? baseURL : defaultLocalhost;
+  }
+    
+    const apiUrl = `${baseUrl}/api/linear`;
+    console.log(`Using Linear API URL: ${apiUrl}`);
+    
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    
+    // If the API call fails, log it and return null
+    if (!response.ok) {
+      const errorText = await response.text().catch(() => 'No error details available');
+      console.error(`Linear API endpoint error (${response.status}):`, errorText);
+      return null;
+    }
+    
+    const result = await response.json();
+    
+    if (result.error || !result.data) {
+      console.error('Linear API error:', result.error || 'No data returned');
+      return null;
+    }
+    
+    if (Array.isArray(result.data) && result.data.length > 0) {
+      console.log(`Successfully loaded roadmap data from Linear with ${result.data.length} team(s)`);
+      return result.data;
+    } else {
+      console.log('Linear API returned empty roadmap data');
+      return null;
+    }
+  } catch (error) {
+    console.error('Error fetching data from Linear API:', error);
+    return null;
+  }
+};
+
+// Function to get roadmap data - either from Linear or fallback to static data
+const getRoadmap = async () => {
+  // Try to get data from Linear first
+  if (!useLinear) {
+    return roadmap;
+  }
+  const linearData = await fetchLinearRoadmap();
+  if (linearData) {
+    return linearData;
+  }
+  
+  console.log('Using static roadmap data as fallback');
+  // Fallback to static data if Linear integration is not configured or fails
+  return roadmap;
+};
+
+export { roadmap, task, getRoadmap };

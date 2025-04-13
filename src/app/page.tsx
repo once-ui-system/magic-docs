@@ -11,10 +11,14 @@ import {
   Line, 
   StatusIndicator
 } from "@/once-ui/components";
-import { baseURL, meta, schema, changelog, roadmap, routes } from "@/app/resources";
+import { baseURL, meta, schema, changelog, routes } from "@/app/resources";
 import { Meta, Schema } from "@/once-ui/modules";
 import { formatDate } from "./utils/formatDate";
 import { PageList } from "@/product/PageList";
+import { getRoadmap } from "./resources/roadmap";
+
+// Get the latest changelog entry
+const latestChangelogEntry = changelog[0];
 
 export async function generateMetadata() {
   return Meta.generate({
@@ -26,13 +30,13 @@ export async function generateMetadata() {
   });
 }
 
-// Calculate roadmap progress stats
-const calculateRoadmapStats = () => {
+// Calculate roadmap progress stats from the data
+const calculateRoadmapStats = (roadmapData) => {
   let totalTasks = 0;
   let inProgressTasks = 0;
   let completedTasks = 0;
   
-  roadmap.forEach(product => {
+  roadmapData.forEach(product => {
     product.columns.forEach(column => {
       totalTasks += column.tasks.length;
       
@@ -56,12 +60,22 @@ const calculateRoadmapStats = () => {
   };
 };
 
-const roadmapStats = calculateRoadmapStats();
+export default async function Home() {
+  // Fetch roadmap data server-side
+  let roadmapStats = {
+    totalTasks: 0,
+    inProgressTasks: 0,
+    completedTasks: 0,
+    progressPercentage: 0
+  };
 
-// Get the latest changelog entry
-const latestChangelogEntry = changelog[0];
+  try {
+    const data = await getRoadmap();
+    roadmapStats = calculateRoadmapStats(data);
+  } catch (error) {
+    console.error('Error fetching roadmap data:', error);
+  }
 
-export default function Home() {
   return (
     <Column maxWidth={56} gap="xl">
       <Schema
@@ -74,7 +88,7 @@ export default function Home() {
           name: schema.name
         }}
       />
-      
+    
       {/* Hero Section */}
       <Column fillWidth gap="l" paddingTop="l">
         <Row fillWidth gap="l">

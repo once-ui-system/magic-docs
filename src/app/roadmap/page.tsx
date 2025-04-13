@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, Column, Row, Card, User, Heading, StatusIndicator } from "@/once-ui/components";
-import { baseURL, layout, meta, roadmap, schema, task } from "../resources";
+import { baseURL, layout, meta, schema, task } from "../resources";
+import { getRoadmap } from "../resources/roadmap";
 import { Meta, Schema } from "@/once-ui/modules";
 import { Schemes } from "@/once-ui/types";
 
@@ -65,7 +66,17 @@ const RoadmapTask = ({ task: taskItem }: { task: Task }) => (
   </Column>
 );
 
-export default function RoadmapPage() {
+export default async function RoadmapPage() {
+  // Fetch roadmap data server-side
+  let roadmapData: any[] = [];
+  
+  try {
+    roadmapData = await getRoadmap();
+  } catch (error) {
+    console.error('Error fetching roadmap data:', error);
+    roadmapData = []; // Set to empty array if error occurs
+  }
+  
   return (
     <Column maxWidth={layout.body.width} minWidth={0} gap="24" as="main">
       <Schema
@@ -78,6 +89,7 @@ export default function RoadmapPage() {
           name: schema.name
         }}
       />
+      
       <Column fillWidth gap="12" paddingBottom="l">
         <Heading variant="display-strong-s">
           Roadmap
@@ -86,72 +98,78 @@ export default function RoadmapPage() {
           List of features and tasks that are planned for the next release.
         </Text>
       </Column>
-
-      {roadmap.map((product, productIndex) => (
-        <Column key={productIndex} gap="24" marginTop={productIndex > 0 ? "48" : "0"} fillWidth>
-          {product.product && (
-            <Row gap="16" marginBottom="16" vertical="center" fillWidth>
-              <Row minWidth="40" width="40" height="40" padding="8" vertical="center">
-                <Row radius="full" fillWidth minHeight="4" solid="brand-medium" data-brand={product.brand as Schemes} data-solid="inverse"/>
-              </Row>
-              <Heading as="h2" variant="display-default-xs">
-                {product.product}
-              </Heading>
-            </Row>
-          )}
-          
-          <Row gap="4" fillWidth overflowX="auto" paddingBottom="16">
-            {product.columns.map((column, columnIndex) => (
-              <Column key={columnIndex} padding="4" gap="4" radius="s-4" border="neutral-alpha-weak" background="overlay" fillWidth minWidth={20}>
-                <Row fillWidth vertical="center" gap="8" paddingY="8" paddingX="16">
-                  <Text variant="label-default-m">
-                    {column.title}
-                  </Text>
-                  <Text variant="label-default-s" onBackground="neutral-weak">
-                    {column.tasks.length}
-                  </Text>
+      
+      {roadmapData && roadmapData.length > 0 ? (
+        roadmapData.map((product, productIndex) => (
+          <Column key={productIndex} gap="24" marginTop={productIndex > 0 ? "48" : "0"} fillWidth>
+            {product.product && (
+              <Row gap="16" marginBottom="16" vertical="center" fillWidth>
+                <Row minWidth="40" width="40" height="40" padding="8" vertical="center">
+                  <Row radius="full" fillWidth minHeight="4" solid="brand-medium" data-brand={product.brand as Schemes} data-solid="inverse"/>
                 </Row>
-                
-                <Column gap="4" fillWidth>
-                  {column.tasks.map((taskItem, taskIndex) => {
-                    // Ensure the task item conforms to the Task interface
-                    const typedTask: Task = {
-                      ...taskItem,
-                      type: taskItem.type as keyof typeof task
-                    };
-                    
-                    return typedTask.href ? (
-                      <Card
-                        onBackground="neutral-strong"
-                        border="neutral-alpha-weak"
-                        fillWidth
-                        radius="s"
-                        key={taskIndex} 
-                        href={typedTask.href}
-                        padding="16"
-                      >
-                        <RoadmapTask task={typedTask} />
-                      </Card>
-                    ) : (
-                      <Column
-                        onBackground="neutral-strong"
-                        border="neutral-alpha-weak"
-                        fillWidth
-                        radius="s"
-                        key={taskIndex}
-                        padding="16"
-                        gap="8"
-                      >
-                        <RoadmapTask task={typedTask} />
-                      </Column>
-                    );
-                  })}
+                <Heading as="h2" variant="display-default-xs">
+                  {product.product}
+                </Heading>
+              </Row>
+            )}
+            
+            <Row gap="4" fillWidth overflowX="auto" paddingBottom="16">
+              {product.columns.map((column, columnIndex) => (
+                <Column key={columnIndex} padding="4" gap="4" radius="s-4" border="neutral-alpha-weak" background="overlay" fillWidth minWidth={20}>
+                  <Row fillWidth vertical="center" gap="8" paddingY="8" paddingX="16">
+                    <Text variant="label-default-m">
+                      {column.title}
+                    </Text>
+                    <Text variant="label-default-s" onBackground="neutral-weak">
+                      {column.tasks.length}
+                    </Text>
+                  </Row>
+                  
+                  <Column gap="4" fillWidth>
+                    {column.tasks.map((taskItem, taskIndex) => {
+                      // Ensure the task item conforms to the Task interface
+                      const typedTask: Task = {
+                        ...taskItem,
+                        type: taskItem.type as keyof typeof task
+                      };
+                      
+                      return typedTask.href ? (
+                        <Card
+                          onBackground="neutral-strong"
+                          border="neutral-alpha-weak"
+                          fillWidth
+                          radius="s"
+                          key={taskIndex} 
+                          href={typedTask.href}
+                          padding="16"
+                        >
+                          <RoadmapTask task={typedTask} />
+                        </Card>
+                      ) : (
+                        <Column
+                          onBackground="neutral-strong"
+                          border="neutral-alpha-weak"
+                          fillWidth
+                          radius="s"
+                          key={taskIndex}
+                          padding="16"
+                          gap="8"
+                        >
+                          <RoadmapTask task={typedTask} />
+                        </Column>
+                      );
+                    })}
+                  </Column>
                 </Column>
-              </Column>
-            ))}
-          </Row>
+              ))}
+            </Row>
+          </Column>
+        ))
+      ) : (
+        <Column padding="32" fillWidth vertical="center" horizontal="center">
+          <Text variant="body-default-l">No roadmap data available</Text>
         </Column>
-      ))}
+      )}
     </Column>
   );
 }

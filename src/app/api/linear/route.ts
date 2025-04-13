@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { useLinearPublicLabels, specificTeams, teamNameorID } from '@/app/resources/roadmap';
 
 // Linear API endpoint - handles server-side requests to Linear

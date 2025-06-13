@@ -11,7 +11,7 @@ export default function Error({
 }) {
   return (
     <Column maxWidth="s" gap="24" padding="32" align="center" horizontal="center" >
-      <Heading variant="display-strong-s">Dang! It's broken...</Heading>
+      <Heading variant="display-strong-s">Dang! It&apos;s broken...</Heading>
       <Text wrap="balance" marginBottom="8">
         An error occurred while rendering this page. This is what happened:
       </Text>

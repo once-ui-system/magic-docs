@@ -1,12 +1,9 @@
 "use client";
 
-import React, { useEffect, useState, useMemo, useRef } from "react";
-import { ToggleButton } from '@/once-ui/components/ToggleButton';
-import { Accordion, Column, Flex, Icon, Row, Tag } from "@/once-ui/components";
+import React, { useEffect, useState, useMemo } from "react";
+import { Schemes, Accordion, Column, Flex, Icon, Row, Tag, ToggleButton } from "@once-ui-system/core";
 import { usePathname } from 'next/navigation';
-import { layout } from "@/app/resources/config";
-import { routes } from "@/app/resources";
-import { Schemes } from "@/once-ui/types";
+import { routes, layout } from "@/resources";
 
 import styles from './Sidebar.module.scss';
 
@@ -46,30 +43,52 @@ const NavigationItemComponent: React.FC<{
   const pathSegments = pathname.split('/').filter(Boolean);
   
   // For top-level directories, check if their name is in the pathname segments
-  // This will match routes like "/docs/once-ui/quick-start" for the "once-ui" parent
+  // This will match routes like "/once-ui/quick-start" for the "once-ui" parent
   const isTopLevelMatch = depth === 0 && 
                           pathSegments.length >= 2 && 
                           pathSegments[0] === 'docs' && 
                           correctedSlug.split('/')[0] === pathSegments[1];
   
   // For deeper items, check for exact match or if it's a parent path
-  const isExactMatch = pathname === `/docs/${correctedSlug}`;
-  const isParentPath = pathname.startsWith(`/docs/${correctedSlug}/`);
+  const isExactMatch = pathname === `/${correctedSlug}`;
+  const isParentPath = pathname.startsWith(`/${correctedSlug}/`);
   
-  // Combine all checks
-  const isSelected = isExactMatch || isParentPath || isTopLevelMatch;
+  // Only consider exact matches for selection, not parent paths
+  const isSelected = isExactMatch;
+  
+  // Use this for accordion open state - if it's a parent or exact match
+  const isActive = isExactMatch || isParentPath || isTopLevelMatch;
+  
+  // Check if the current path is within this section by comparing path segments
+  // This is more reliable for deeper nested routes
+  const isPathWithinSection = (() => {
+    // Skip this check for empty paths
+    if (!correctedSlug) return false;
+    
+    const sectionSegments = correctedSlug.split('/').filter(Boolean);
+    
+    // If there aren't enough segments in the path, it can't be within this section
+    if (pathSegments.length < sectionSegments.length) return false;
+    
+    // Check if all section segments match the corresponding path segments
+    for (let i = 0; i < sectionSegments.length; i++) {
+      if (pathSegments[i] !== sectionSegments[i]) {
+        return false;
+      }
+    }
+    
+    return true;
+  })();
   
   // For accordion sections, check if any child's path is in the current URL
   const hasActiveChild = item.children?.some(child => {
     const childSlug = child.slug;
-    const childSegments = childSlug.split('/');
+    const childSegments = childSlug.split('/').filter(Boolean);
     
     // Check if the pathname segments match this child's segments
-    // This handles nested paths like "/docs/once-ui/quick-start" for the "once-ui" parent
-    if (pathSegments.length >= childSegments.length + 1) {
-      // +1 for the "docs" segment
+    if (pathSegments.length >= childSegments.length) {
       for (let i = 0; i < childSegments.length; i++) {
-        if (pathSegments[i + 1] !== childSegments[i]) {
+        if (pathSegments[i] !== childSegments[i]) {
           return false;
         }
       }
@@ -78,6 +97,10 @@ const NavigationItemComponent: React.FC<{
     
     return false;
   });
+  
+  // Check if current section should be open based on path matching
+  // This ensures the section is open when arriving at a page within this section
+  const shouldBeOpen = isSelected || hasActiveChild || isParentPath || isPathWithinSection;
 
   if (item.children) {
     return (
@@ -98,7 +121,7 @@ const NavigationItemComponent: React.FC<{
             paddingBottom={undefined}
             paddingLeft="4"
             paddingTop="4"
-            open={hasActiveChild} // Set accordion to open if it contains the active route
+            open={shouldBeOpen}
             title={
               <Row textVariant="label-strong-s" onBackground="brand-strong">
                 {item.title}
@@ -126,25 +149,25 @@ const NavigationItemComponent: React.FC<{
   return (
     <ToggleButton
       fillWidth
-      justifyContent="space-between"
+      horizontal="space-between"
       selected={isSelected}
       className={depth === 0 ? styles.navigation : undefined}
-      href={`/docs/${correctedSlug}`}>
+      href={`/${correctedSlug}`}>
       <Row fillWidth horizontal="space-between" vertical="center">
-          <Row
-            overflow="hidden"
-            gap="8"
-            onBackground={isSelected ? "neutral-strong" : "neutral-weak"}
-            textVariant={isSelected ? "label-strong-s" : "label-default-s"}
-            style={{ textOverflow: "ellipsis", whiteSpace: "nowrap"}}>
-              {item.navIcon && <Icon size="xs" name={item.navIcon}/>}
-              {item.label || item.title}
-          </Row>
-          {item.navTag && (
-            <Tag data-theme="dark" data-brand={item.navTagVariant} style={{marginRight: "-0.5rem", transform: "scale(0.8)", transformOrigin: "right center"}} variant="brand" size="s">
-                {item.navTag}
-            </Tag>
-          )}
+        <Row
+          overflow="hidden"
+          gap="8"
+          onBackground={isSelected ? "neutral-strong" : "neutral-weak"}
+          textVariant={isSelected ? "label-strong-s" : "label-default-s"}
+          style={{ textOverflow: "ellipsis", whiteSpace: "nowrap"}}>
+            {item.navIcon && <Icon size="xs" name={item.navIcon}/>}
+            {item.label || item.title}
+        </Row>
+        {item.navTag && (
+          <Tag data-theme="dark" data-brand={item.navTagVariant} style={{marginRight: "-0.5rem", transform: "scale(0.8)", transformOrigin: "right center"}} variant="brand" size="s">
+              {item.navTag}
+          </Tag>
+        )}
       </Row>
     </ToggleButton>
   );
@@ -175,7 +198,7 @@ const ResourceLinkComponent: React.FC<{
   return (
     <ToggleButton
       fillWidth
-      justifyContent="space-between"
+      horizontal="space-between"
       selected={isSelected}
       className={styles.navigation}
       href={href}>

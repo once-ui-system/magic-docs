@@ -3,7 +3,7 @@ title: "Feedback"
 summary: "Learn how to use the Feedback component to display informational, success, warning, and error messages to users."
 updatedAt: "2025-03-08"
 navLabel: "Feedback"
-navIcon: "infoCircle"
+navIcon: "info"
 ---
 
 The Feedback component provides a consistent way to communicate status messages, alerts, and notifications to users. It supports different variants to convey different types of information effectively.
@@ -47,7 +47,7 @@ Each variant is designed to communicate a specific type of message:
   description="There was a problem processing your request. Please try again."
 />
 
-## With Action Button
+## With Button
 
 You can add an action button to provide users with a direct way to respond:
 
@@ -55,11 +55,9 @@ You can add an action button to provide users with a direct way to respond:
   variant="info"
   title="New Feature Available"
   description="We've added a new feature that you might be interested in."
-  actionButtonProps={{
-    children: "Learn More",
-    variant: "primary"
-  }}
-/>
+>
+  <Button size="s">Learn More</Button>
+</Feedback>
 
 ## Implementation Example
 

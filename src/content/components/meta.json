@@ -1,7 +1,6 @@
-{ 
-  "order": 1,
+{
   "title": "Components",
   "pages": {
-    "overview": 0
+    "overview": 1
   }
 }

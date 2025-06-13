@@ -2,10 +2,9 @@
 
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Button, Flex, Logo, NavIcon, Row, Kbar } from "@/once-ui/components";
-import { layout, routes } from "@/app/resources/config";
+import { Button, Fade, Flex, Logo, NavIcon, Row, Kbar, useTheme } from "@once-ui-system/core";
+import { layout, routes } from "@/resources/once-ui.config";
 import { Sidebar, NavigationItem } from "./Sidebar";
-import { useTheme } from "@/once-ui/components/ThemeProvider";
 
 export function Header() {
   const [sidebarVisible, setSidebarVisible] = useState(false);
@@ -60,7 +59,7 @@ export function Header() {
           section: "Documentation",
           shortcut: [],
           keywords: keywords,
-          href: `/docs/${correctedSlug}`,
+          href: `/${correctedSlug}`,
           icon: item.navIcon || "document",
         });
       }
@@ -153,11 +152,22 @@ export function Header() {
 
   return (
     <>
-      <Flex as="header" horizontal="center" position="sticky" top="0" zIndex={9} fillWidth vertical="center" background="surface" borderBottom="neutral-alpha-weak" paddingY="12" paddingX="l">
+      <Fade
+        pattern={{ display: true, size: "2" }}
+        zIndex={3}
+        pointerEvents="none"
+        height="64"
+        position="fixed"
+        fillWidth
+        top="0"
+        left="0"
+      />
+      <Flex as="header" horizontal="center" position="sticky" top="0" zIndex={9} fillWidth vertical="center" paddingY="12" paddingX="l">
         <Row maxWidth={layout.header.width} vertical="center" horizontal="space-between" gap="l">
-          <Row vertical="center" gap="8">
+          <Row fillWidth vertical="center" gap="8">
             <NavIcon show="m" onClick={toggleSidebar}/>
-            <Logo icon={false} size="s" href="/"/>
+            <Logo className="dark-flex" wordmark="/trademark/type-dark.svg" size="s" href="/"/>
+            <Logo className="light-flex" wordmark="/trademark/type-light.svg" size="s" href="/"/>
           </Row>
           <Kbar hide="m" items={kbar} radius="full" background="neutral-alpha-weak">
             <Button data-border="rounded" size="s" variant="tertiary" weight="default">
@@ -167,10 +177,10 @@ export function Header() {
               </Row>
             </Button>
           </Kbar>
-          <Row gap="8">
+          <Row fillWidth horizontal="end" gap="8" data-border="rounded">
             <Row hide="s">
-              <Button size="s" variant="secondary" href="https://once-ui.com">
-                Get started
+              <Button size="s" variant="secondary" href="https://once-ui.com/products">
+                Start building
               </Button>
             </Row>
             <Button href="https://once-ui.com/auth" size="s">

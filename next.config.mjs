@@ -1,18 +1,21 @@
-import mdx from "@next/mdx";
-import path from 'path';
-
-const withMDX = mdx({
-  extension: /\.mdx?$/,
-  options: {},
-});
-
 /** @type {import('next').NextConfig} */
+import withMDX from '@next/mdx'
+
+const withMDXConfig = withMDX({
+  extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [],
+    rehypePlugins: [],
+  },
+})
+
 const nextConfig = {
   sassOptions: {
     compiler: "modern",
     silenceDeprecations: ["legacy-js-api"],
   },
   pageExtensions: ["ts", "tsx", "md", "mdx"],
+  transpilePackages: ["next-mdx-remote"],
   output: 'standalone',
   experimental: {
     serverMinification: true,
@@ -58,4 +61,4 @@ const nextConfig = {
   },
 };
 
-export default withMDX(nextConfig);
+export default withMDXConfig(nextConfig);

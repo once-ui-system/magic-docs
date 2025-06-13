@@ -1,65 +1,48 @@
 import { MDXRemote, MDXRemoteProps } from "next-mdx-remote/rsc";
 import React, { ReactNode } from "react";
-import dynamic from "next/dynamic";
 
 import { 
-  Heading,
-  HeadingLink,
+  Heading, 
   Row,
-  SmartImage,
-  SmartLink,
+  Column,
+  Table,
+  Media, 
+  SmartLink, 
   Text,
+  InlineCode, 
+  Accordion, 
+  AccordionGroup ,
+  CodeBlock,
+  TextProps,
+  HeadingLink,
+  MediaProps,
+  Card,
+  Grid,
+  Feedback,
+  Button,
+  Icon,
+} from "@once-ui-system/core";
+import { PageList } from "./PageList";
+
+const onceUIComponents = {
+  Table,
+  Heading,
+  Text,
+  Row,
+  Media,
+  SmartLink,
   InlineCode,
   Accordion,
-  AccordionGroup
-} from "@/once-ui/components";
-import { CodeBlock } from "@/once-ui/modules/code/CodeBlock";
-import { TextProps } from "@/once-ui/interfaces";
-import { SmartImageProps } from "@/once-ui/components/SmartImage";
-
-type TableProps = {
-  data: {
-    headers: string[];
-    rows: string[][];
-  };
+  AccordionGroup,
+  CodeBlock,
+  Grid,
+  HeadingLink,
+  Feedback,
+  Button,
+  Icon,
+  Card,
+  Column,
 };
-
-function Table({ data }: TableProps) {
-  const headers = data.headers.map((header, index) => (
-    <th style={{textAlign: "left", borderBottom: "1px solid var(--neutral-alpha-medium)"}} className="px-16 py-12 font-label font-default font-s" key={index}>
-      {header}
-    </th>
-  ));
-  
-  const rows = data.rows.map((row, index) => (
-    <tr key={index}>
-      {row.map((cell, cellIndex) => (
-        <td className="px-16 py-12 font-body font-default font-s" key={cellIndex}>{cell}</td>
-      ))}
-    </tr>
-  ));
-
-  return (
-    <Row fillWidth radius="m" overflowY="hidden" border="neutral-alpha-medium" overflowX="auto" 
-      marginTop="8"
-      marginBottom="16">
-      <table className="fill-width surface-background" style={{borderSpacing: 0, borderCollapse: "collapse", minWidth: "32rem"}}>
-        <thead className="neutral-on-background-strong">
-          <tr>{headers}</tr>
-        </thead>
-        <tbody className="neutral-on-background-medium">
-          {rows.length > 0 ? (
-            rows
-          ) : (
-            <tr>
-              <td colSpan={headers.length} className="px-24 py-12 font-body font-default font-s">No data available</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-    </Row>
-  );
-}
 
 type CustomLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> & {
   href: string;
@@ -90,14 +73,14 @@ function CustomLink({ href, children, ...props }: CustomLinkProps) {
   );
 }
 
-function createImage({ alt, src, ...props }: SmartImageProps & { src: string }) {
+function createImage({ alt, src, ...props }: MediaProps & { src: string }) {
   if (!src) {
-    console.error("SmartImage requires a valid 'src' property.");
+    console.error("Media requires a valid 'src' property.");
     return null;
   }
 
   return (
-    <SmartImage
+    <Media
       marginTop="8"
       marginBottom="16"
       enlarge
@@ -121,11 +104,13 @@ function slugify(str: string): string {
 }
 
 function createHeading(as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6") {
-  const CustomHeading = ({ children, ...props }: TextProps<typeof as>) => {
+  // Use HeadingLinkProps to ensure type compatibility
+  const CustomHeading = ({ children, ...props }: Omit<React.ComponentProps<typeof HeadingLink>, 'as' | 'id'>) => {
     const slug = slugify(children as string);
     return (
       <HeadingLink
-        style={{ marginTop: "var(--static-space-24)", marginBottom: "var(--static-space-12)" }}
+        marginTop="24"
+        marginBottom="12"
         as={as}
         id={slug}
         {...props}
@@ -171,14 +156,14 @@ function createCodeBlock(props: any) {
       <CodeBlock
         marginTop="8"
         marginBottom="16"
-        codeInstances={[
+        codes={[
           {
             code: children,
             language,
             label
           }
         ]}
-        copyButton={true}
+        copyButton
       />
     );
   }
@@ -199,23 +184,8 @@ const components = {
   a: CustomLink as any,
   code: createInlineCode as any,
   pre: createCodeBlock as any,
-  Heading,
-  Text,
-  Table,
-  CodeBlock,
-  InlineCode,
-  Accordion,
-  AccordionGroup,
-  Feedback: dynamic(() => import("@/once-ui/components").then(mod => mod.Feedback)),
-  Button: dynamic(() => import("@/once-ui/components").then(mod => mod.Button)),
-  Card: dynamic(() => import("@/once-ui/components").then(mod => mod.Card)),
-  PageList: dynamic(() => import("@/product/PageList").then(mod => mod.PageList)),
-  Grid: dynamic(() => import("@/once-ui/components").then(mod => mod.Grid)),
-  Row: dynamic(() => import("@/once-ui/components").then(mod => mod.Row)),
-  Column: dynamic(() => import("@/once-ui/components").then(mod => mod.Column)),
-  Icon: dynamic(() => import("@/once-ui/components").then(mod => mod.Icon)),
-  SmartImage: dynamic(() => import("@/once-ui/components").then(mod => mod.SmartImage)),
-  SmartLink: dynamic(() => import("@/once-ui/components").then(mod => mod.SmartLink)),
+  PageList,
+  ...onceUIComponents,
 };
 
 type CustomMDXProps = MDXRemoteProps & {
@@ -223,7 +193,24 @@ type CustomMDXProps = MDXRemoteProps & {
 };
 
 export function CustomMDX(props: CustomMDXProps) {
-  return (
-    <MDXRemote {...props} components={{ ...components, ...(props.components || {}) }} />
-  );
+  // Add a try-catch block to handle any errors during MDX rendering
+  try {
+    return (
+      <MDXRemote {...props} components={{ ...components, ...(props.components || {}) }} />
+    );
+  } catch (error) {
+    console.error('Error rendering MDX content:', error);
+    
+    // Return a fallback UI when an error occurs
+    return (
+      <Column gap="16" padding="24" border="accent-medium" radius="m">
+        <Text variant="heading-strong-m" onBackground="accent-strong">
+          Error rendering content
+        </Text>
+        <Text variant="body-default-m" onBackground="accent-medium">
+          There was an error rendering this content. Please try refreshing the page.
+        </Text>
+      </Column>
+    );
+  }
 }

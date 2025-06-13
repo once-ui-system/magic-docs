@@ -1,5 +1,5 @@
-import { Row } from "@/once-ui/components";
-import { Sidebar } from "@/product/Sidebar";
+import { Row } from "@once-ui-system/core";
+import { Sidebar } from "@/product";
 import React, { memo } from "react";
 
 const DocsLayout = memo(({

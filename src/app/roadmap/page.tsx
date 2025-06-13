@@ -1,8 +1,7 @@
 import React from "react";
-import { Text, Column, Row, Card, User, Heading, StatusIndicator } from "@/once-ui/components";
-import { baseURL, layout, meta, roadmap, schema, task } from "../resources";
-import { Meta, Schema } from "@/once-ui/modules";
-import { Schemes } from "@/once-ui/types";
+import { Text, Column, Row, Card, User, Heading, StatusIndicator, Meta, Schema } from "@once-ui-system/core";
+import { baseURL, layout, meta, roadmap, schema, task } from "../../resources";
+import { Schemes } from "@once-ui-system/core";
 
 export interface Task {
   title: string;
@@ -83,7 +82,7 @@ export default function RoadmapPage() {
           Roadmap
         </Heading>
         <Text wrap="balance" onBackground="neutral-weak" variant="body-default-xl" marginBottom="20">
-          List of features and tasks that are planned for the next release.
+          List of features planned for Q2 2025
         </Text>
       </Column>
 

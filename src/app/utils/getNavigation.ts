@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import { Schemes } from '@/once-ui/types';
+import { Schemes } from '@once-ui-system/core';
 
 interface NavigationItem {
     slug: string;

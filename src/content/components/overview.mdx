@@ -22,12 +22,16 @@ Our components follow these design principles:
 Here's a quick overview of some of our most commonly used components:
 
 <Table data={{
-  headers: ["Component", "Purpose", "Key Features"],
+  headers: [
+    {content: "Component"}, 
+    {content: "Purpose"}, 
+    {content: "Key Features"}
+  ],
   rows: [
     ["Card", "Container for related content", "Flexible layout, hover states, interactive options"],
     ["Accordion", "Collapsible content sections", "Animated transitions, keyboard accessibility"],
     ["Feedback", "User notifications", "Multiple variants (success, error, warning, info)"],
-    ["SmartImage", "Enhanced image display", "Lazy loading, aspect ratio control, zoom capability"]
+    ["Media", "Enhanced image display", "Lazy loading, aspect ratio control, zoom capability"]
   ]
 }} />
 
@@ -37,7 +41,7 @@ Here's a simple example of using our components together:
 
 ```tsx
 <Card padding="m" radius="l" shadow="m">
-  <SmartImage src={image} alt={title} aspectRatio="16/9" />
+  <Media src={image} alt={title} aspectRatio="16/9" />
   <Text variant="heading-strong-m">{title}</Text>
   <Text variant="body-default-s">{description}</Text>
 </Card>

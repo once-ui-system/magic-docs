@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { routes } from '@/app/resources';
-import { Flex, Spinner } from '@/once-ui/components';
+import { routes } from '@/resources';
+import { Flex, Spinner } from '@once-ui-system/core';
 import NotFound from '@/app/not-found';
 
 interface RouteGuardProps {

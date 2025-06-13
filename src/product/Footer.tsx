@@ -1,4 +1,4 @@
-import { layout, social } from "@/app/resources/config";
+import { layout, social } from "@/resources/once-ui.config";
 import {
   Button,
   Column,
@@ -7,19 +7,20 @@ import {
   Row,
   SmartLink,
   ThemeSwitcher,
-} from "@/once-ui/components";
+} from "@once-ui-system/core";
 
 export const Footer = () => {
   return (
     <Column gap="40" fillWidth paddingY="xl" paddingX="l" horizontal="center" position="relative">
       <Row gap="12" textVariant="label-default-m" maxWidth={layout.footer.width} vertical="center">
-        <Logo href="/" wordmark={false} size="m" />
+        <Logo className="dark-flex" href="/" icon="/trademark/icon-dark.svg" size="m" />
+        <Logo className="light-flex" href="/" icon="/trademark/icon-light.svg" size="m" />
         <Button
           data-border="rounded"
           size="s"
           weight="default"
           variant="tertiary"
-          href="https://once-ui.com/templates"
+          href="https://once-ui.com/products"
         >
           <Row gap="12" vertical="center">
             Launch your app now
@@ -33,10 +34,19 @@ export const Footer = () => {
             Products
           </Row>
           <Row>
-            <SmartLink href="https://once-ui.com">Once UI</SmartLink>
+            <SmartLink href="https://once-ui.com/products/once-ui-core">Once UI</SmartLink>
           </Row>
           <Row>
-            <SmartLink href="https://magic-portfolio.com">Magic Portfolio</SmartLink>
+            <SmartLink href="https://once-ui.com/products/magic-portfolio">Magic Portfolio</SmartLink>
+          </Row>
+          <Row>
+            <SmartLink href="https://once-ui.com/products/magic-store">Magic Store</SmartLink>
+          </Row>
+          <Row>
+            <SmartLink href="https://once-ui.com/products/magic-docs">Magic Docs</SmartLink>
+          </Row>
+          <Row>
+            <SmartLink href="https://once-ui.com/products/magic-bio">Magic Bio</SmartLink>
           </Row>
         </Column>
         <Column gap="12" textVariant="label-default-m">

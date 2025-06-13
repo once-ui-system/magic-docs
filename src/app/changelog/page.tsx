@@ -1,7 +1,6 @@
 import React from "react";
-import { Column, SmartLink, Row, Line, Text, Heading, SmartImage, HeadingLink } from "@/once-ui/components";
-import { baseURL, meta, schema, changelog } from "@/app/resources";
-import { Meta, Schema } from "@/once-ui/modules";
+import { Column, SmartLink, Row, Line, Text, Heading, Media, Meta, Schema, HeadingLink } from "@once-ui-system/core";
+import { baseURL, meta, schema, changelog } from "@/resources";
 import { formatDate } from "../utils/formatDate";
 
 export async function generateMetadata() {
@@ -34,7 +33,7 @@ const Changelog: React.FC = () => {
           Changelog
         </Heading>
         <Text wrap="balance" onBackground="neutral-weak" variant="body-default-xl" marginBottom="20">
-          See what&apos;s new
+          See what&apos;s new in Once UI
         </Text>
       </Column>
 
@@ -74,7 +73,7 @@ const Changelog: React.FC = () => {
             )}
             
             {entry.image && (
-              <SmartImage
+              <Media
                 priority={index === 0}
                 sizes="(max-width: 768px) 100vw, 768px"
                 marginTop="20"

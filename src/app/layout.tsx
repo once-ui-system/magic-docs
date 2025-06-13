@@ -6,8 +6,6 @@ import classNames from "classnames";
 import { Footer, Header } from "@/product";
 import { baseURL } from "@/resources";
 
-import { Analytics } from "@vercel/analytics/react"
-
 import { Background, Column, Flex, Meta } from "@once-ui-system/core";
 import { effects, fonts, layout, schema } from "../resources/once-ui.config";
 import { meta } from "@/resources";
@@ -176,7 +174,6 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           <Footer />
         </Column>
         </Providers>
-        <Analytics />
       </Flex>
     </>
   );

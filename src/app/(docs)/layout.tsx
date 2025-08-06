@@ -9,7 +9,7 @@ export default function DocsLayout({
 }) {
   return (
     <Row fillWidth gap="24">
-      <Sidebar hide="m" />
+      <Sidebar m={{hide: true}} />
       {children}
     </Row>
   );

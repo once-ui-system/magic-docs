@@ -38,7 +38,7 @@ const Changelog: React.FC = () => {
       </Column>
 
       {changelog.map((entry, index) => (
-        <Row key={entry.date} fillWidth gap="20" vertical="start" position="relative" mobileDirection="column">
+        <Row key={entry.date} fillWidth gap="20" vertical="start" position="relative" s={{direction: "column"}}>
           <Column width={16} maxWidth={16} fillHeight>
             <Column maxWidth="160" fitWidth fillHeight>
               <Row
@@ -57,7 +57,7 @@ const Changelog: React.FC = () => {
                 {formatDate(entry.date)}
               </Row>
               {index < changelog.length - 1 && (
-                <Line hide="s" marginLeft="40" vert background="neutral-alpha-weak"/>
+                <Line s={{hide: true}} marginLeft="40" vert background="neutral-alpha-weak"/>
               )}
             </Column>
           </Column>

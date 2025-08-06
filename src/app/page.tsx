@@ -130,7 +130,7 @@ export default function Home() {
         <Heading as="h2" variant="display-default-xs" marginTop="48">
           Components
         </Heading>
-        <Grid fillWidth columns="2" mobileColumns="1" gap="8" marginTop="24">
+        <Grid fillWidth columns="2" s={{columns: "1"}} gap="8" marginTop="24">
           <PageList path={["components"]} description={false}/>
         </Grid>
       </Column>
@@ -143,8 +143,8 @@ export default function Home() {
        radius="l"
        border="neutral-alpha-weak"
      >
-       <Column paddingX="32" paddingY="24" fillWidth horizontal="space-between" mobileDirection="column" gap="4">
-         <Row fillWidth vertical="center" horizontal="space-between" gap="16" wrap>
+       <Column paddingX="32" paddingY="24" fillWidth horizontal="between" s={{direction: "column"}} gap="4">
+         <Row fillWidth vertical="center" horizontal="between" gap="16" wrap>
            <Heading as="h2" variant="display-default-xs">
              Latest Update
            </Heading>
@@ -191,8 +191,8 @@ export default function Home() {
         radius="l"
         border="neutral-alpha-weak"
       >
-        <Column paddingX="32" paddingY="24" fillWidth horizontal="space-between" mobileDirection="column" gap="4">
-          <Row fillWidth vertical="center" horizontal="space-between" gap="16" wrap>
+        <Column paddingX="32" paddingY="24" fillWidth horizontal="between" s={{direction: "column"}} gap="4">
+          <Row fillWidth vertical="center" horizontal="between" gap="16" wrap>
             <Heading as="h2" variant="display-default-xs">
               Q2 2025 Roadmap
             </Heading>
@@ -207,7 +207,7 @@ export default function Home() {
         
         <Line background="neutral-alpha-weak" />
         
-        <Row fillWidth padding="32" gap="20" position="relative" mobileDirection="column">
+        <Row fillWidth padding="32" gap="20" position="relative" s={{direction: "column"}}>
           <Row fillWidth gap="12">
             {/* Overall Progress */}
             <Column fillWidth gap="8" paddingTop="8">
@@ -249,7 +249,7 @@ export default function Home() {
               </Column>
               
               {/* Task Status */}
-              <Grid fillWidth columns="3" mobileColumns="1" gap="8" marginTop="24">
+              <Grid fillWidth columns="3" s={{columns: "1"}} gap="8" marginTop="24">
                 {/* Planned Tasks */}
                 <Column 
                   padding="l" 

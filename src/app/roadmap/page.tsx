@@ -37,7 +37,7 @@ const RoadmapTask = ({ task: taskItem }: { task: Task }) => (
     )}
     
     {(taskItem.user || taskItem.type) && (
-        <Row marginTop="8" fillWidth vertical="center" horizontal="space-between">
+        <Row marginTop="8" fillWidth vertical="center" horizontal="between">
           {taskItem.user && (
             <User
               avatarProps={{ 

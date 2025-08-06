@@ -26,8 +26,6 @@ export interface NavigationItem extends Omit<React.ComponentProps<typeof Flex>, 
 
 interface SidebarProps extends Omit<React.ComponentProps<typeof Flex>, "children"> {
   initialNavigation?: NavigationItem[];
-  hide?: "s" | "m" | "l";
-  show?: "s" | "m" | "l";
 }
 
 // Memoized navigation item component to prevent re-renders
@@ -149,11 +147,11 @@ const NavigationItemComponent: React.FC<{
   return (
     <ToggleButton
       fillWidth
-      horizontal="space-between"
+      horizontal="between"
       selected={isSelected}
       className={depth === 0 ? styles.navigation : undefined}
       href={`/${correctedSlug}`}>
-      <Row fillWidth horizontal="space-between" vertical="center">
+      <Row fillWidth horizontal="between" vertical="center">
         <Row
           overflow="hidden"
           gap="8"
@@ -198,7 +196,7 @@ const ResourceLinkComponent: React.FC<{
   return (
     <ToggleButton
       fillWidth
-      horizontal="space-between"
+      horizontal="between"
       selected={isSelected}
       className={styles.navigation}
       href={href}>

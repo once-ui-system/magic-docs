@@ -7,24 +7,6 @@ import { CustomMDX } from "@/product/mdx";
 import { Metadata } from "next";
 import React from "react";
 
-function SafeMDX({ source }: { source: string }) {
-  try {
-    return <CustomMDX source={source} />;
-  } catch (error) {
-    console.error('Error rendering MDX:', error);
-    return (
-      <Column gap="16" padding="24" border="accent-medium" radius="m">
-        <Text variant="heading-strong-m" onBackground="accent-strong">
-          Error rendering content
-        </Text>
-        <Text variant="body-default-m" onBackground="accent-medium">
-          There was an error rendering this content. Please try refreshing the page.
-        </Text>
-      </Column>
-    );
-  }
-}
-
 export async function generateMetadata({
   params,
 }: {
@@ -104,10 +86,10 @@ export default async function Docs({
             <Media border="neutral-alpha-medium" enlarge src={doc.metadata.image} alt={"Thumbnail of " + doc.metadata.title} aspectRatio="16 / 9" radius="m" sizes="(max-width: 768px) 100vw, 768px" priority />
           )}
           <Column as="article" fillWidth>
-            <SafeMDX source={doc.content} />
+            <CustomMDX source={doc.content} />
           </Column>
           
-          <Row gap="16" fillWidth horizontal="space-between" mobileDirection="column">              
+          <Row gap="16" fillWidth horizontal="between" s={{direction: "column"}}>              
               {prevPage ? (
                 <Row fillWidth>
                 <Row maxWidth={20}>
@@ -163,7 +145,7 @@ export default async function Docs({
             </Row>
         </Column>
       </Row>
-      <Column gap="16" maxWidth={layout.sideNav.width} hide="s" position="sticky" top="80" fitHeight>
+      <Column gap="16" maxWidth={layout.sideNav.width} s={{hide: true}} position="sticky" top="80" fitHeight>
         <Row gap="12" paddingLeft="2" vertical="center" onBackground="neutral-medium" textVariant="label-default-s">
           <Icon name="document" size="xs"/>
           On this page

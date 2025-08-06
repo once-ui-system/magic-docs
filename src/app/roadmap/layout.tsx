@@ -9,7 +9,7 @@ const DocsLayout = memo(({
 }) => {
   return (
     <Row fillWidth gap="24" position="relative">
-      <Sidebar hide="m" />
+      <Sidebar m={{hide: true}} />
       {children}
     </Row>
   );

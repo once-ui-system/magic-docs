@@ -163,9 +163,9 @@ export function Header() {
         left="0"
       />
       <Flex as="header" horizontal="center" position="sticky" top="0" zIndex={9} fillWidth vertical="center" paddingY="12" paddingX="l">
-        <Row maxWidth={layout.header.width} vertical="center" horizontal="space-between" gap="l">
+        <Row maxWidth={layout.header.width} vertical="center" horizontal="between" gap="l">
           <Row fillWidth vertical="center" gap="8">
-            <NavIcon show="m" onClick={toggleSidebar}/>
+            <NavIcon hide m={{hide: false}} onClick={toggleSidebar}/>
             <Logo className="dark-flex" wordmark="/trademark/type-dark.svg" size="s" href="/"/>
             <Logo className="light-flex" wordmark="/trademark/type-light.svg" size="s" href="/"/>
           </Row>
@@ -178,7 +178,7 @@ export function Header() {
             </Button>
           </Kbar>
           <Row fillWidth horizontal="end" gap="8" data-border="rounded">
-            <Row hide="s">
+            <Row s={{hide: true}}>
               <Button size="s" variant="secondary" href="https://once-ui.com/products">
                 Start building
               </Button>

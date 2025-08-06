@@ -21,6 +21,9 @@ import {
   Feedback,
   Button,
   Icon,
+  List,
+  ListItem,
+  Line,
 } from "@once-ui-system/core";
 import { PageList } from "./PageList";
 
@@ -103,6 +106,25 @@ function slugify(str: string): string {
     .replace(/\-\-+/g, "-"); // Replace multiple - with single -
 }
 
+function createList({ children }: { children: ReactNode }) {
+  return (
+    <List>
+      {children}
+    </List>
+  );
+}
+
+function createListItem({ children }: { children: ReactNode }) {
+  return (
+    <ListItem
+      marginTop="4"
+      marginBottom="8"
+    >
+      {children}
+    </ListItem>
+  );
+}
+
 function createHeading(as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6") {
   // Use HeadingLinkProps to ensure type compatibility
   const CustomHeading = ({ children, ...props }: Omit<React.ComponentProps<typeof HeadingLink>, 'as' | 'id'>) => {
@@ -172,6 +194,10 @@ function createCodeBlock(props: any) {
   return <pre {...props} />;
 }
 
+function createHR() {
+  return <Line />;
+}
+
 const components = {
   p: createParagraph as any,
   h1: createHeading("h1") as any,
@@ -184,6 +210,10 @@ const components = {
   a: CustomLink as any,
   code: createInlineCode as any,
   pre: createCodeBlock as any,
+  ul: createList as any,
+  ol: createList as any,
+  li: createListItem as any,
+  hr: createHR as any,
   PageList,
   ...onceUIComponents,
 };

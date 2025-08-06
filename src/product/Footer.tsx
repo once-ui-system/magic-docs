@@ -13,8 +13,8 @@ export const Footer = () => {
   return (
     <Column gap="40" fillWidth paddingY="xl" paddingX="l" horizontal="center" position="relative">
       <Row gap="12" textVariant="label-default-m" maxWidth={layout.footer.width} vertical="center">
-        <Logo className="dark-flex" href="/" icon="/trademark/icon-dark.svg" size="m" />
-        <Logo className="light-flex" href="/" icon="/trademark/icon-light.svg" size="m" />
+        <Logo dark href="/" icon="/trademark/icon-dark.svg" size="m" />
+        <Logo light href="/" icon="/trademark/icon-light.svg" size="m" />
         <Button
           data-border="rounded"
           size="s"
@@ -28,7 +28,7 @@ export const Footer = () => {
           </Row>
         </Button>
       </Row>
-      <Row maxWidth={layout.footer.width} horizontal="space-between" gap="40" wrap paddingX="2">
+      <Row maxWidth={layout.footer.width} horizontal="between" gap="40" wrap paddingX="2">
         <Column gap="12" textVariant="label-default-m">
           <Row paddingX="2" marginBottom="8">
             Products

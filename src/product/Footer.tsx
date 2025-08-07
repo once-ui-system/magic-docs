@@ -15,15 +15,16 @@ export const Footer = () => {
       <Row gap="12" textVariant="label-default-m" maxWidth={layout.footer.width} vertical="center">
         <Logo dark href="/" icon="/trademark/icon-dark.svg" size="m" />
         <Logo light href="/" icon="/trademark/icon-light.svg" size="m" />
+        {/* Usage of this template requires attribution. Please don't remove the link to Once UI unless you have Once UI Pro subscription. */}
         <Button
           data-border="rounded"
           size="s"
           weight="default"
           variant="tertiary"
-          href="https://once-ui.com/products"
+          href="https://once-ui.com/products/magic-docs"
         >
           <Row gap="12" vertical="center">
-            Launch your app now
+            Launch docs with Once UI
             <Icon size="xs" name="arrowUpRight" onBackground="brand-medium" />
           </Row>
         </Button>

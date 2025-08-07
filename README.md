@@ -1,12 +1,12 @@
-# **Build your documentation site with Once UI's Magic Docs**
+# Magic Docs
+
+Magic Docs was built with [Once UI](https://once-ui.com) for [Next.js](https://nextjs.org). It requires Node.js v18.17+.
 
 View the [demo here](https://docs.once-ui.com).
 
 ![Magic Docs](public/images/cover.jpg)
 
-# Getting started
-
-Magic Docs was built with [Once UI](https://once-ui.com) for [Next.js](https://nextjs.org). It requires Node.js v18.17+.
+## Getting started
 
 **1. Clone the repository**
 ```
@@ -25,54 +25,56 @@ npm run dev
 
 **4. Edit config**
 ```
-src/app/resources/config.js
+src/resources/once-ui.config.js
 ```
 
-**5. Edit content**
-```
-src/content/
-```
-
-**6. Create documentation pages**
+**5. Create documentation pages**
 ```
 Add new .mdx files to src/content/
 ```
 
-# Features
+Read the full documentation [here](https://docs.once-ui.com/magic-docs/quick-start).
 
-## Once UI
-- All tokens, components & features of [Once UI](https://once-ui.com)
+## Features
 
-## SEO
+### Once UI
+- All tokens, components & features of [Once UI](https://once-ui.com) available through NPM
+
+### SEO
 - Automatic open-graph and X image generation with next/og
 - Automatic schema and metadata generation based on the content file
 
-## Design
+### Pages
+- Roadmap: when enabled, task progress is displayed in the homepage
+- Changelog: when enabled, last changes are displayed in the homepage
+
+### Design
 - Responsive layout optimized for all screen sizes
 - Timeless design without heavy animations and motion
-- Endless customization options through [data attributes](https://once-ui.com/docs/theming)
+- Endless customization options through [Once UI](https://docs.once-ui.com/once-ui/contexts/themeProvider)
 - Light and dark mode support with system preference detection
 
-## Documentation Features
+### Navigation
 - Organized documentation structure with nested categories
-- Interactive code examples with syntax highlighting
 - Searchable content with command palette (Cmd+K / Ctrl+K)
-- Responsive navigation with mobile-friendly sidebar
-- Supports all Once UI components
+- Automatically generated, responsive sidebar
 
-# Authors
+### Creators
 
-Connect with us on Threads or LinkedIn.
+Lorant One: [Threads](https://www.threads.net/@lorant.one) / [LinkedIn](https://www.linkedin.com/in/lorant-one/)
 
-Lorant One: [Threads](https://www.threads.net/@lorant.one), [LinkedIn](https://www.linkedin.com/in/lorant-one/)  
-Zsofia Komaromi: [Threads](https://www.threads.net/@zsofia_kom), [LinkedIn](https://www.linkedin.com/in/zsofiakomaromi/)
-
-# Get involved
+## Get involved
 
 - Join the [Design Engineers Club on Discord](https://discord.com/invite/5EyAQ4eNdS) and share your project with us!
 
-# License
+## License
 
-TL;DR: Access to Magic Docs under Once UI Pro allows personal/internal use and modifications, but prohibits SaaS, resale, redistribution, and public sharing.
+Distributed under the CC BY-NC 4.0 License.
+- Commercial usage is not allowed.
+- Attribution is required.
+- You can extend the license to commercial use by purchasing a [Once UI Pro](https://once-ui.com/pricing) license.
 
 See `LICENSE.txt` for more information.
+
+## Deploy with Vercel
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fonce-ui-system%2Fmagic-docs&project-name=magic-docs&repository-name=magic-docs&redirect-url=https%3A%2F%2Fgithub.com%2Fonce-ui-system%2Fmagic-docs&demo-title=Magic%20Docs&demo-description=Showcase%20your%20designers%20or%20developer%20portfolio&demo-url=https%3A%2F%2Fdemo.magic-docs.com&demo-image=%2F%2Fraw.githubusercontent.com%2Fonce-ui-system%2Fmagic-docs%2Fmain%2Fpublic%2Fimages%2Fcover.jpg)

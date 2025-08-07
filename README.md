@@ -2,7 +2,7 @@
 
 Magic Docs was built with [Once UI](https://once-ui.com) for [Next.js](https://nextjs.org). It requires Node.js v18.17+.
 
-View the [demo here](https://docs.once-ui.com).
+View the demo [here](https://docs.once-ui.com).
 
 ![Magic Docs](public/images/cover.jpg)
 
@@ -65,14 +65,15 @@ Lorant One: [Threads](https://www.threads.net/@lorant.one) / [LinkedIn](https://
 
 ## Get involved
 
-- Join the [Design Engineers Club on Discord](https://discord.com/invite/5EyAQ4eNdS) and share your project with us!
+- Join the Design Engineers Club on [Discord](https://discord.com/invite/5EyAQ4eNdS) and share your project with us!
+- Deployed your docs? Share it on the [Once UI Hub](https://once-ui.com/hub) too! We feature our favorite apps on our landing page.
 
 ## License
 
 Distributed under the CC BY-NC 4.0 License.
-- Commercial usage is not allowed.
 - Attribution is required.
-- You can extend the license to commercial use by purchasing a [Once UI Pro](https://once-ui.com/pricing) license.
+- Commercial usage is not allowed.
+- You can extend the license to [Dopler CC](https://dopler.app/license) by purchasing a [Once UI Pro](https://once-ui.com/pricing) license.
 
 See `LICENSE.txt` for more information.
 

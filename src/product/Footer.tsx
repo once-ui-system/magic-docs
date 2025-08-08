@@ -24,7 +24,7 @@ export const Footer = () => {
           href="https://once-ui.com/products/magic-docs"
         >
           <Row gap="12" vertical="center">
-            Launch docs with Once UI
+            Launch your docs with Once UI
             <Icon size="xs" name="arrowUpRight" onBackground="brand-medium" />
           </Row>
         </Button>

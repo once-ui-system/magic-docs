@@ -97,7 +97,7 @@ export function PageList({
               radius="m"
               src={page.metadata.image}
               alt={"Thumbnail of " + page.metadata.title}
-              aspectRatio="2 / 1"
+              aspectRatio="16 / 9"
             />
           )}
           <Column fillWidth gap="4" vertical="center" paddingX="16" paddingY="12">

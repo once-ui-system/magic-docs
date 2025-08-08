@@ -61,7 +61,7 @@ Read the full documentation [here](https://docs.once-ui.com/magic-docs/quick-sta
 
 Magic Docs was built with [Once UI](https://once-ui.com) for [Next.js](https://nextjs.org). It requires Node.js v18.17+.
 
-### Creators
+## Creators
 
 Lorant One: [Threads](https://www.threads.net/@lorant.one) / [LinkedIn](https://www.linkedin.com/in/lorant-one/)
 
@@ -69,6 +69,10 @@ Lorant One: [Threads](https://www.threads.net/@lorant.one) / [LinkedIn](https://
 
 - Join the Design Engineers Club on [Discord](https://discord.com/invite/5EyAQ4eNdS) and share your project with us!
 - Deployed your docs? Share it on the [Once UI Hub](https://once-ui.com/hub) too! We feature our favorite apps on our landing page.
+
+## Magic Docs
+
+This project is built with [Magic Docs](https://once-ui.com/products/magic-docs). Build your own documentation with Magic Docs for free!
 
 ## License
 

@@ -96,7 +96,7 @@ export default function Home() {
                   variant="label-default-s"
                   onBackground="neutral-weak"
                 >
-                  Simple, clean and fast
+                  Simple, clean docs site
                 </Text>
             </Badge>
             <Heading variant="display-strong-s">
@@ -111,22 +111,21 @@ export default function Home() {
       </Column>
 
       <Column fillWidth>
-      <Column fillWidth gap="4">
-        <Text 
-          variant="display-default-s" 
-          onBackground="neutral-strong"
-        >
-          Products
-        </Text>
-        <Text
-          variant="label-default-s" 
-          onBackground="neutral-weak"
-          marginTop="8"
-        >
-          Deploy your docs in minutes
-        </Text>
-      </Column>
-      <PageList depth={1} thumbnail={true} marginTop="24" minHeight={14}/>
+        <Column fillWidth>
+          <Text 
+            variant="display-default-s" 
+            onBackground="neutral-strong"
+          >
+            Products
+          </Text>
+          <Text
+            onBackground="neutral-weak"
+            marginTop="8"
+          >
+            Deploy your docs in minutes
+          </Text>
+        </Column>
+        <PageList depth={1} thumbnail={true} marginTop="24" minHeight={14}/>
         <Heading as="h2" variant="display-default-xs" marginTop="48">
           Components
         </Heading>

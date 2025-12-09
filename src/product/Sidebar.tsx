@@ -338,12 +338,13 @@ const Sidebar: React.FC<SidebarProps> = ({ initialNavigation, ...rest }) => {
       width={layout.sidebar.width} 
       minWidth={layout.sidebar.width} 
       position="sticky" 
-      top="64" 
+      top="56" 
       fitHeight 
       gap="2" 
       as="nav" 
       overflowY="auto" 
-      paddingRight="8" 
+      paddingX="8"
+      paddingY="16"
       style={containerStyle} 
       {...rest}
     >

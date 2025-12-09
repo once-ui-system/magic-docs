@@ -17,7 +17,8 @@ const Changelog: React.FC = () => {
   return (
     <Column
       maxWidth={56}
-      as="main">
+      as="main"
+      padding="l">
       <Schema
         as="webPage"
         title={meta.changelog.title}

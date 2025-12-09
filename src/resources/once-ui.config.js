@@ -86,7 +86,7 @@ const layout = {
     width: 17, // width of the sideNav on document pages
   },
   footer: {
-    width: 44, // width of the content inside the footer
+    width: 72, // width of the content inside the footer
   },
 };
 

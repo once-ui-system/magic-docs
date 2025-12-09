@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Button, Fade, Flex, Logo, NavIcon, Row, Kbar, useTheme } from "@once-ui-system/core";
+import { Button, Flex, Logo, NavIcon, Row, Kbar, useTheme, Animation } from "@once-ui-system/core";
 import { layout, routes } from "@/resources/once-ui.config";
 import { Sidebar, NavigationItem } from "./Sidebar";
 
@@ -152,24 +152,39 @@ export function Header() {
 
   return (
     <>
-      <Fade
-        pattern={{ display: true, size: "2" }}
-        zIndex={3}
-        pointerEvents="none"
-        height="64"
-        position="fixed"
-        fillWidth
-        top="0"
-        left="0"
-      />
-      <Flex as="header" horizontal="center" position="sticky" top="0" zIndex={9} fillWidth vertical="center" paddingY="12" paddingX="l">
+      <Flex as="header" background="page" horizontal="center" position="sticky" top="0" zIndex={9} fillWidth vertical="center" paddingY="12" paddingRight="24" paddingLeft="20" borderBottom="neutral-alpha-medium">
         <Row maxWidth={layout.header.width} vertical="center" horizontal="between" gap="l">
           <Row fillWidth vertical="center" gap="8">
-            <NavIcon hide m={{hide: false}} onClick={toggleSidebar}/>
-            <Logo className="dark-flex" wordmark="/trademark/type-dark.svg" size="s" href="/"/>
-            <Logo className="light-flex" wordmark="/trademark/type-light.svg" size="s" href="/"/>
+            <Animation
+              triggerType="click"
+              active={sidebarVisible}
+              slideDown={1}
+              scale={0.9}
+              blur={0.5}
+              duration={200}
+              trigger={
+                <NavIcon hide m={{hide: false}} onClick={toggleSidebar} isActive={sidebarVisible}/>
+              }>
+              <Row
+                width={24}
+                style={{height: "calc(100vh - var(--static-space-64))", top: "3.25rem", left: "-1.5rem"}} 
+                background="page" 
+                position="fixed"
+                borderTop="neutral-alpha-medium"
+                borderRight="neutral-alpha-medium"
+                zIndex={9}>
+                <Sidebar
+                  data-scaling="110"
+                  fillWidth
+                  width={undefined}
+                  padding="8" 
+                />
+              </Row>
+            </Animation>
+            <Logo dark wordmark="/trademarks/type-dark.svg" size="s" href="/"/>
+            <Logo light wordmark="/trademarks/type-light.svg" size="s" href="/"/>
           </Row>
-          <Kbar hide="m" items={kbar} radius="full" background="neutral-alpha-weak">
+          <Kbar s={{hide: true}} items={kbar} radius="full" background="neutral-alpha-weak">
             <Button data-border="rounded" size="s" variant="tertiary" weight="default">
               <Row vertical="center" gap="16" style={{marginLeft: '-0.5rem'}} paddingRight="8">
                 <Row background="neutral-alpha-medium" paddingX="8" paddingY="4" radius="full" data-scaling="90" textVariant="body-default-xs" onBackground="neutral-medium">{isMac ? 'Cmd' : 'Ctrl'} k</Row>
@@ -189,20 +204,6 @@ export function Header() {
           </Row>
         </Row>
       </Flex>
-
-      {sidebarVisible && (
-        <Sidebar 
-          maxWidth={100}
-          style={{height: "calc(100vh - var(--static-space-64))", backdropFilter: "blur(2rem)"}} 
-          padding="8" 
-          background="overlay" 
-          position="fixed"
-          borderTop="neutral-alpha-weak"
-          left="0" 
-          top="64"
-          zIndex={9}
-        />
-      )}
     </>
   );
 };

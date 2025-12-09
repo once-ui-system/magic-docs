@@ -34,6 +34,15 @@ const nextConfig = {
         hostname: '**',
       },
     ],
+    localPatterns: [
+      {
+        pathname: '/**',
+      },
+      {
+        pathname: '/api/og/proxy',
+        search: '?url=*',
+      },
+    ],
   },
   // Reduce webpack cache size
   webpack: (config, { dev, isServer }) => {

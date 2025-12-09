@@ -3,10 +3,10 @@ import '@once-ui-system/core/css/tokens.css';
 
 import classNames from "classnames";
 
-import { Footer, Header } from "@/product";
+import { Footer, Header, Sidebar } from "@/product";
 import { baseURL } from "@/resources";
 
-import { Background, Column, Flex, Meta } from "@once-ui-system/core";
+import { Background, Column, Flex, Meta, Row } from "@once-ui-system/core";
 import { effects, fonts, layout, schema } from "../resources/once-ui.config";
 import { meta } from "@/resources";
 import { RouteGuard } from "@/product/RouteGuard";
@@ -161,13 +161,17 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           <Header />
           <Flex
             fillWidth
-            padding="l"
             horizontal="center"
             flex={1}
           >
             <Flex horizontal="center" maxWidth={layout.body.width} minHeight="0">
               <RouteGuard>
-                {children}
+                <Row fillWidth gap="24">
+                  <Sidebar style={{minHeight: '100vh'}} m={{hide: true}} borderRight="neutral-alpha-medium" />
+                  <Row fillWidth horizontal="center">
+                    {children}
+                  </Row>
+                </Row>
               </RouteGuard>
             </Flex>
           </Flex>

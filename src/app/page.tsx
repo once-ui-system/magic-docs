@@ -81,7 +81,7 @@ export default function Home() {
       <Column fillWidth gap="l" paddingTop="l">
         <Row fillWidth gap="l">
           <Column maxWidth="xs" gap="12">
-          <Badge
+            <Badge
               background="overlay"
               paddingLeft="4"
               paddingRight="16"
@@ -91,7 +91,7 @@ export default function Home() {
               vertical="center"
               marginBottom="12"
             >
-                <Tag marginRight="12">Docs</Tag>
+                <Tag data-border="rounded" marginRight="12">Docs</Tag>
                 <Text
                   variant="label-default-s"
                   onBackground="neutral-weak"
@@ -137,24 +137,24 @@ export default function Home() {
       {/* Latest Update Section */}
       {routes['/changelog'] && (
        <Column 
-       maxWidth={56}
-       background="overlay"
-       radius="l"
-       border="neutral-alpha-weak"
-     >
-       <Column paddingX="32" paddingY="24" fillWidth horizontal="between" s={{direction: "column"}} gap="4">
-         <Row fillWidth vertical="center" horizontal="between" gap="16" wrap>
-           <Heading as="h2" variant="display-default-xs">
-             Latest Update
-           </Heading>
-           <Button data-border="rounded" weight="default" variant="secondary" href="/changelog" size="s" suffixIcon="chevronRight">
-             All changes
-           </Button>
-         </Row>
-         <Text variant="label-default-s" onBackground="neutral-weak">
-           {formatDate(latestChangelogEntry.date)}
-         </Text>
-       </Column>
+          maxWidth={56}
+          background="overlay"
+          radius="l"
+          border="neutral-alpha-weak"
+        >
+        <Column paddingX="32" paddingY="24" fillWidth horizontal="between" s={{direction: "column"}} gap="4">
+          <Row fillWidth vertical="center" horizontal="between" gap="16" wrap>
+            <Heading as="h2" variant="display-default-xs">
+              Latest Update
+            </Heading>
+            <Button data-border="rounded" weight="default" variant="secondary" href="/changelog" size="s" suffixIcon="chevronRight">
+              All changes
+            </Button>
+          </Row>
+          <Text variant="label-default-s" onBackground="neutral-weak">
+            {formatDate(latestChangelogEntry.date)}
+          </Text>
+        </Column>
         
         <Column fillWidth>
           {latestChangelogEntry.image && (

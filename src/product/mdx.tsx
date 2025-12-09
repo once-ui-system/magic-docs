@@ -53,26 +53,10 @@ type CustomLinkProps = React.AnchorHTMLAttributes<HTMLAnchorElement> & {
 };
 
 function CustomLink({ href, children, ...props }: CustomLinkProps) {
-  if (href.startsWith("/")) {
-    return (
-      <SmartLink href={href} {...props}>
-        {children}
-      </SmartLink>
-    );
-  }
-
-  if (href.startsWith("#")) {
-    return (
-      <a href={href} {...props}>
-        {children}
-      </a>
-    );
-  }
-
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" {...props}>
+    <SmartLink href={href} {...props}>
       {children}
-    </a>
+    </SmartLink>
   );
 }
 

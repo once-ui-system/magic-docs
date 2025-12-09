@@ -70,7 +70,7 @@ export default async function Docs({
               name: schema.name
             }}
           />
-          <Column fillWidth gap="8" vertical="center">
+          <Column fillWidth gap="8" vertical="center" paddingTop="40">
             <Text variant="label-default-l" onBackground="neutral-medium">{sectionTitle}</Text>
             <Heading variant="display-strong-s">{doc.metadata.title}</Heading>
             <Text variant="body-default-s" onBackground="neutral-weak">
@@ -145,12 +145,8 @@ export default async function Docs({
             </Row>
         </Column>
       </Row>
-      <Column gap="16" maxWidth={layout.sideNav.width} s={{hide: true}} position="sticky" top="80" fitHeight>
-        <Row gap="12" paddingLeft="2" vertical="center" onBackground="neutral-medium" textVariant="label-default-s">
-          <Icon name="document" size="xs"/>
-          On this page
-        </Row>
-        <HeadingNav/>
+      <Column gap="16" maxWidth={layout.sideNav.width} s={{hide: true}} fillHeight paddingLeft="24" borderLeft="neutral-alpha-medium">
+        <HeadingNav position="sticky" top="80" fitHeight/>
       </Column>
     </>
   );

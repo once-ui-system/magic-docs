@@ -67,7 +67,7 @@ export default async function Docs({
   return (
     <>
       <Row fillWidth horizontal="center" paddingX="l" s={{ paddingX: "16" }}>
-        <Column as="main" maxWidth={layout.content.width} gap="l" paddingBottom="xl">
+        <Column as="main" maxWidth={`${layout.content.width}rem`} gap="l" paddingBottom="xl">
           <Schema
             as="techArticle"
             title={doc.metadata.title + " – " + schema.name}
@@ -82,9 +82,9 @@ export default async function Docs({
             }}
           />
           <Column fillWidth gap="8" vertical="center" paddingTop="40">
-            <Text variant="label-default-l" onBackground="neutral-medium">{sectionTitle}</Text>
-            <Heading variant="display-strong-s">{doc.metadata.title}</Heading>
-            <Text variant="body-default-s" onBackground="neutral-weak">
+            <Text textVariant="label-default-l" onBackground="neutral-medium">{sectionTitle}</Text>
+            <Heading textVariant="display-strong-s">{doc.metadata.title}</Heading>
+            <Text textVariant="body-default-s" onBackground="neutral-weak">
               Last update: {formatDate(doc.metadata.updatedAt)}
             </Text>
             {doc.metadata.github && (
@@ -106,7 +106,7 @@ export default async function Docs({
           <Row gap="16" fillWidth horizontal="between" s={{direction: "column"}}>              
               {prevPage ? (
                 <Row fillWidth>
-                <Row maxWidth={20}>
+                <Row maxWidth="20rem">
                 <Card
                   fillWidth
                   border="neutral-alpha-medium"
@@ -117,12 +117,12 @@ export default async function Docs({
                 >
                   <Icon name="chevronLeft" size="s" onBackground="neutral-weak" />
                   <Column gap="4" vertical="center" paddingX="16" paddingY="12">
-                    <Text variant="label-default-s" onBackground="neutral-weak">
+                    <Text textVariant="label-default-s" onBackground="neutral-weak">
                       {prevPage.slug.includes('/') ? 
                         `${prevPage.slug.split('/')[0].split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}` : 
                         'page'}
                     </Text>
-                    <Text onBackground="neutral-strong" variant="heading-strong-m" wrap="balance">
+                    <Text onBackground="neutral-strong" textVariant="heading-strong-m" wrap="balance">
                       {prevPage.metadata.title}
                     </Text>
                   </Column>
@@ -132,7 +132,7 @@ export default async function Docs({
               ) : <Row/>}
               {nextPage ? (
                 <Row fillWidth horizontal="end">
-                  <Row maxWidth={20}>
+                  <Row maxWidth="20rem">
                     <Card
                       fillWidth
                       border="neutral-alpha-medium"
@@ -142,12 +142,12 @@ export default async function Docs({
                       paddingX="16"
                     >
                       <Column horizontal="end" gap="4" vertical="center" paddingX="16" paddingY="12">
-                        <Text variant="label-default-s" onBackground="neutral-weak">
+                        <Text textVariant="label-default-s" onBackground="neutral-weak">
                           {nextPage.slug.includes('/') ? 
                             `${nextPage.slug.split('/')[0].split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}` : 
                             'page'}
                         </Text>
-                        <Text onBackground="neutral-strong" variant="heading-strong-m" wrap="balance">
+                        <Text onBackground="neutral-strong" textVariant="heading-strong-m" wrap="balance">
                           {nextPage.metadata.title}
                         </Text>
                       </Column>
@@ -165,7 +165,7 @@ export default async function Docs({
           </Column>
         </Column>
       </Row>
-      <Column gap="16" maxWidth={layout.sideNav.width} s={{hide: true}} fillHeight paddingLeft="24" borderLeft="neutral-alpha-medium">
+      <Column gap="16" maxWidth={`${layout.sideNav.width}rem`} s={{hide: true}} fillHeight paddingLeft="24" borderLeft="neutral-alpha-medium">
         <HeadingNav position="sticky" top="80" fitHeight/>
       </Column>
     </>

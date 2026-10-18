@@ -14,7 +14,7 @@ The Feedback component has four main variants: info, success, warning, and dange
 
 <Feedback
   icon
-  variant="info"
+  tone="info"
   title="Information"
   description="This is an informational message for the user."
 />
@@ -26,7 +26,7 @@ Each variant is designed to communicate a specific type of message:
 <Feedback
   icon
   marginBottom="24"
-  variant="success"
+  tone="success"
   title="Success"
   description="Your changes have been saved successfully."
 />
@@ -34,7 +34,7 @@ Each variant is designed to communicate a specific type of message:
 <Feedback
   icon
   marginBottom="24"
-  variant="warning"
+  tone="warning"
   title="Warning"
   description="Your session will expire in 5 minutes. Please save your work."
 />
@@ -42,7 +42,7 @@ Each variant is designed to communicate a specific type of message:
 <Feedback
   icon
   marginBottom="24"
-  variant="danger"
+  tone="danger"
   title="Error"
   description="There was a problem processing your request. Please try again."
 />
@@ -52,7 +52,7 @@ Each variant is designed to communicate a specific type of message:
 You can add an action button to provide users with a direct way to respond:
 
 <Feedback
-  variant="info"
+  tone="info"
   title="New Feature Available"
   description="We've added a new feature that you might be interested in."
 >
@@ -65,7 +65,7 @@ Here's how to implement Feedback components in your application:
 
 ```tsx
 <Feedback
-  variant="success"
+  tone="success"
   title="Form Submitted"
   description="Thank you for your submission. We'll be in touch soon."
 />

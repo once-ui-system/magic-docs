@@ -16,7 +16,7 @@ export async function generateMetadata() {
 const Changelog: React.FC = () => {
   return (
     <Column
-      maxWidth={56}
+      maxWidth="56rem"
       as="main"
       padding="l">
       <Schema
@@ -30,17 +30,17 @@ const Changelog: React.FC = () => {
         }}
       />
       <Column fillWidth gap="8" paddingBottom="l">
-        <Heading variant="display-strong-s">
+        <Heading textVariant="display-strong-s">
           Changelog
         </Heading>
-        <Text wrap="balance" onBackground="neutral-weak" variant="body-default-xl" marginBottom="20">
+        <Text wrap="balance" onBackground="neutral-weak" textVariant="body-default-xl" marginBottom="20">
           See what&apos;s new in Once UI
         </Text>
       </Column>
 
       {changelog.map((entry, index) => (
         <Row key={entry.date} fillWidth gap="20" vertical="start" position="relative" s={{direction: "column"}}>
-          <Column width={16} maxWidth={16} fillHeight>
+          <Column width="16rem" maxWidth="16rem" fillHeight>
             <Column maxWidth="160" fitWidth fillHeight>
               <Row
                 position="sticky" top="80"
@@ -68,7 +68,7 @@ const Changelog: React.FC = () => {
             </HeadingLink>
             
             {entry.description && (
-              <Text variant="body-default-m" onBackground="neutral-weak">
+              <Text textVariant="body-default-m" onBackground="neutral-weak">
                 {entry.description}
               </Text>
             )}
@@ -94,7 +94,7 @@ const Changelog: React.FC = () => {
                   </Heading>
                   
                   {section.description && (
-                    <Text variant="body-default-m" onBackground="neutral-weak" marginBottom="8">
+                    <Text textVariant="body-default-m" onBackground="neutral-weak" marginBottom="8">
                       {section.description}
                     </Text>
                   )}
@@ -103,7 +103,7 @@ const Changelog: React.FC = () => {
                     <ul style={{marginTop: "var(--static-space-8)"}}>
                       {section.bullets.map((bullet, bulletIndex) => (
                         <li key={bulletIndex}>
-                          <Text variant="body-default-m" onBackground="neutral-weak">
+                          <Text textVariant="body-default-m" onBackground="neutral-weak">
                             {bullet}
                           </Text>
                         </li>

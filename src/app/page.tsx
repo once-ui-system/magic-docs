@@ -1,15 +1,14 @@
 import React from "react";
-import { 
-  Column, 
-  Row, 
-  Heading, 
-  Text, 
-  Button, 
+import {
+  Column,
+  Row,
+  Heading,
+  Text,
+  Button,
   Grid,
-  Media, 
-  Line, 
+  Media,
+  Line,
   StatusIndicator,
-  Badge,
   Tag,
   Meta,
   Schema
@@ -65,7 +64,7 @@ const latestChangelogEntry = changelog[0];
 
 export default function Home() {
   return (
-    <Column maxWidth={56} gap="xl">
+    <Column maxWidth="56rem" gap="xl">
       <Schema
         as="webPage"
         title={meta.home.title}
@@ -81,7 +80,8 @@ export default function Home() {
       <Column fillWidth gap="l" paddingTop="l">
         <Row fillWidth gap="l">
           <Column maxWidth="xs" gap="12">
-            <Badge
+            <Tag
+              variant="announce"
               background="overlay"
               paddingLeft="4"
               paddingRight="16"
@@ -93,16 +93,16 @@ export default function Home() {
             >
                 <Tag data-border="rounded" marginRight="12">Docs</Tag>
                 <Text
-                  variant="label-default-s"
+                  textVariant="label-default-s"
                   onBackground="neutral-weak"
                 >
                   Simple, clean docs site
                 </Text>
-            </Badge>
-            <Heading variant="display-strong-s">
+            </Tag>
+            <Heading textVariant="display-strong-s">
               Magic Docs
             </Heading>
-            <Text wrap="balance" onBackground="neutral-weak" variant="body-default-xl" marginBottom="20">
+            <Text wrap="balance" onBackground="neutral-weak" textVariant="body-default-xl" marginBottom="20">
               Build amazing product documentations without writing a single line of code
             </Text>
             <Button data-border="rounded" size="s" href="/get-started" variant="secondary" arrowIcon id="get-started">Quick start</Button>
@@ -113,7 +113,7 @@ export default function Home() {
       <Column fillWidth>
         <Column fillWidth>
           <Text 
-            variant="display-default-s" 
+            textVariant="display-default-s" 
             onBackground="neutral-strong"
           >
             Products
@@ -125,8 +125,8 @@ export default function Home() {
             Deploy your docs in minutes
           </Text>
         </Column>
-        <PageList depth={1} thumbnail={true} marginTop="24" minHeight={14}/>
-        <Heading as="h2" variant="display-default-xs" marginTop="48">
+        <PageList depth={1} thumbnail={true} marginTop="24" minHeight="14rem"/>
+        <Heading as="h2" textVariant="display-default-xs" marginTop="48">
           Components
         </Heading>
         <Grid fillWidth columns="2" s={{columns: "1"}} gap="8" marginTop="24">
@@ -137,21 +137,21 @@ export default function Home() {
       {/* Latest Update Section */}
       {routes['/changelog'] && (
        <Column 
-          maxWidth={56}
+          maxWidth="56rem"
           background="overlay"
           radius="l"
           border="neutral-alpha-weak"
         >
         <Column paddingX="32" paddingY="24" fillWidth horizontal="between" s={{direction: "column"}} gap="4">
           <Row fillWidth vertical="center" horizontal="between" gap="16" wrap>
-            <Heading as="h2" variant="display-default-xs">
+            <Heading as="h2" textVariant="display-default-xs">
               Latest Update
             </Heading>
             <Button data-border="rounded" weight="default" variant="secondary" href="/changelog" size="s" suffixIcon="chevronRight">
               All changes
             </Button>
           </Row>
-          <Text variant="label-default-s" onBackground="neutral-weak">
+          <Text textVariant="label-default-s" onBackground="neutral-weak">
             {formatDate(latestChangelogEntry.date)}
           </Text>
         </Column>
@@ -174,7 +174,7 @@ export default function Home() {
             </Heading>
 
             {latestChangelogEntry.description && (
-              <Text variant="body-default-m" onBackground="neutral-weak">
+              <Text textVariant="body-default-m" onBackground="neutral-weak">
                 {latestChangelogEntry.description}
               </Text>
             )}
@@ -185,21 +185,21 @@ export default function Home() {
       
       {/* Roadmap Progress Section */}
       <Column 
-        maxWidth={56}
+        maxWidth="56rem"
         background="overlay"
         radius="l"
         border="neutral-alpha-weak"
       >
         <Column paddingX="32" paddingY="24" fillWidth horizontal="between" s={{direction: "column"}} gap="4">
           <Row fillWidth vertical="center" horizontal="between" gap="16" wrap>
-            <Heading as="h2" variant="display-default-xs">
+            <Heading as="h2" textVariant="display-default-xs">
               Q2 2025 Roadmap
             </Heading>
             <Button data-border="rounded" weight="default" variant="secondary" href="/roadmap" size="s" suffixIcon="chevronRight">
             View Roadmap
           </Button>
           </Row>
-          <Text variant="label-default-s" onBackground="neutral-weak">
+          <Text textVariant="label-default-s" onBackground="neutral-weak">
             Progress and task status
           </Text>
         </Column>
@@ -213,14 +213,14 @@ export default function Home() {
               <Column fillWidth gap="20">
                 <Column fillWidth horizontal="center" gap="4">
                   <Text 
-                    variant="display-strong-l" 
+                    textVariant="display-strong-l" 
                     onBackground="neutral-strong"
                   >
                     {roadmapStats.progressPercentage}%
                   </Text>
                   <Text 
                     align="center"
-                    variant="label-default-s" 
+                    textVariant="label-default-s" 
                     onBackground="neutral-weak"
                     marginTop="8"
                   >
@@ -259,15 +259,15 @@ export default function Home() {
                   gap="s"
                 >
                   <Text 
-                    variant="display-default-m" 
+                    textVariant="display-default-m" 
                     onBackground="neutral-strong"
                   >
                     {roadmapStats.totalTasks - roadmapStats.completedTasks - roadmapStats.inProgressTasks}
                   </Text>
                   <Row vertical="center" gap="8">
-                    <StatusIndicator color="blue" />
+                    <StatusIndicator scheme="blue" />
                     <Text 
-                      variant="label-default-s" 
+                      textVariant="label-default-s" 
                       onBackground="neutral-weak"
                     >
                       Planned
@@ -285,15 +285,15 @@ export default function Home() {
                   gap="s"
                 >
                   <Text 
-                    variant="display-default-m" 
+                    textVariant="display-default-m" 
                     onBackground="neutral-strong"
                   >
                     {roadmapStats.inProgressTasks}
                   </Text>
                   <Row vertical="center" gap="8">
-                    <StatusIndicator color="yellow" />
+                    <StatusIndicator scheme="yellow" />
                     <Text 
-                      variant="label-default-s" 
+                      textVariant="label-default-s" 
                       onBackground="neutral-weak"
                     >
                       In progress
@@ -311,15 +311,15 @@ export default function Home() {
                   gap="s"
                 >
                   <Text 
-                    variant="display-default-m" 
+                    textVariant="display-default-m" 
                     onBackground="neutral-strong"
                   >
                     {roadmapStats.completedTasks}
                   </Text>
                   <Row vertical="center" gap="8">
-                    <StatusIndicator color="green" />
+                    <StatusIndicator scheme="green" />
                     <Text 
-                      variant="label-default-s" 
+                      textVariant="label-default-s" 
                       onBackground="neutral-weak"
                     >
                       Completed

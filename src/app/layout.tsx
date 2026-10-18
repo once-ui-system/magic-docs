@@ -73,16 +73,16 @@ export default async function RootLayout({ children }: RootLayoutProps) {
           position="fixed"
           mask={{
             cursor: effects.mask.cursor,
-            x: effects.mask.x,
-            y: effects.mask.y,
-              radius: effects.mask.radius,
+            x: `${effects.mask.x}%`,
+            y: `${effects.mask.y}%`,
+              radius: `${effects.mask.radius}vh`,
             }}
             gradient={{
               display: effects.gradient.display,
-              x: effects.gradient.x,
-              y: effects.gradient.y,
-              width: effects.gradient.width,
-              height: effects.gradient.height,
+              x: `${effects.gradient.x}%`,
+              y: `${effects.gradient.y}%`,
+              width: `${effects.gradient.width}%`,
+              height: `${effects.gradient.height}%`,
               tilt: effects.gradient.tilt,
               colorStart: effects.gradient.colorStart,
               colorEnd: effects.gradient.colorEnd,
@@ -123,7 +123,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             horizontal="center"
             flex={1}
           >
-            <Flex horizontal="center" maxWidth={layout.body.width} minHeight="0">
+            <Flex horizontal="center" maxWidth={`${layout.body.width}rem`} minHeight="0">
               <RouteGuard>
                 <Row fillWidth gap="24">
                   <Sidebar style={{minHeight: '100vh'}} m={{hide: true}} borderRight="neutral-alpha-medium" />

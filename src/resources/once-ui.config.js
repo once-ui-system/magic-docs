@@ -60,7 +60,7 @@ const { baseURL, style, dataStyle } = defineConfig({
   dataStyle: {
   variant: "gradient", // flat | gradient | outline
   mode: "categorical", // categorical | divergent | sequential
-  height: 24, // default chart height
+  height: "24rem", // default chart height
   axis: {
     stroke: "var(--neutral-alpha-weak)",
   },
@@ -73,7 +73,7 @@ const { baseURL, style, dataStyle } = defineConfig({
 });
 
 const layout = {
-  // units are set in REM
+  // units are set in REM: the components add "rem" where they use these (Once UI 3.0 reads a bare number as px)
   header: {
     width: 200, // max-width of the content inside the header
   },

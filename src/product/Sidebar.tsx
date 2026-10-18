@@ -102,6 +102,11 @@ const NavigationItemComponent: React.FC<{
   // This ensures the section is open when arriving at a page within this section
   const shouldBeOpen = isSelected || hasActiveChild || isParentPath || isPathWithinSection;
 
+  // The section opens again when the route moves into it (2.x Accordion synced
+  // its `open` prop on change; 3.0's `defaultOpen` is read once).
+  const [sectionOpen, setSectionOpen] = useState(shouldBeOpen);
+  useEffect(() => setSectionOpen(shouldBeOpen), [shouldBeOpen]);
+
   if (item.children) {
     return (
       <Row
@@ -121,7 +126,8 @@ const NavigationItemComponent: React.FC<{
             paddingBottom={undefined}
             paddingLeft="4"
             paddingTop="4"
-            open={shouldBeOpen}
+            open={sectionOpen}
+            onOpenChange={setSectionOpen}
             title={
               <Row textVariant="label-strong-s" onBackground="brand-strong">
                 {item.title}
@@ -164,7 +170,7 @@ const NavigationItemComponent: React.FC<{
             {item.label || item.title}
         </Row>
         {item.navTag && (
-          <Tag data-theme="dark" data-brand={item.navTagVariant} style={{marginRight: "-0.5rem", transform: "scale(0.8)", transformOrigin: "right center"}} scheme="brand" size="s">
+          <Tag data-theme="dark" data-brand={item.navTagVariant} style={{marginRight: "-0.5rem", transform: "scale(0.8)", transformOrigin: "right center"}} tone="brand" size="s">
               {item.navTag}
           </Tag>
         )}
@@ -345,8 +351,8 @@ const Sidebar: React.FC<SidebarProps> = ({ initialNavigation, ...rest }) => {
 
   return (
     <Column 
-      width={layout.sidebar.width} 
-      minWidth={layout.sidebar.width} 
+      width={`${layout.sidebar.width}rem`} 
+      minWidth={`${layout.sidebar.width}rem`} 
       position="sticky" 
       top="56" 
       fitHeight 

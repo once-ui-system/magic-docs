@@ -1,15 +1,20 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Button, Flex, Logo, NavIcon, Row, Kbar, useTheme, Animation } from "@once-ui-system/core";
+import { Button, Flex, Logo, NavIcon, Row, Kbar, useTheme, Animation, ThemeSwitcher, Line } from "@once-ui-system/core";
 import { layout, routes } from "@/resources/once-ui.config";
+import { PLATFORMS, counterpartSlug, isPlatformRoot, platformOfPath } from "@/resources/platforms";
 import { Sidebar, NavigationItem } from "./Sidebar";
+import { flattenSlugs } from "./PlatformSwitcher";
+import { VersionPicker } from "./VersionPicker";
 
 export function Header() {
   const [sidebarVisible, setSidebarVisible] = useState(false);
   const [isMac, setIsMac] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+  const platform = platformOfPath(pathname);
 
   useEffect(() => {
     setSidebarVisible(false);
@@ -68,7 +73,21 @@ export function Header() {
     return kbarItems;
   };
 
-  const docsItems = convertToKbarItems(navigationItems);
+  // Search stays inside the platform being read, like the sidebar.
+  const platformItems = platform.root
+    ? (navigationItems.find((item) => item.slug === platform.root)?.children ?? [])
+    : navigationItems.filter((item) => !isPlatformRoot(item.slug));
+  const docsItems = convertToKbarItems(platformItems);
+  const allSlugs = flattenSlugs(navigationItems);
+  const platformKbarItems = PLATFORMS.filter((p) => p.id !== platform.id).map((p) => ({
+    id: `platform-${p.id}`,
+    name: `Switch to ${p.label} docs`,
+    section: "Platform",
+    shortcut: [],
+    keywords: `${p.label.toLowerCase()}, platform, switch, ${p.id}`,
+    perform: () => router.push(`/${counterpartSlug(pathname ?? "/", p, allSlugs)}`),
+    icon: p.icon,
+  }));
   const { theme, setTheme } = useTheme();
 
   const navigationKbarItems = [
@@ -110,6 +129,7 @@ export function Header() {
   const kbar = [
     ...navigationKbarItems,
     ...docsItems,
+    ...platformKbarItems,
     {
       id: "theme-toggle",
       name: theme === 'dark' ? "Light mode" : "Dark mode",
@@ -163,11 +183,11 @@ export function Header() {
               blur={0.5}
               duration={200}
               trigger={
-                <NavIcon hide m={{hide: false}} onClick={toggleSidebar} isActive={sidebarVisible}/>
+                <NavIcon hide m={{hide: false}} onClick={toggleSidebar} active={sidebarVisible}/>
               }>
               <Row
                 width={24}
-                style={{height: "calc(100vh - var(--static-space-64))", top: "3.25rem", left: "-1.5rem"}} 
+                style={{height: "calc(100vh - var(--static-space-64))", top: "3.25rem", left: "0"}} 
                 background="page" 
                 position="fixed"
                 borderTop="neutral-alpha-medium"
@@ -177,12 +197,16 @@ export function Header() {
                   data-scaling="110"
                   fillWidth
                   width={undefined}
-                  padding="8" 
+                  padding="8"
+                  showVersion
                 />
               </Row>
             </Animation>
-            <Logo dark wordmark="/trademarks/type-dark.svg" size="s" href="/"/>
-            <Logo light wordmark="/trademarks/type-light.svg" size="s" href="/"/>
+            <Logo wordmark={{ light: "/trademarks/type-light.svg", dark: "/trademarks/type-dark.svg" }} size="s" href="/"/>
+            {/* On a phone the picker moves into the menu, see `showVersion`. */}
+            <Row s={{ hide: true }} marginLeft="4">
+              <VersionPicker />
+            </Row>
           </Row>
           <Kbar s={{hide: true}} items={kbar} radius="full" background="neutral-alpha-weak">
             <Button data-border="rounded" size="s" variant="tertiary" weight="default">
@@ -192,7 +216,9 @@ export function Header() {
               </Row>
             </Button>
           </Kbar>
-          <Row fillWidth horizontal="end" gap="8" data-border="rounded">
+          <Row fillWidth horizontal="end" gap="8" data-border="rounded" vertical="center">
+            <ThemeSwitcher style={{ scale: 0.85 }} />
+            <Line vert height="20" marginX="4" s={{ hide: true }} />
             <Row s={{hide: true}}>
               <Button size="s" variant="secondary" href="https://once-ui.com/products">
                 Start building

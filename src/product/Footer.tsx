@@ -1,3 +1,4 @@
+import type { IconName } from "@once-ui-system/core";
 import { layout, social } from "@/resources/once-ui.config";
 import {
   Button,
@@ -6,7 +7,6 @@ import {
   Logo,
   Row,
   SmartLink,
-  ThemeSwitcher,
 } from "@once-ui-system/core";
 
 export const Footer = () => {
@@ -72,12 +72,9 @@ export const Footer = () => {
             Social
           </Row>
           {social.map((link, index) => (
-            <Button key={index} href={link.link} weight="default" prefixIcon={link.icon} label={link.name} size="s" variant="secondary" />
+            <Button key={index} href={link.link} weight="default" prefixIcon={link.icon as IconName} label={link.name} size="s" variant="secondary" />
           ))}
         </Column>
-      </Row>
-      <Row maxWidth={layout.footer.width}>
-        <ThemeSwitcher />
       </Row>
     </Column>
   );

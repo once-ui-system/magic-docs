@@ -12,7 +12,6 @@ import {
   InlineCode, 
   Accordion, 
   AccordionGroup ,
-  CodeBlock,
   TextProps,
   HeadingLink,
   MediaProps,
@@ -25,6 +24,7 @@ import {
   ListItem,
   Line,
 } from "@once-ui-system/core";
+import { CodeBlock } from "@once-ui-system/core/code";
 import { PageList } from "./PageList";
 
 const onceUIComponents = {

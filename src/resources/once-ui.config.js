@@ -1,4 +1,5 @@
-const baseURL = "https://docs.once-ui.com";
+// @ts-check
+import { defineConfig } from "@once-ui-system/core/config";
 
 const routes = {
   '/changelog':  true,
@@ -40,20 +41,23 @@ const fonts = {
   code: code,
 };
 
-const style = {
-  theme: "dark", // dark | light
-  neutral: "gray", // sand | gray | slate
+// Typed by defineConfig, so `style` and `dataStyle` go to ThemeInit and the
+// providers as written: no casts, no renamed keys.
+const { baseURL, style, dataStyle } = defineConfig({
+  baseURL: "https://docs.once-ui.com",
+  style: {
+  theme: "system", // system | dark | light
+  neutral: "gray", // sand | gray | slate | rose | mint | dusk
   brand: "blue", // blue | indigo | violet | magenta | pink | red | orange | yellow | moss | green | emerald | aqua | cyan
   accent: "indigo", // blue | indigo | violet | magenta | pink | red | orange | yellow | moss | green | emerald | aqua | cyan
   solid: "contrast", // color | contrast
   solidStyle: "flat", // flat | plastic
-  border: "playful", // rounded | playful | conservative
+  border: "playful", // rounded | playful | conservative | sharp
   surface: "translucent", // filled | translucent
   transition: "all", // all | micro | macro
-  scaling: "100"
-};
-
-const dataStyle = {
+  scaling: "100",
+  },
+  dataStyle: {
   variant: "gradient", // flat | gradient | outline
   mode: "categorical", // categorical | divergent | sequential
   height: 24, // default chart height
@@ -65,7 +69,8 @@ const dataStyle = {
     fontSize: 11,
     line: false
   },
-};
+  },
+});
 
 const layout = {
   // units are set in REM

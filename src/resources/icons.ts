@@ -36,7 +36,7 @@ import { RiVisaLine } from "react-icons/ri";
 
 import { FaDiscord, FaGithub, FaGoogle, FaLinkedin, FaMailchimp, FaThreads } from "react-icons/fa6";
 
-export const iconLibrary: Record<string, IconType> = {
+export const iconLibrary = {
   openLink: HiOutlineLink,
   discord: FaDiscord,
   google: FaGoogle,
@@ -75,7 +75,12 @@ export const iconLibrary: Record<string, IconType> = {
   components: HiOutlineCube,
   sidebar: HiOutlineBars3,
   password: HiOutlineKey,
-};
+} satisfies Record<string, IconType>;
 
 export type IconLibrary = typeof iconLibrary;
 export type IconName = keyof IconLibrary;
+
+// Teach Once UI the names registered above, so `<Icon name="rocket" />` type-checks.
+declare module "@once-ui-system/core" {
+  interface IconLibraryOverrides extends Record<keyof typeof iconLibrary, true> {}
+}

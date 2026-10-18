@@ -6,8 +6,8 @@ import classNames from "classnames";
 import { Footer, Header, Sidebar } from "@/product";
 import { baseURL } from "@/resources";
 
-import { Background, Column, Flex, Meta, Row } from "@once-ui-system/core";
-import { effects, fonts, layout, schema } from "../resources/once-ui.config";
+import { Background, Column, Flex, Meta, Row, ThemeInit } from "@once-ui-system/core";
+import { dataStyle, effects, fonts, layout, schema, style } from "../resources/once-ui.config";
 import { meta } from "@/resources";
 import { RouteGuard } from "@/product/RouteGuard";
 import { Providers } from '@/product/Providers';
@@ -62,51 +62,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         )}
       >
         <head>
-          <script
-            // biome-ignore lint/security/noDangerouslySetInnerHtml: <It's not dynamic nor a security issue.>
-            dangerouslySetInnerHTML={{
-              __html: `
-                (function() {
-                try {
-                  const root = document.documentElement;
-                  
-                  const defaultTheme = 'system';
-                  root.setAttribute('data-neutral', 'gray');
-                  root.setAttribute('data-brand', 'blue');
-                  root.setAttribute('data-accent', 'indigo');
-                  root.setAttribute('data-solid', 'contrast');
-                  root.setAttribute('data-solid-style', 'flat');
-                  root.setAttribute('data-border', 'playful');
-                  root.setAttribute('data-surface', 'filled');
-                  root.setAttribute('data-transition', 'all');
-                  root.setAttribute('data-scaling', '100');
-                  root.setAttribute('data-viz-style', 'categorical');
-                  
-                  const resolveTheme = (themeValue) => {
-                    if (!themeValue || themeValue === 'system') {
-                      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-                    }
-                    return themeValue;
-                  };
-                  
-                  const theme = localStorage.getItem('data-theme');
-                  const resolvedTheme = resolveTheme(theme);
-                  root.setAttribute('data-theme', resolvedTheme);
-                  
-                  const styleKeys = ['neutral', 'brand', 'accent', 'solid', 'solid-style', 'viz-style', 'border', 'surface', 'transition', 'scaling'];
-                  styleKeys.forEach(key => {
-                    const value = localStorage.getItem('data-' + key);
-                    if (value) {
-                      root.setAttribute('data-' + key, value);
-                    }
-                  });
-                } catch (e) {
-                  document.documentElement.setAttribute('data-theme', 'dark');
-                }
-              })();
-              `,
-            }}
-          />
+          <ThemeInit config={style} dataStyle={dataStyle} />
         </head>
         <Providers>
         <Column background="page" as="body" fillWidth margin="0" padding="0" style={{ minHeight: "100vh" }}>

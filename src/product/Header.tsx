@@ -163,7 +163,7 @@ export function Header() {
               blur={0.5}
               duration={200}
               trigger={
-                <NavIcon hide m={{hide: false}} onClick={toggleSidebar} isActive={sidebarVisible}/>
+                <NavIcon hide m={{hide: false}} onClick={toggleSidebar} active={sidebarVisible}/>
               }>
               <Row
                 width={24}

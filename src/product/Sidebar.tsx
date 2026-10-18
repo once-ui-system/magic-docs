@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useMemo } from "react";
-import { Schemes, Accordion, Column, Flex, Icon, Row, Tag, ToggleButton } from "@once-ui-system/core";
+import { type IconName, Schemes, Accordion, Column, Flex, Icon, Row, Tag, ToggleButton } from "@once-ui-system/core";
 import { usePathname } from 'next/navigation';
 import { routes, layout } from "@/resources";
 
@@ -158,11 +158,11 @@ const NavigationItemComponent: React.FC<{
           onBackground={isSelected ? "neutral-strong" : "neutral-weak"}
           textVariant={isSelected ? "label-strong-s" : "label-default-s"}
           style={{ textOverflow: "ellipsis", whiteSpace: "nowrap"}}>
-            {item.navIcon && <Icon size="xs" name={item.navIcon}/>}
+            {item.navIcon && <Icon size="xs" name={item.navIcon as IconName}/>}
             {item.label || item.title}
         </Row>
         {item.navTag && (
-          <Tag data-theme="dark" data-brand={item.navTagVariant} style={{marginRight: "-0.5rem", transform: "scale(0.8)", transformOrigin: "right center"}} variant="brand" size="s">
+          <Tag data-theme="dark" data-brand={item.navTagVariant} style={{marginRight: "-0.5rem", transform: "scale(0.8)", transformOrigin: "right center"}} scheme="brand" size="s">
               {item.navTag}
           </Tag>
         )}
@@ -187,7 +187,7 @@ NavigationItem.displayName = 'NavigationItem';
 // Memoized resource link component
 const ResourceLinkComponent: React.FC<{
   href: string;
-  icon: string;
+  icon: IconName;
   label: string;
   pathname: string;
 }> = ({ href, icon, label, pathname }) => {

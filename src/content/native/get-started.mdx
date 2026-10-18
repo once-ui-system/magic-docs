@@ -1,0 +1,29 @@
+---
+title: "Get Started"
+summary: "A second platform in the same docs site, with its own sidebar, search and page-to-page navigation."
+updatedAt: "2026-10-18"
+navIcon: "mobile"
+---
+
+This page lives in `src/content/native/`, so it belongs to the **React Native** platform. Use the switcher at the top of the sidebar to move between platforms (and versions): the sidebar, search and the previous / next links only show the pages of the platform you are reading.
+
+## How platforms work
+
+Platforms are listed in `src/resources/platforms.ts`. The first one is the content root; every other one is a folder named after its `root`:
+
+```ts
+export const PLATFORMS: Platform[] = [
+  { id: "web", label: "Web", icon: "computer", home: "get-started", ... },
+  { id: "native", label: "React Native", icon: "mobile", root: "native", home: "native/get-started", ... },
+];
+```
+
+The platform is read from the URL, so a link to a page always opens it in the right context. Switching keeps the reader on the same topic when the other platform has a page with the same name, and opens that platform's `home` otherwise.
+
+## One platform only
+
+Delete the second entry and its folder. With one platform and one version the switcher hides itself.
+
+## Versions
+
+Each version of the docs is its own deployed site. List them in `src/resources/versions.ts`: with more than one, the switcher at the top of the sidebar also lists the versions and opens the same page on the one you pick.

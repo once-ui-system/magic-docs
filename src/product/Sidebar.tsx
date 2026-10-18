@@ -1,9 +1,11 @@
 "use client";
 
 import React, { useEffect, useState, useMemo } from "react";
-import { Schemes, Accordion, Column, Flex, Icon, Row, Tag, ToggleButton } from "@once-ui-system/core";
+import { type IconName, Schemes, Accordion, Column, Flex, Icon, Row, Tag, ToggleButton } from "@once-ui-system/core";
 import { usePathname } from 'next/navigation';
 import { routes, layout } from "@/resources";
+import { isPlatformRoot, platformOfPath } from "@/resources/platforms";
+import { DocsContextSwitcher, flattenSlugs } from "./DocsContextSwitcher";
 
 import styles from './Sidebar.module.scss';
 
@@ -158,11 +160,11 @@ const NavigationItemComponent: React.FC<{
           onBackground={isSelected ? "neutral-strong" : "neutral-weak"}
           textVariant={isSelected ? "label-strong-s" : "label-default-s"}
           style={{ textOverflow: "ellipsis", whiteSpace: "nowrap"}}>
-            {item.navIcon && <Icon size="xs" name={item.navIcon}/>}
+            {item.navIcon && <Icon size="xs" name={item.navIcon as IconName}/>}
             {item.label || item.title}
         </Row>
         {item.navTag && (
-          <Tag data-theme="dark" data-brand={item.navTagVariant} style={{marginRight: "-0.5rem", transform: "scale(0.8)", transformOrigin: "right center"}} variant="brand" size="s">
+          <Tag data-theme="dark" data-brand={item.navTagVariant} style={{marginRight: "-0.5rem", transform: "scale(0.8)", transformOrigin: "right center"}} scheme="brand" size="s">
               {item.navTag}
           </Tag>
         )}
@@ -187,7 +189,7 @@ NavigationItem.displayName = 'NavigationItem';
 // Memoized resource link component
 const ResourceLinkComponent: React.FC<{
   href: string;
-  icon: string;
+  icon: IconName;
   label: string;
   pathname: string;
 }> = ({ href, icon, label, pathname }) => {
@@ -246,6 +248,14 @@ const SidebarContent: React.FC<{
     );
   };
 
+  /* Each platform is its own site context: the default platform shows
+     everything but the other platforms' folders, a platform with its own
+     folder shows only that folder's pages, lifted to the top level. */
+  const platform = platformOfPath(pathname);
+  const visible = platform.root
+    ? (navigation.find((item) => item.slug === platform.root)?.children ?? [])
+    : navigation.filter((item) => !isPlatformRoot(item.slug));
+
   // Create resources section
   const resourcesSection = (!(routes['/roadmap'] || routes['/changelog'])) ? null : (
     <Column gap="2" marginTop="32" paddingLeft="4">
@@ -274,7 +284,7 @@ const SidebarContent: React.FC<{
 
   return (
     <>
-      {renderNavigation(navigation, 0)}
+      {renderNavigation(visible, 0)}
       {resourcesSection}
     </>
   );
@@ -348,6 +358,9 @@ const Sidebar: React.FC<SidebarProps> = ({ initialNavigation, ...rest }) => {
       style={containerStyle} 
       {...rest}
     >
+      <Row fillWidth paddingX="4" paddingBottom="12">
+        <DocsContextSwitcher slugs={flattenSlugs(navigation)} />
+      </Row>
       {hasLoaded && <SidebarContent key={pathname} navigation={navigation} pathname={pathname} />}
     </Column>
   );

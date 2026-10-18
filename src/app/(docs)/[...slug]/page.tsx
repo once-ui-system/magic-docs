@@ -1,8 +1,12 @@
 import { notFound } from "next/navigation";
 import { getPages, getAdjacentPages } from "@/app/utils/utils";
 import { formatDate } from "@/app/utils/formatDate";
-import { Column, Heading, Icon, Row, Media, Text, Card, HeadingNav, Meta, Schema, Button } from "@once-ui-system/core";
+import { Column, Heading, Icon, Row, Media, Text, Card, HeadingNav, Meta, Schema, Button, Line, SmartLink } from "@once-ui-system/core";
 import { baseURL, layout, schema } from "@/resources";
+import { repository } from "@/resources/once-ui.config";
+import { platformOfSlug } from "@/resources/platforms";
+import { currentVersion } from "@/resources/versions";
+import { VersionNotice } from "@/product/VersionNotice";
 import { CustomMDX } from "@/product/mdx";
 import { Metadata } from "next";
 import React from "react";
@@ -45,17 +49,24 @@ export default async function Docs({
   
   const { prevPage, nextPage } = getAdjacentPages(slugPath, 'section');
   
-  // Determine section title - use "Docs" for top-level elements
-  const sectionTitle = routeParams.slug.length === 1 && !routeParams.slug[0].includes('/') 
-    ? "Docs"
-    : routeParams.slug[0]
-      ?.split('-')
+  const titleCase = (segment: string) =>
+    segment
+      .split('-')
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
+
+  // Determine section title - use "Docs" for top-level elements. A platform's
+  // folder is that platform's root, so its pages are titled by the platform
+  // (or by their section inside it), not by the folder name.
+  const slug = routeParams.slug;
+  const platform = platformOfSlug(slugPath);
+  const sectionTitle = platform.root
+    ? slug.length > 2 ? titleCase(slug[1]) : platform.label
+    : slug.length === 1 ? "Docs" : titleCase(slug[0]);
   
   return (
     <>
-      <Row fillWidth horizontal="center">
+      <Row fillWidth horizontal="center" paddingX="l" s={{ paddingX: "16" }}>
         <Column as="main" maxWidth={layout.content.width} gap="l" paddingBottom="xl">
           <Schema
             as="techArticle"
@@ -77,10 +88,13 @@ export default async function Docs({
               Last update: {formatDate(doc.metadata.updatedAt)}
             </Text>
             {doc.metadata.github && (
-              <Button className="mt-20" href={"https://github.com/once-ui-system/core/blob/main/packages/core/src/" + doc.metadata.github} size="s" variant="secondary" prefixIcon="github" weight="default" data-border="rounded">
-                View on GitHub
-              </Button>
+              <Row marginTop="20">
+                <Button href={doc.metadata.github.startsWith("http") ? doc.metadata.github : "https://github.com/once-ui-system/core/blob/main/packages/core/src/" + doc.metadata.github} size="s" variant="secondary" prefixIcon="github" weight="default" data-border="rounded">
+                  View on GitHub
+                </Button>
+              </Row>
             )}
+            <VersionNotice path={`/${doc.slug}`} />
           </Column>
           {doc.metadata.image && (
             <Media border="neutral-alpha-medium" enlarge src={doc.metadata.image} alt={"Thumbnail of " + doc.metadata.title} aspectRatio="16 / 9" radius="m" sizes="(max-width: 768px) 100vw, 768px" priority />
@@ -143,6 +157,12 @@ export default async function Docs({
                 </Row>
               ) : <Row/>}
             </Row>
+          <Column fillWidth gap="24" marginTop="40">
+            <Line width="40"/>
+            <Row fillWidth vertical="center" gap="8" onBackground="neutral-weak" textVariant="label-default-s">
+              Edit this page on <SmartLink prefixIcon="github" href={`${repository.url}/blob/${currentVersion.branch}/${repository.contentPath}/${doc.slug}.mdx`}>GitHub</SmartLink>
+            </Row>
+          </Column>
         </Column>
       </Row>
       <Column gap="16" maxWidth={layout.sideNav.width} s={{hide: true}} fillHeight paddingLeft="24" borderLeft="neutral-alpha-medium">

@@ -26,12 +26,12 @@ export async function generateMetadata() {
 
 const RoadmapTask = ({ task: taskItem }: { task: Task }) => (
   <Column gap="8" fillWidth>
-    <Text align="left" onBackground="neutral-strong" variant="body-strong-m">
+    <Text align="left" onBackground="neutral-strong" textVariant="body-strong-m">
       {taskItem.title}
     </Text>
     
     {taskItem.description && (
-      <Text align="left" variant="body-default-s" onBackground="neutral-weak">
+      <Text align="left" textVariant="body-default-s" onBackground="neutral-weak">
         {taskItem.description}
       </Text>
     )}
@@ -54,9 +54,9 @@ const RoadmapTask = ({ task: taskItem }: { task: Task }) => (
         {taskItem.type && (
           <Row vertical="center" gap="8">
             <StatusIndicator 
-              color={task[taskItem.type].color as Schemes}
+              scheme={task[taskItem.type].color as Schemes}
             />
-            <Text onBackground="neutral-weak" variant="label-default-s">{task[taskItem.type].label}</Text>
+            <Text onBackground="neutral-weak" textVariant="label-default-s">{task[taskItem.type].label}</Text>
           </Row>
         )}
       </Row>
@@ -66,7 +66,7 @@ const RoadmapTask = ({ task: taskItem }: { task: Task }) => (
 
 export default function RoadmapPage() {
   return (
-    <Column maxWidth={layout.body.width} minWidth={0} gap="24" as="main" padding="l">
+    <Column maxWidth={`${layout.body.width}rem`} minWidth={0} gap="24" as="main" padding="l">
       <Schema
         as="webPage"
         title={meta.roadmap.title}
@@ -78,10 +78,10 @@ export default function RoadmapPage() {
         }}
       />
       <Column fillWidth gap="12" paddingBottom="l">
-        <Heading variant="display-strong-s">
+        <Heading textVariant="display-strong-s">
           Roadmap
         </Heading>
-        <Text wrap="balance" onBackground="neutral-weak" variant="body-default-xl" marginBottom="20">
+        <Text wrap="balance" onBackground="neutral-weak" textVariant="body-default-xl" marginBottom="20">
           List of features planned for Q2 2025
         </Text>
       </Column>
@@ -93,7 +93,7 @@ export default function RoadmapPage() {
               <Row minWidth="40" width="40" height="40" padding="8" vertical="center">
                 <Row radius="full" fillWidth minHeight="4" solid="brand-medium" data-brand={product.brand as Schemes} data-solid="inverse"/>
               </Row>
-              <Heading as="h2" variant="display-default-xs">
+              <Heading as="h2" textVariant="display-default-xs">
                 {product.product}
               </Heading>
             </Row>
@@ -101,12 +101,12 @@ export default function RoadmapPage() {
           
           <Row gap="4" fillWidth overflowX="auto" paddingBottom="16">
             {product.columns.map((column, columnIndex) => (
-              <Column key={columnIndex} padding="4" gap="4" radius="s-4" border="neutral-alpha-weak" background="overlay" fillWidth minWidth={20}>
+              <Column key={columnIndex} padding="4" gap="4" radius="s-4" border="neutral-alpha-weak" background="overlay" fillWidth minWidth="20rem">
                 <Row fillWidth vertical="center" gap="8" paddingY="8" paddingX="16">
-                  <Text variant="label-default-m">
+                  <Text textVariant="label-default-m">
                     {column.title}
                   </Text>
-                  <Text variant="label-default-s" onBackground="neutral-weak">
+                  <Text textVariant="label-default-s" onBackground="neutral-weak">
                     {column.tasks.length}
                   </Text>
                 </Row>

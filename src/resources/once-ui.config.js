@@ -131,6 +131,13 @@ const effects = {
   },
 };
 
+// Where the docs' own source lives, for "Edit this page" links. The branch
+// comes from the current version, see src/resources/versions.ts.
+const repository = {
+  url: "https://github.com/once-ui-system/magic-docs",
+  contentPath: "src/content",
+};
+
 const social = [
   // Links are automatically displayed.
   // Import new icons in /once-ui/icons.ts
@@ -171,4 +178,4 @@ const meta = {
   }
 };
 
-export { dataStyle, effects, style, layout, baseURL, social, schema, meta, routes, fonts };
+export { dataStyle, effects, style, layout, baseURL, social, schema, meta, routes, fonts, repository };

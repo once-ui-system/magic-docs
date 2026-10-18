@@ -1,6 +1,8 @@
 import { IconType } from "react-icons";
 
 import {
+  HiOutlineComputerDesktop,
+  HiOutlineDevicePhoneMobile,
   HiMiniMinus,
   HiOutlineEye,
   HiOutlineEyeSlash,
@@ -75,6 +77,8 @@ export const iconLibrary = {
   components: HiOutlineCube,
   sidebar: HiOutlineBars3,
   password: HiOutlineKey,
+  computer: HiOutlineComputerDesktop,
+  mobile: HiOutlineDevicePhoneMobile,
 } satisfies Record<string, IconType>;
 
 export type IconLibrary = typeof iconLibrary;

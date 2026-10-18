@@ -11,6 +11,7 @@ import { dataStyle, effects, fonts, layout, schema, style } from "../resources/o
 import { meta } from "@/resources";
 import { RouteGuard } from "@/product/RouteGuard";
 import { Providers } from '@/product/Providers';
+import { currentVersion } from "@/resources/versions";
 
 export async function generateMetadata() {
   const baseMetadata = Meta.generate({
@@ -29,11 +30,13 @@ export async function generateMetadata() {
       siteName: meta.home.title,
       locale: schema.locale,
     },
+    // Only the stable version is indexed, so search results land on the docs
+    // for the release people install by default.
     robots: {
-      index: true,
+      index: currentVersion.status === "stable",
       follow: true,
       googleBot: {
-        index: true,
+        index: currentVersion.status === "stable",
         follow: true,
         "max-video-preview": -1,
         "max-image-preview": "large",

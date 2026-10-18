@@ -13,6 +13,8 @@ View the demo [here](https://docs.once-ui.com).
 git clone https://github.com/once-ui-system/magic-docs.git
 ```
 
+Requires Node.js 20.9 or later.
+
 **2. Install dependencies**
 ```
 npm install
@@ -58,6 +60,17 @@ Read the full documentation [here](https://docs.once-ui.com/magic-docs/quick-sta
 - Organized documentation structure with nested categories
 - Searchable content with command palette (Cmd+K / Ctrl+K)
 - Automatically generated, responsive sidebar
+
+### Platforms
+- Document more than one platform (for example Web and React Native) in one site
+- Each platform is its own context: sidebar, search and previous / next links show only its pages
+- A switcher at the top of the sidebar keeps the reader on the same topic across platforms
+- Configure in `src/resources/platforms.ts`; with one platform the switcher hides itself
+
+### Versions
+- One deployed site per version, listed in `src/resources/versions.ts`
+- The header shows the current version; with more than one it becomes a picker that keeps the current page
+- Beta versions show a prerelease notice on every page and are not indexed by search engines
 
 Magic Docs was built with [Once UI](https://once-ui.com) for [Next.js](https://nextjs.org). It requires Node.js v18.17+.
 

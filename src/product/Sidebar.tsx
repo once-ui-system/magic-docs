@@ -4,6 +4,9 @@ import React, { useEffect, useState, useMemo } from "react";
 import { type IconName, Schemes, Accordion, Column, Flex, Icon, Row, Tag, ToggleButton } from "@once-ui-system/core";
 import { usePathname } from 'next/navigation';
 import { routes, layout } from "@/resources";
+import { PLATFORMS, isPlatformRoot, platformOfPath } from "@/resources/platforms";
+import { PlatformSwitcher, flattenSlugs } from "./PlatformSwitcher";
+import { VersionPicker } from "./VersionPicker";
 
 import styles from './Sidebar.module.scss';
 
@@ -26,6 +29,9 @@ export interface NavigationItem extends Omit<React.ComponentProps<typeof Flex>, 
 
 interface SidebarProps extends Omit<React.ComponentProps<typeof Flex>, "children"> {
   initialNavigation?: NavigationItem[];
+  /** Adds the version picker above the platform switcher, for the phone menu,
+      where the header has no room for it. */
+  showVersion?: boolean;
 }
 
 // Memoized navigation item component to prevent re-renders
@@ -246,6 +252,14 @@ const SidebarContent: React.FC<{
     );
   };
 
+  /* Each platform is its own site context: the default platform shows
+     everything but the other platforms' folders, a platform with its own
+     folder shows only that folder's pages, lifted to the top level. */
+  const platform = platformOfPath(pathname);
+  const visible = platform.root
+    ? (navigation.find((item) => item.slug === platform.root)?.children ?? [])
+    : navigation.filter((item) => !isPlatformRoot(item.slug));
+
   // Create resources section
   const resourcesSection = (!(routes['/roadmap'] || routes['/changelog'])) ? null : (
     <Column gap="2" marginTop="32" paddingLeft="4">
@@ -274,7 +288,7 @@ const SidebarContent: React.FC<{
 
   return (
     <>
-      {renderNavigation(navigation, 0)}
+      {renderNavigation(visible, 0)}
       {resourcesSection}
     </>
   );
@@ -290,7 +304,7 @@ const SidebarContent: React.FC<{
 
 SidebarContent.displayName = 'SidebarContent';
 
-const Sidebar: React.FC<SidebarProps> = ({ initialNavigation, ...rest }) => {
+const Sidebar: React.FC<SidebarProps> = ({ initialNavigation, showVersion, ...rest }) => {
   const [navigation, setNavigation] = useState<NavigationItem[]>(initialNavigation || []);
   const [hasLoaded, setHasLoaded] = useState(false);
   const pathname = usePathname();
@@ -348,6 +362,16 @@ const Sidebar: React.FC<SidebarProps> = ({ initialNavigation, ...rest }) => {
       style={containerStyle} 
       {...rest}
     >
+      {showVersion && (
+        <Row fillWidth paddingX="4" paddingBottom="8" hide s={{ hide: false }}>
+          <VersionPicker />
+        </Row>
+      )}
+      {PLATFORMS.length > 1 && (
+        <Row fillWidth paddingX="4" paddingBottom="12">
+          <PlatformSwitcher slugs={flattenSlugs(navigation)} />
+        </Row>
+      )}
       {hasLoaded && <SidebarContent key={pathname} navigation={navigation} pathname={pathname} />}
     </Column>
   );

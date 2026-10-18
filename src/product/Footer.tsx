@@ -7,7 +7,6 @@ import {
   Logo,
   Row,
   SmartLink,
-  ThemeSwitcher,
 } from "@once-ui-system/core";
 
 export const Footer = () => {
@@ -76,9 +75,6 @@ export const Footer = () => {
             <Button key={index} href={link.link} weight="default" prefixIcon={link.icon as IconName} label={link.name} size="s" variant="secondary" />
           ))}
         </Column>
-      </Row>
-      <Row maxWidth={layout.footer.width}>
-        <ThemeSwitcher />
       </Row>
     </Column>
   );

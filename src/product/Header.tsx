@@ -6,8 +6,7 @@ import { Button, Flex, Logo, NavIcon, Row, Kbar, useTheme, Animation, ThemeSwitc
 import { layout, routes } from "@/resources/once-ui.config";
 import { PLATFORMS, counterpartSlug, isPlatformRoot, platformOfPath } from "@/resources/platforms";
 import { Sidebar, NavigationItem } from "./Sidebar";
-import { flattenSlugs } from "./PlatformSwitcher";
-import { VersionPicker } from "./VersionPicker";
+import { flattenSlugs } from "./DocsContextSwitcher";
 
 export function Header() {
   const [sidebarVisible, setSidebarVisible] = useState(false);
@@ -198,15 +197,10 @@ export function Header() {
                   fillWidth
                   width={undefined}
                   padding="8"
-                  showVersion
                 />
               </Row>
             </Animation>
             <Logo wordmark={{ light: "/trademarks/type-light.svg", dark: "/trademarks/type-dark.svg" }} size="s" href="/"/>
-            {/* On a phone the picker moves into the menu, see `showVersion`. */}
-            <Row s={{ hide: true }} marginLeft="4">
-              <VersionPicker />
-            </Row>
           </Row>
           <Kbar s={{hide: true}} items={kbar} radius="full" background="neutral-alpha-weak">
             <Button data-border="rounded" size="s" variant="tertiary" weight="default">

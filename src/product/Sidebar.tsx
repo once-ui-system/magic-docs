@@ -4,9 +4,8 @@ import React, { useEffect, useState, useMemo } from "react";
 import { type IconName, Schemes, Accordion, Column, Flex, Icon, Row, Tag, ToggleButton } from "@once-ui-system/core";
 import { usePathname } from 'next/navigation';
 import { routes, layout } from "@/resources";
-import { PLATFORMS, isPlatformRoot, platformOfPath } from "@/resources/platforms";
-import { PlatformSwitcher, flattenSlugs } from "./PlatformSwitcher";
-import { VersionPicker } from "./VersionPicker";
+import { isPlatformRoot, platformOfPath } from "@/resources/platforms";
+import { DocsContextSwitcher, flattenSlugs } from "./DocsContextSwitcher";
 
 import styles from './Sidebar.module.scss';
 
@@ -29,9 +28,6 @@ export interface NavigationItem extends Omit<React.ComponentProps<typeof Flex>, 
 
 interface SidebarProps extends Omit<React.ComponentProps<typeof Flex>, "children"> {
   initialNavigation?: NavigationItem[];
-  /** Adds the version picker above the platform switcher, for the phone menu,
-      where the header has no room for it. */
-  showVersion?: boolean;
 }
 
 // Memoized navigation item component to prevent re-renders
@@ -304,7 +300,7 @@ const SidebarContent: React.FC<{
 
 SidebarContent.displayName = 'SidebarContent';
 
-const Sidebar: React.FC<SidebarProps> = ({ initialNavigation, showVersion, ...rest }) => {
+const Sidebar: React.FC<SidebarProps> = ({ initialNavigation, ...rest }) => {
   const [navigation, setNavigation] = useState<NavigationItem[]>(initialNavigation || []);
   const [hasLoaded, setHasLoaded] = useState(false);
   const pathname = usePathname();
@@ -362,16 +358,9 @@ const Sidebar: React.FC<SidebarProps> = ({ initialNavigation, showVersion, ...re
       style={containerStyle} 
       {...rest}
     >
-      {showVersion && (
-        <Row fillWidth paddingX="4" paddingBottom="8" hide s={{ hide: false }}>
-          <VersionPicker />
-        </Row>
-      )}
-      {PLATFORMS.length > 1 && (
-        <Row fillWidth paddingX="4" paddingBottom="12">
-          <PlatformSwitcher slugs={flattenSlugs(navigation)} />
-        </Row>
-      )}
+      <Row fillWidth paddingX="4" paddingBottom="12">
+        <DocsContextSwitcher slugs={flattenSlugs(navigation)} />
+      </Row>
       {hasLoaded && <SidebarContent key={pathname} navigation={navigation} pathname={pathname} />}
     </Column>
   );

@@ -64,12 +64,12 @@ Read the full documentation [here](https://docs.once-ui.com/magic-docs/quick-sta
 ### Platforms
 - Document more than one platform (for example Web and React Native) in one site
 - Each platform is its own context: sidebar, search and previous / next links show only its pages
-- A switcher at the top of the sidebar keeps the reader on the same topic across platforms
-- Configure in `src/resources/platforms.ts`; with one platform the switcher hides itself
+- One switcher at the top of the sidebar for platform and version; it keeps the reader on the same topic
+- Configure in `src/resources/platforms.ts`; with one platform and one version the switcher hides itself
 
 ### Versions
 - One deployed site per version, listed in `src/resources/versions.ts`
-- The header shows the current version; with more than one it becomes a picker that keeps the current page
+- The switcher at the top of the sidebar shows the platform and the version; with more than one version its menu lists them and keeps the current page
 - Beta versions show a prerelease notice on every page and are not indexed by search engines
 
 Magic Docs was built with [Once UI](https://once-ui.com) for [Next.js](https://nextjs.org). It requires Node.js v18.17+.

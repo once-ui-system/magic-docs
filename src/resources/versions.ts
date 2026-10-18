@@ -7,7 +7,8 @@ import { baseURL } from "./once-ui.config";
  * match what that version ships. The picker in the header moves between the
  * sites and keeps the reader on the same page.
  *
- * With one entry the header shows the version as a label. To add a version:
+ * The switcher at the top of the sidebar shows the platform and the version;
+ * with more than one entry its menu lists the versions. To add a version:
  * deploy its branch to its own URL, add an entry here (on every branch), and
  * set `CURRENT_VERSION` on each branch to that branch's entry. An entry with
  * `published: false` is listed but cannot be picked, for a site not up yet.
@@ -48,7 +49,7 @@ export interface DocsVersion {
 export const VERSIONS: DocsVersion[] = [
   {
     id: "2",
-    label: "v2.2",
+    label: "2.2",
     npmTag: "latest",
     status: "stable",
     url: baseURL,

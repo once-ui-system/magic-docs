@@ -19,13 +19,15 @@ import { formatDate } from "./utils/formatDate";
 import { PageList } from "@/product/PageList";
 
 export async function generateMetadata() {
-  return Meta.generate({
+  const metadata = Meta.generate({
     title: meta.home.title,
     description: meta.home.description,
     baseURL: baseURL,
     path: meta.home.path,
     image: meta.home.image
   });
+  // Meta.generate writes a canonical only alongside language alternates.
+  return { ...metadata, alternates: { canonical: metadata.openGraph.url } };
 }
 
 // Calculate roadmap progress stats
@@ -99,7 +101,7 @@ export default function Home() {
                   Simple, clean docs site
                 </Text>
             </Badge>
-            <Heading variant="display-strong-s">
+            <Heading as="h1" variant="display-strong-s">
               Magic Docs
             </Heading>
             <Text wrap="balance" onBackground="neutral-weak" variant="body-default-xl" marginBottom="20">

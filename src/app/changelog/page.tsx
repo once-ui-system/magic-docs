@@ -1,19 +1,25 @@
 import React from "react";
 import { Column, SmartLink, Row, Line, Text, Heading, Media, Meta, Schema, HeadingLink } from "@once-ui-system/core";
-import { baseURL, meta, schema, changelog } from "@/resources";
+import { notFound } from "next/navigation";
+import { baseURL, meta, schema, changelog, routes } from "@/resources";
 import { formatDate } from "../utils/formatDate";
 
 export async function generateMetadata() {
-  return Meta.generate({
+  const metadata = Meta.generate({
     title: meta.changelog.title,
     description: meta.changelog.description,
     baseURL: baseURL,
     path: meta.changelog.path,
     image: meta.changelog.image
   });
+  // Meta.generate writes a canonical only alongside language alternates.
+  return { ...metadata, alternates: { canonical: metadata.openGraph.url } };
 }
 
 const Changelog: React.FC = () => {
+  // Turned off in once-ui.config.js routes: a real 404, decided on the server.
+  if (!routes["/changelog"]) notFound();
+
   return (
     <Column
       maxWidth={56}

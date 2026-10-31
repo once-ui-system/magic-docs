@@ -9,7 +9,6 @@ import { baseURL } from "@/resources";
 import { Background, Column, Flex, Meta, Row, ThemeInit } from "@once-ui-system/core";
 import { dataStyle, effects, fonts, layout, schema, style } from "../resources/once-ui.config";
 import { meta } from "@/resources";
-import { RouteGuard } from "@/product/RouteGuard";
 import { Providers } from '@/product/Providers';
 import { currentVersion } from "@/resources/versions";
 
@@ -124,14 +123,12 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             flex={1}
           >
             <Flex horizontal="center" maxWidth={layout.body.width} minHeight="0">
-              <RouteGuard>
-                <Row fillWidth gap="24">
-                  <Sidebar style={{minHeight: '100vh'}} m={{hide: true}} borderRight="neutral-alpha-medium" />
-                  <Row fillWidth horizontal="center">
-                    {children}
-                  </Row>
+              <Row fillWidth gap="24">
+                <Sidebar style={{minHeight: '100vh'}} m={{hide: true}} borderRight="neutral-alpha-medium" />
+                <Row fillWidth horizontal="center">
+                  {children}
                 </Row>
-              </RouteGuard>
+              </Row>
             </Flex>
           </Flex>
           <Footer />

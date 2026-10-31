@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, Column, Row, Card, User, Heading, StatusIndicator, Meta, Schema } from "@once-ui-system/core";
-import { baseURL, layout, meta, roadmap, schema, task } from "../../resources";
+import { notFound } from "next/navigation";
+import { baseURL, layout, meta, roadmap, routes, schema, task } from "../../resources";
 import { Schemes } from "@once-ui-system/core";
 
 export interface Task {
@@ -15,13 +16,15 @@ export interface Task {
 }
 
 export async function generateMetadata() {
-  return Meta.generate({
+  const metadata = Meta.generate({
     title: meta.roadmap.title,
     description: meta.roadmap.description,
     baseURL: baseURL,
     path: meta.roadmap.path,
     image: meta.roadmap.image
   });
+  // Meta.generate writes a canonical only alongside language alternates.
+  return { ...metadata, alternates: { canonical: metadata.openGraph.url } };
 }
 
 const RoadmapTask = ({ task: taskItem }: { task: Task }) => (
@@ -65,6 +68,9 @@ const RoadmapTask = ({ task: taskItem }: { task: Task }) => (
 );
 
 export default function RoadmapPage() {
+  // Turned off in once-ui.config.js routes: a real 404, decided on the server.
+  if (!routes["/roadmap"]) notFound();
+
   return (
     <Column maxWidth={layout.body.width} minWidth={0} gap="24" as="main" padding="l">
       <Schema

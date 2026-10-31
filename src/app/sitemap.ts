@@ -1,5 +1,5 @@
 import { getPages } from "@/app/utils/utils";
-import { baseURL } from "@/resources";
+import { baseURL, routes } from "@/resources";
 
 export default async function sitemap() {
   const pages = getPages(["src", "content"]).map((post) => ({
@@ -7,10 +7,14 @@ export default async function sitemap() {
     lastModified: post.metadata.updatedAt,
   }));
 
-  const routes = pages.map((route) => ({
-    url: `${baseURL}/${route}`,
-    lastModified: new Date().toISOString().split("T")[0],
-  }));
+  // The home page plus the enabled top-level routes (changelog, roadmap).
+  const today = new Date().toISOString().split("T")[0];
+  const staticRoutes = ["", ...Object.keys(routes).filter((route) => routes[route as keyof typeof routes])].map(
+    (route) => ({
+      url: `${baseURL}${route}`,
+      lastModified: today,
+    }),
+  );
 
-  return [...routes, ...pages];
+  return [...staticRoutes, ...pages];
 }

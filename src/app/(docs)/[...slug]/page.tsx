@@ -24,7 +24,7 @@ export async function generateMetadata({
 
   if (!doc) return {};
 
-  return Meta.generate({
+  const metadata = Meta.generate({
     title: doc.metadata.title + " – " + schema.name,
     description: doc.metadata.summary,
     baseURL,
@@ -33,6 +33,8 @@ export async function generateMetadata({
     publishedTime: doc.metadata.updatedAt,
     image: doc.metadata.image || `/api/og/generate?title=${encodeURIComponent(doc.metadata.title)}&description=${encodeURIComponent(doc.metadata.summary)}`,
   });
+  // Meta.generate writes a canonical only alongside language alternates.
+  return { ...metadata, alternates: { canonical: metadata.openGraph.url } };
 }
 
 export default async function Docs({

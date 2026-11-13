@@ -12,9 +12,9 @@ import {
 export const Footer = () => {
   return (
     <Column gap="40" fillWidth paddingY="xl" paddingX="l" horizontal="center" borderTop="neutral-alpha-medium">
-      <Row gap="12" textVariant="label-default-m" maxWidth={layout.footer.width} vertical="center">
-        <Logo dark href="/" icon="/trademarks/icon-dark.svg" size="m" />
-        <Logo light href="/" icon="/trademarks/icon-light.svg" size="m" />
+      <Row gap="12" textVariant="label-default-m" maxWidth={`${layout.footer.width}rem`} vertical="center">
+        <Logo showIn="dark" href="/" icon="/trademarks/icon-dark.svg" size="m" />
+        <Logo showIn="light" href="/" icon="/trademarks/icon-light.svg" size="m" />
         {/* Usage of this template requires attribution. Please don't remove the link to Once UI unless you have Once UI Pro subscription. */}
         <Button
           data-border="rounded"
@@ -29,7 +29,7 @@ export const Footer = () => {
           </Row>
         </Button>
       </Row>
-      <Row maxWidth={layout.footer.width} horizontal="between" gap="40" wrap paddingX="2">
+      <Row maxWidth={`${layout.footer.width}rem`} horizontal="between" gap="40" wrap paddingX="2">
         <Column gap="12" textVariant="label-default-m">
           <Row paddingX="2" marginBottom="8">
             Products

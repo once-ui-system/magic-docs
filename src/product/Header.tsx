@@ -172,20 +172,22 @@ export function Header() {
   return (
     <>
       <Flex as="header" background="page" horizontal="center" position="sticky" zIndex={9} fillWidth vertical="center" paddingY="12" paddingRight="16" paddingLeft="12" borderBottom="neutral-alpha-medium">
-        <Row maxWidth={layout.header.width} vertical="center" horizontal="between" gap="l">
+        <Row maxWidth={`${layout.header.width}rem`} vertical="center" horizontal="between" gap="l">
           <Row fillWidth vertical="center" gap="8">
             <Animation
               triggerType="click"
               active={sidebarVisible}
-              slideDown={1}
+              slideDown="1rem"
               scale={0.9}
               blur={0.5}
               duration={200}
               trigger={
-                <NavIcon hide m={{hide: false}} onClick={toggleSidebar} active={sidebarVisible}/>
+                <Row hide m={{hide: false}}>
+                  <NavIcon onClick={toggleSidebar} active={sidebarVisible}/>
+                </Row>
               }>
               <Row
-                width={24}
+                width="24rem"
                 style={{height: "calc(100vh - var(--static-space-64))", top: "3.25rem", left: "0"}} 
                 background="page" 
                 position="fixed"

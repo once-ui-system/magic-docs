@@ -135,7 +135,7 @@ function createParagraph({ children }: TextProps) {
   return (
     <Text
       style={{ lineHeight: "175%" }}
-      variant="body-default-m"
+      textVariant="body-default-m"
       onBackground="neutral-medium"
       marginTop="8"
       marginBottom="12"
@@ -225,10 +225,10 @@ export function CustomMDX(props: CustomMDXProps) {
     // Return a fallback UI when an error occurs
     return (
       <Column gap="16" padding="24" border="accent-medium" radius="m">
-        <Text variant="heading-strong-m" onBackground="accent-strong">
+        <Text textVariant="heading-strong-m" onBackground="accent-strong">
           Error rendering content
         </Text>
-        <Text variant="body-default-m" onBackground="accent-medium">
+        <Text textVariant="body-default-m" onBackground="accent-medium">
           There was an error rendering this content. Please try refreshing the page.
         </Text>
       </Column>

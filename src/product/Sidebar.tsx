@@ -112,6 +112,7 @@ const NavigationItemComponent: React.FC<{
           marginTop="2">
           {layout.sidebar.collapsible ? (
           <Accordion
+            key={String(shouldBeOpen)}
             gap="2"
             icon="chevronRight"
             iconRotation={90}
@@ -121,7 +122,7 @@ const NavigationItemComponent: React.FC<{
             paddingBottom={undefined}
             paddingLeft="4"
             paddingTop="4"
-            open={shouldBeOpen}
+            defaultOpen={shouldBeOpen}
             title={
               <Row textVariant="label-strong-s" onBackground="brand-strong">
                 {item.title}
@@ -164,7 +165,7 @@ const NavigationItemComponent: React.FC<{
             {item.label || item.title}
         </Row>
         {item.navTag && (
-          <Tag data-theme="dark" data-brand={item.navTagVariant} style={{marginRight: "-0.5rem", transform: "scale(0.8)", transformOrigin: "right center"}} scheme="brand" size="s">
+          <Tag data-theme="dark" data-brand={item.navTagVariant} style={{marginRight: "-0.5rem", transform: "scale(0.8)", transformOrigin: "right center"}} tone="brand" size="s">
               {item.navTag}
           </Tag>
         )}
@@ -345,8 +346,8 @@ const Sidebar: React.FC<SidebarProps> = ({ initialNavigation, ...rest }) => {
 
   return (
     <Column 
-      width={layout.sidebar.width} 
-      minWidth={layout.sidebar.width} 
+      width={`${layout.sidebar.width}rem`} 
+      minWidth={`${layout.sidebar.width}rem`} 
       position="sticky" 
       top="56" 
       fitHeight 

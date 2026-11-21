@@ -13,11 +13,11 @@
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.0",
-    "@next/mdx": "^16.2.12",
+    "@next/mdx": "^16.4.6",
     "@once-ui-system/core": "^2.1.0",
     "classnames": "^2.5.1",
     "gray-matter": "^4.0.3",
-    "next": "^16.2.12",
+    "next": "^16.4.6",
     "next-mdx-remote": "^6.0.0",
     "prismjs": "^1.30.0",
     "react": "19.2.8",
